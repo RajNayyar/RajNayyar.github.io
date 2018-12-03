@@ -1,0 +1,15 @@
+.about-container{
+    height: 100vh;
+    text-align: center;
+}
+.about-title{
+    font-weight: lighter;
+    letter-spacing: 2ch;
+    font-size: 40px;
+  }
+
+.about-image{
+    border-radius: 50%;
+    width: 200px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}

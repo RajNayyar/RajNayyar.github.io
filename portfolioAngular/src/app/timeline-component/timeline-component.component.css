@@ -1,0 +1,36 @@
+.timeline-content{
+  height: 100vh;
+  text-align: center;
+  margin: 50px auto;
+}
+.timeline{
+  width: 40%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  border-radius: 100px;
+}
+h2{
+  margin-left: 20px;
+}
+.timeline-logo{
+  width: 60px;
+  height: 60px;
+  margin-top: 30px;
+  margin-left: 30px;
+  border: 1px solid;
+}
+.timeline-data{
+  
+  display: flex;
+  flex-direction: column;
+}
+.timeline-title{
+  font-weight: lighter;
+  letter-spacing: 2ch;
+  font-size: 40px;
+}
+.timeline-container{
+  margin: 20px auto;
+}

@@ -1,0 +1,12 @@
+<div class="timeline-content">
+  <h1 class="timeline-title">TIMELINE</h1>
+  <div class = "timeline-container" *ngFor="let item of timelineContent">
+    <div class="timeline">
+        <img src = "{{item.logo}}" class="timeline-logo">
+      <div class = "timeline-data">
+        <h2>{{item.date}}: {{item.work}}</h2>
+        <p>{{item.workDesc}}</p>
+      </div>
+    </div>
+  </div>
+</div>
