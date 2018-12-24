@@ -18,7 +18,7 @@ import {
       transition(':enter', [
         query(':self', [
           style({ opacity: 0 }),
-            animate('1000ms ease-out', style({ opacity: 1 }))
+            animate('5000ms ease-out', style({ opacity: 1 }))
      
         ])
       ])

@@ -7,7 +7,9 @@ import { TimelineComponentComponent } from './timeline-component/timeline-compon
 import { VerticalTimelineModule } from 'angular-vertical-timeline';
 import { AboutComponentComponent } from './about-component/about-component.component';
 import { HeaderComponent } from './header/header.component';
-
+import { SkillsComponentComponent } from './skills-component/skills-component.component';
+import { ProjectsComponentComponent } from './projects-component/projects-component.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,10 +17,13 @@ import { HeaderComponent } from './header/header.component';
     TimelineComponentComponent,
     AboutComponentComponent,
     HeaderComponent,
+    SkillsComponentComponent,
+    ProjectsComponentComponent,
   ],
   imports: [
     BrowserModule,
     VerticalTimelineModule,
+    NgbModule,
     BrowserAnimationsModule
   ],
   providers: [],

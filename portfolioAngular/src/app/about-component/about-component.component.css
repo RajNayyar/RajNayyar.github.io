@@ -5,11 +5,19 @@
 .about-title{
     font-weight: lighter;
     letter-spacing: 2ch;
-    font-size: 40px;
   }
 
 .about-image{
     border-radius: 50%;
     width: 200px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.desc{
+    font-family: sans-serif;
+    font-size: 50px;
+}
+.desc-container{
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
 }
