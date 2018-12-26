@@ -6,3 +6,9 @@
     font-weight: lighter;
     letter-spacing: 2ch;
   }
+  ngb-carousel{
+      widht: 100%;
+  }
+  .image{
+      width: 100%;
+  }
