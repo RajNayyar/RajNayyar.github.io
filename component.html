@@ -1,0 +1,175 @@
+<section id="qualities-products">
+
+  <!-- QUALITIES (HORIZONTAL LIST) -->
+  <div class="qualities box">
+    <h2>Why Choose SantZorb?</h2>
+
+    <div class="qualities-row">
+
+      <div class="quality-item">
+        <div class="icon-wrap"><img src="icon1.png" /></div>
+        <span>Absorption</span>
+      </div>
+
+      <div class="quality-item">
+        <div class="icon-wrap"><img src="icon2.png" /></div>
+        <span>Breathable</span>
+      </div>
+
+      <div class="quality-item">
+        <div class="icon-wrap"><img src="icon3.png" /></div>
+        <span>Leak-Proof</span>
+      </div>
+
+      <div class="quality-item">
+        <div class="icon-wrap"><img src="icon4.png" /></div>
+        <span>Soft</span>
+      </div>
+
+      <div class="quality-item">
+        <div class="icon-wrap"><img src="icon5.png" /></div>
+        <span>Discreet</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PRODUCTS (LARGE IMAGES HORIZONTAL) -->
+  <div class="products box">
+    <h2>Our Product Range</h2>
+
+    <div class="product-row">
+
+      <div class="product-item">
+        <div class="product-image"><img src="product1.png" /></div>
+        <h4>Classic Fit</h4>
+      </div>
+
+      <div class="product-item">
+        <div class="product-image"><img src="product2.png" /></div>
+        <h4>Overnight Shield</h4>
+      </div>
+
+      <div class="product-item">
+        <div class="product-image"><img src="product3.png" /></div>
+        <h4>Ultra Thin</h4>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+
+<style>
+/* SECTION */
+#qualities-products {
+  padding: 60px 8%;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* BOX STYLE */
+.box {
+  background: #fff;
+  padding: 40px;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+.box h2 {
+  color: #17365d;
+  margin-bottom: 35px;
+}
+
+/* HORIZONTAL QUALITIES LIST */
+.qualities-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.quality-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #17365d;
+}
+
+.icon-wrap {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.18));
+}
+
+/* LARGE PRODUCT IMAGES (HORIZONTAL) */
+.product-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-image {
+  width: 250px;      /* LARGE SIZE */
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 22px rgba(0,0,0,0.22));
+}
+
+.product-item h4 {
+  margin-top: 14px;
+  color: #17365d;
+  font-size: 1.05rem;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+  .qualities-row {
+    gap: 30px;
+  }
+
+  .product-row {
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .product-image {
+    width: 220px;
+    height: 220px;
+  }
+}
+</style>

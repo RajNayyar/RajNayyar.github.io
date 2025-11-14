@@ -1,0 +1,148 @@
+{
+  "site": {
+    "title": "AEIOU Healthcare — Landing Page",
+    "brandName": "AEIOU Healthcare",
+    "logo": "aeiou.png"
+  },
+  "nav": [
+    { "label": "Home", "href": "#home" },
+    { "label": "About Us", "href": "#about" },
+    { "label": "Product", "href": "#product" },
+    { "label": "Shop By Product", "href": "#all-products" },
+    { "label": "Contact Us", "href": "#contact" }
+  ],
+  "hero": {
+    "eyebrow": "Introducing",
+    "title": "SantZorb Unisex Adult Diapers",
+    "desc": "DISCREET AND EXCEPTIONALLY COMFORTABLE IN USE",
+    "ctaLabel": "Learn More",
+    "ctaHref": "#product",
+    "image": "diaper.png"
+  },
+  "about": {
+    "title": "About AEIOU Healthcare",
+    "subtitle": "Care. Comfort. Confidence.",
+    "logo": "aeiou.png",
+    "paragraphs": [
+      "Founded in 2021, AEIOU Healthcare Pvt. Ltd. is driven by a vision to bring high-quality, reliable healthcare products to the OTC (Over-the-Counter) market. Our leadership team brings together over 30 years of Pharmaceutical expertise, 25 years in IT, and 25 years in Quality Management, creating a strong foundation of experience, innovation, and trust.",
+      "At AEIOU Healthcare, we partner exclusively with reputable, ISO-certified third-party manufacturers to ensure every product meets the highest standards of safety, efficacy, and consistency. All our offerings are marketed under our own registered brand and trademark—reflecting our commitment to authenticity and excellence.",
+      "With a focus on customer well-being and a dedication to building a distinguished presence in the Commercial Trade Channel, we aim to deliver trusted healthcare solutions that make everyday life healthier and simpler."
+    ]
+  },
+  "productSection": {
+    "title": "SantZorb Protection & Range",
+    "subtitle": "Unisex adult diapers designed for comfort, confidence, and day–night protection.",
+    "qualitiesTitle": "Why Choose SantZorb?",
+    "qualities": [
+      { "icon": "absorb.png", "label": "Superior absorption" },
+      { "icon": "breath.png", "label": "Breathable feel" },
+      { "icon": "360.png", "label": "360° leak guard" },
+      { "icon": "skin.png", "label": "Soft on skin" },
+      { "icon": "low-profile.png", "label": "Low-profile fit" }
+    ],
+    "rangesTitle": "Our Core Range",
+    "featuredIds": ["core-18", "core-19", "core-20"]
+  },
+  "catalog": {
+    "title": "Shop by Product",
+    "products": [
+      {
+        "id": "core-18",
+        "name": "SantZorb M (18 pcs)",
+        "subtitle": "Waist 30–40 in • Day/Night",
+        "titleFull": "SantZorb Unisex Adult Diapers — M (18 pcs)",
+        "price": 19.99,
+        "rating": 4.8,
+        "badges": ["LeakGuard", "Odor Lock", "Derm Tested"],
+        "desc": "Everyday comfort with breathable sides and a quick-wick core that helps keep skin dry and fresh.",
+        "image": "product1.png"
+      },{
+        "id": "core-19",
+        "name": "SantZorb M (18 pcs)",
+        "subtitle": "Waist 30–40 in • Day/Night",
+        "titleFull": "SantZorb Unisex Adult Diapers — M (18 pcs)",
+        "price": 19.99,
+        "rating": 4.8,
+        "badges": ["LeakGuard", "Odor Lock", "Derm Tested"],
+        "desc": "Everyday comfort with breathable sides and a quick-wick core that helps keep skin dry and fresh.",
+        "image": "product2.png"
+      },{
+        "id": "core-20",
+        "name": "SantZorb M (18 pcs)",
+        "subtitle": "Waist 30–40 in • Day/Night",
+        "titleFull": "SantZorb Unisex Adult Diapers — M (18 pcs)",
+        "price": 19.99,
+        "rating": 4.8,
+        "badges": ["LeakGuard", "Odor Lock", "Derm Tested"],
+        "desc": "Everyday comfort with breathable sides and a quick-wick core that helps keep skin dry and fresh.",
+        "image": "product3.png"
+      },
+      {
+        "id": "m-18",
+        "name": "SantZorb M (18 pcs)",
+        "subtitle": "Waist 30–40 in • Day/Night",
+        "titleFull": "SantZorb Unisex Adult Diapers — M (18 pcs)",
+        "price": 19.99,
+        "rating": 4.8,
+        "badges": ["LeakGuard", "Odor Lock", "Derm Tested"],
+        "desc": "Everyday comfort with breathable sides and a quick-wick core that helps keep skin dry and fresh.",
+        "image": "diaper.png"
+      },
+      {
+        "id": "l-18",
+        "name": "SantZorb L (18 pcs)",
+        "subtitle": "Waist 38–48 in • Night+",
+        "titleFull": "SantZorb Unisex Adult Diapers — L (18 pcs)",
+        "price": 21.99,
+        "rating": 4.7,
+        "badges": ["UltraDry", "SkinSafe", "LeakShield"],
+        "desc": "Secure, gentle fit for longer wear. Channels direct moisture away to reduce irritation risk.",
+        "image": "diaper.png"
+      },
+      {
+        "id": "xl-16",
+        "name": "SantZorb XL (16 pcs)",
+        "subtitle": "Waist 46–58 in • Night+",
+        "titleFull": "SantZorb Unisex Adult Diapers — XL (16 pcs)",
+        "price": 22.99,
+        "rating": 4.8,
+        "badges": ["MaxAbsorb", "Anti-Leak", "SoftTouch"],
+        "desc": "For extended protection without bulk. Soft inner layer supports airflow for a cooler feel.",
+        "image": "diaper.png"
+      },
+      {
+        "id": "pants-m-10",
+        "name": "Pants M (10 pcs)",
+        "subtitle": "Waist 30–40 in • Active",
+        "titleFull": "SantZorb Pants — M (10 pcs)",
+        "price": 17.99,
+        "rating": 4.6,
+        "badges": ["FlexFit", "DryCore", "Odor Safe"],
+        "desc": "Discreet, flexible fit for active days. Stretch waist adapts to movement and posture.",
+        "image": "diaper.png"
+      },
+      {
+        "id": "pants-l-10",
+        "name": "Pants L (10 pcs)",
+        "subtitle": "Waist 38–48 in • Active",
+        "titleFull": "SantZorb Pants — L (10 pcs)",
+        "price": 18.99,
+        "rating": 4.7,
+        "badges": ["BreathEasy", "QuickWick", "SoftTouch"],
+        "desc": "Lightweight feel with reliable absorbency. Designed to minimize bunching or roll-down.",
+        "image": "diaper.png"
+      },
+      {
+        "id": "pads-10",
+        "name": "Underpads (10 pcs)",
+        "subtitle": "90×60 cm • Multi-use",
+        "titleFull": "SantZorb Underpads — (10 pcs)",
+        "price": 12.99,
+        "rating": 4.5,
+        "badges": ["StayDry", "No-Slip", "SoftQuilt"],
+        "desc": "Extra layer of assurance anywhere you need it. Locks moisture fast and reduces odors.",
+        "image": "diaper.png"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1066 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AEIOU Healthcare — Landing Page</title>
+  <style>
+    :root{
+      --brand:#1E4A85;
+      --brand-ink:#0F2F50;
+      --ink:#17365D;
+      --muted:#5C6F82;
+      --line:#d7dde5;
+      --bg-home:#D6EAF8;
+      --bg:#fff;
+      --header-h:64px;
+      --radius:10px;
+      --shadow:0 10px 15px rgba(0,0,0,.1);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:#222;
+      background:var(--bg);
+      line-height:1.5;
+      scroll-behavior:smooth;
+    }
+    :focus-visible{outline:3px solid #7db7ff;outline-offset:2px}
+    .skip-link{position:absolute;left:-9999px;top:-9999px}
+    .skip-link:focus{
+      left:16px;top:16px;
+      background:#000;color:#fff;
+      padding:8px 12px;
+      border-radius:6px;
+    }
+
+    /* HEADER */
+    header{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:var(--header-h);
+      display:flex;
+      align-items:center;
+      gap:24px;
+      padding:10px 20px;
+      background:#fff;
+      border-bottom:1px solid #ccc;
+      z-index:1000;
+    }
+    .logo{display:flex;align-items:center;gap:8px}
+    .logo img{height:35px;width:auto;display:block}
+    nav.primary{display:flex;gap:28px;margin-left:4px}
+    nav.primary a{
+      text-decoration:none;
+      color:#222;
+      font-weight:600;
+      font-size:16px;
+    }
+    nav.primary a:hover{color:#0074d9}
+
+    .menu-btn{
+      display:none;
+      position:relative;
+      width:40px;height:32px;
+      border:0;background:transparent;
+      cursor:pointer;
+    }
+    .menu-btn span{
+      position:absolute;
+      left:8px;right:8px;
+      height:3px;
+      background:#000;
+      border-radius:2px;
+      transition:transform .25s ease,opacity .25s ease;
+    }
+    .menu-btn span:nth-child(1){top:8px}
+    .menu-btn span:nth-child(2){top:14.5px}
+    .menu-btn span:nth-child(3){top:21px}
+    .menu-btn[aria-expanded="true"] span:nth-child(1){
+      transform:translateY(6.5px) rotate(45deg);
+    }
+    .menu-btn[aria-expanded="true"] span:nth-child(2){
+      opacity:0;
+    }
+    .menu-btn[aria-expanded="true"] span:nth-child(3){
+      transform:translateY(-6.5px) rotate(-45deg);
+    }
+
+    .drawer{
+      position:fixed;
+      top:0;left:-260px;
+      width:250px;height:100%;
+      background:#fff;
+      box-shadow:2px 0 12px rgba(0,0,0,.15);
+      display:flex;
+      flex-direction:column;
+      padding-top:var(--header-h);
+      transition:left .3s ease;
+      z-index:999;
+      border-right:1px solid var(--line);
+    }
+    .drawer a{
+      padding:14px 18px;
+      border-bottom:1px solid #eee;
+      color:#222;
+      text-decoration:none;
+    }
+    .drawer a:hover{background:#f5f5f5}
+    .drawer.show{left:0}
+
+    main{padding-top:calc(var(--header-h) + 12px)}
+
+    /* GENERIC SECTION */
+    section{
+      min-height:92vh;
+      display:grid;
+      place-items:center;
+      padding:40px 20px;
+    }
+
+    /* HERO */
+    #home{background:var(--bg-home)}
+    .home{
+      width:min(1200px,100%);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      align-items:center;
+      gap:32px;
+    }
+    .home__text{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .home__eyebrow{
+      font-size:.95rem;
+      color:var(--muted);
+      font-weight:700;
+      letter-spacing:.08em;
+      margin:0 0 6px;
+    }
+    .home__title{
+      font-size:clamp(1.8rem,3.4vw + .5rem,2.75rem);
+      color:var(--ink);
+      font-weight:800;
+      line-height:1.2;
+      margin:8px 0 6px;
+    }
+    .home__desc{
+      font-size:1rem;
+      color:var(--muted);
+      font-weight:700;
+      letter-spacing:.08em;
+      margin:6px 0 18px;
+    }
+    .btn{
+      background:var(--brand);
+      color:#fff;
+      padding:12px 26px;
+      border-radius:var(--radius);
+      text-decoration:none;
+      font-weight:700;
+      display:inline-block;
+      border:0;
+      cursor:pointer;
+      transition:background .25s ease,transform .08s ease;
+    }
+    .btn:hover{background:var(--brand-ink)}
+    .btn:active{transform:translateY(1px)}
+    .home__media{text-align:right}
+    .home__media img{
+      max-width:100%;
+      height:auto;
+      filter:drop-shadow(var(--shadow));
+    }
+
+    .animate{
+      opacity:0;
+      transform:translateY(26px);
+      transition:opacity .6s ease-out,transform .6s ease-out;
+    }
+    .animate.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* ABOUT */
+    .about-section{
+      background:#f7faff;
+      padding:80px 20px;
+      min-height:auto;
+      display:block;
+    }
+    .about-inner{
+      max-width:1000px;
+      margin:0 auto;
+      text-align:center;
+    }
+    .about-hero{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      margin-bottom:40px;
+    }
+    .about-logo{
+      height:120px;
+      width:auto;
+      margin-bottom:20px;
+      filter:drop-shadow(0 6px 14px rgba(0,0,0,0.1));
+    }
+    .about-title{
+      font-size:30px;
+      color:var(--ink);
+      margin-bottom:8px;
+      font-weight:800;
+    }
+    .about-sub{
+      color:var(--muted);
+      font-weight:600;
+      margin-bottom:32px;
+    }
+    .about-content{
+      text-align:left;
+      font-size:16px;
+      color:#2b2b2b;
+      line-height:1.7;
+    }
+    .about-content p{margin-bottom:20px}
+
+    /* PRODUCT SECTION – SANTZORB COMPONENT */
+    .product-section{
+      background:#f7faff;
+      padding:80px 20px;
+      min-height:auto;
+      display:block;
+    }
+    .product-inner{
+      max-width:1100px;
+      margin:0 auto;
+      text-align:center;
+    }
+    .product-title{
+      font-size:30px;
+      color:var(--ink);
+      margin-bottom:8px;
+      font-weight:800;
+    }
+    .product-sub{
+      color:var(--muted);
+      font-size:16px;
+      margin-bottom:32px;
+      font-weight:600;
+    }
+    .product-layout{
+      display:flex;
+      flex-direction:column;
+      gap:40px;
+      margin-top:10px;
+      min-width: 300px;
+      max-width: 1024px;
+    }
+
+    .box{
+      background:#fff;
+      padding:32px 28px;
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.06);
+      text-align:center;
+      margin:0 auto;
+      width: 100%;
+    }
+    .product-box-title{
+      margin:0 0 24px;
+      color:var(--ink);
+      font-size:22px;
+    }
+
+    /* Horizontal qualities row */
+    .qualities-row{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:40px;
+      flex-wrap:wrap;
+    }
+    .quality-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      font-size:.95rem;
+      color:var(--ink);
+    }
+    .icon-wrap{
+      width:60px;height:60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .icon-wrap img{
+      width:100%;height:100%;
+      object-fit:contain;
+      filter:drop-shadow(0 5px 10px rgba(0,0,0,0.18));
+    }
+
+    /* Product range row */
+    .product-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:40px;
+      flex-wrap:wrap;
+      margin: 0 auto
+    }
+    .product-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      margin:0 auto;
+    }
+    .product-image{
+      width:250px;height:250px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .product-image img{
+      width:100%;height:100%;
+      object-fit:contain;
+      filter:drop-shadow(0 12px 22px rgba(0,0,0,0.22));
+    }
+    .product-item h4{
+      margin-top:14px;margin-bottom:4px;
+      color:var(--ink);
+      font-size:1.05rem;
+    }
+    .product-size{
+      margin:0;
+      font-size:.85rem;
+      color:var(--muted);
+    }
+
+    /* CATALOG */
+    .cat{
+      --gap:18px;
+      --cards:3;
+      --navy:#17365D;
+      --accent:#1E4A85;
+      padding:56px 20px;
+      background:#fff;
+      position:relative;
+    }
+    .cat-inner{
+      max-width:1200px;
+      margin:0 auto;
+      position:relative;
+    }
+    .cat-title{
+      margin:0 0 16px;
+      color:var(--navy);
+      font-size:24px;
+      text-align:left;
+    }
+    .cat-viewport{
+      overflow:hidden;
+      max-width:100%;
+      margin:0 auto;
+    }
+    .cat-track{
+      display:flex;
+      gap:var(--gap);
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      padding:10px 4px 14px;
+      scroll-behavior:smooth;
+      align-items:stretch;
+    }
+    .cat-track::-webkit-scrollbar{height:8px}
+    .cat-track::-webkit-scrollbar-thumb{
+      background:#d7dbe2;
+      border-radius:999px;
+    }
+    .cat-card{
+      /* Prevent cards from exploding wider on smaller screens */
+      flex:0 0 clamp(260px,
+                     calc((100% - (var(--gap) * (var(--cards) - 1))) / var(--cards)),
+                     360px);
+      max-width:100%;
+      scroll-snap-align:start;
+      background:#fff;
+      border:1px solid #e7ebf0;
+      border-radius:16px;
+      box-shadow:0 8px 22px rgba(23,54,93,.08);
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      transition:transform .18s ease,box-shadow .18s ease;
+      min-height:480px;
+    }
+    .cat-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 28px rgba(23,54,93,.12);
+    }
+    .cat-media{padding:18px 18px 0}
+    .cat-card img{
+      width:100%;height:260px;
+      object-fit:contain;
+      display:block;
+    }
+    .cat-meta{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:14px 18px 18px;
+    }
+    .cat-name{margin:0;font-size:18px;color:var(--ink)}
+    .cat-sub{color:#5c6f82;font-size:13px}
+    .cat-badges{display:flex;flex-wrap:wrap;gap:6px}
+    .cat-badges span{
+      font-size:12px;
+      color:#17365D;
+      background:#EAF4FB;
+      border:1px solid #e1e6ee;
+      border-radius:999px;
+      padding:4px 8px;
+    }
+    .cat-rating{color:#F5A524;font-weight:700}
+    .cat-rating small{
+      color:#2b2b2b;
+      margin-left:6px;
+      font-weight:600;
+    }
+    .cat-desc{
+      color:#2b2b2b;
+      line-height:1.45;
+    }
+    .cat-bottom{
+      margin-top:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .cat-price{
+      font-weight:800;
+      color:#17365D;
+      font-size:18px;
+    }
+    .cat-cta{
+      background:var(--accent);
+      color:#fff;
+      border:0;
+      padding:10px 14px;
+      border-radius:8px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .cat-cta:hover{background:#0F2F50}
+    .cat-arrow{
+      position:absolute;
+      top:58%;
+      transform:translateY(-50%);
+      width:42px;height:42px;
+      border-radius:50%;
+      border:1px solid #e1e6ee;
+      background:#fff;
+      color:#2b2b2b;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      font-size:22px;
+      line-height:1;
+      box-shadow:0 6px 16px rgba(0,0,0,.06);
+    }
+    .cat-prev{left:-10px}
+    .cat-next{right:-10px}
+    .cat-arrow:hover{background:#f6f8fb}
+
+    .cat-modal{position:fixed;inset:0;display:none;z-index:2000}
+    .cat-modal.show{display:block}
+    .cat-backdrop{
+      position:absolute;inset:0;
+      background:rgba(0,0,0,.45);
+    }
+    .cat-dialog{
+      position:absolute;
+      left:50%;top:50%;
+      transform:translate(-50%,-50%);
+      width:min(780px,92vw);
+      background:#fff;
+      border-radius:16px;
+      border:1px solid #eaeef3;
+      box-shadow:0 30px 80px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .cat-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:16px 20px;
+      border-bottom:1px solid #eef1f5;
+    }
+    .cat-modal-title{margin:0;color:var(--ink);font-size:22px}
+    .cat-modal-sub{margin:2px 0 0;color:#5c6f82;font-size:14px}
+    .cat-close{
+      background:transparent;
+      border:0;
+      font-size:26px;
+      cursor:pointer;
+      color:#2b2b2b;
+    }
+    .cat-body{
+      padding:18px 20px 22px;
+      display:grid;
+      grid-template-columns:1.05fr 1.3fr;
+      gap:20px;
+    }
+    .cat-body-media img{
+      width:100%;height:300px;
+      object-fit:contain;
+      border:1px solid #eef1f5;
+      border-radius:12px;
+    }
+    .cat-details p{margin:0 0 10px;color:#2b2b2b}
+    .cat-modal-price{
+      font-weight:800;
+      color:#17365D;
+      margin:6px 0 10px;
+    }
+    .cat-bullets{margin:10px 0 0 18px;color:#425466}
+    .cat-bullets li{margin:6px 0}
+    .cat-btn{
+      display:inline-block;
+      margin-top:16px;
+      padding:12px 20px;
+      background:var(--accent);
+      color:#fff;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:700;
+    }
+    .cat-btn:hover{background:#0F2F50}
+
+    /* CONTACT */
+    .contact-section{
+      background:#f7faff;
+      padding:80px 20px;
+      min-height:auto;
+      display:block;
+    }
+    .contact-inner{
+      max-width:1200px;
+      margin:0 auto;
+    }
+    .contact-title{
+      font-size:30px;
+      color:var(--ink);
+      text-align:center;
+      margin-bottom:10px;
+    }
+    .contact-sub{
+      color:var(--muted);
+      text-align:center;
+      margin-bottom:50px;
+      font-size:16px;
+    }
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:60px;
+      align-items:flex-start;
+    }
+    .contact-info{
+      font-size:16px;
+      color:#2b2b2b;
+      line-height:1.8;
+    }
+    .contact-info h3{
+      color:var(--brand);
+      margin-bottom:18px;
+    }
+    .contact-info a{
+      color:var(--brand);
+      text-decoration:none;
+    }
+    .contact-info a:hover{text-decoration:underline}
+    .contact-form{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+    .form-group{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .contact-form label{
+      font-weight:700;
+      color:var(--ink);
+    }
+    .contact-form input,
+    .contact-form textarea{
+      border-radius:var(--radius);
+      border:1px solid #d7dde5;
+      padding:12px 14px;
+      font-family:inherit;
+      font-size:15px;
+      width:100%;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus{
+      outline:2px solid var(--brand);
+    }
+    .contact-form textarea{
+      min-height:140px;
+      resize:vertical;
+    }
+    .contact-form .btn{
+      align-self:flex-start;
+      padding:12px 28px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:1100px){
+      .cat{--cards:2}
+    }
+    @media (max-width:920px){
+      nav.primary{display:none}
+      .menu-btn{display:inline-block;margin-right:auto}
+      .home{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+      .home__text{align-items:center}
+      .home__media{text-align:center}
+    }
+    @media (max-width:768px){
+      .contact-grid{
+        grid-template-columns:1fr;
+        gap:40px;
+      }
+      .contact-form .btn{
+        width:100%;
+        text-align:center;
+      }
+      .product-row{
+        flex-direction:column;
+        gap:30px;
+      }
+      .product-image{
+        width:220px;height:220px;
+      }
+      .qualities-row{gap:28px}
+
+      .cat{--cards:1}
+      .cat-track{
+        justify-content:center;
+      }
+      .cat-card{
+        min-height:520px;
+      }
+      .cat-card img{height:240px}
+      .cat-body{grid-template-columns:1fr}
+      .cat-body-media img{height:240px}
+      .cat-prev{left:6px}
+      .cat-next{right:6px}
+    }
+    @media (max-width:520px){
+      .logo img{height:28px}
+      :root{--header-h:58px}
+      .cat-title{text-align:center}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .animate,.menu-btn span{transition:none!important}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <button class="menu-btn" id="menuBtn" aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="logo" aria-label="AEIOU Healthcare">
+      <img id="brandLogo" src="aeiou.png" alt="AEIOU Healthcare logo" />
+    </div>
+    <nav class="primary" id="primaryNav" aria-label="Primary"></nav>
+  </header>
+
+  <nav class="drawer" id="mobileNav" aria-label="Mobile" aria-hidden="true"></nav>
+
+  <main id="main">
+    <!-- HERO -->
+    <section id="home">
+      <div class="home animate">
+        <div class="home__text">
+          <p class="home__eyebrow" id="heroEyebrow"></p>
+          <h1 class="home__title" id="heroTitle"></h1>
+          <p class="home__desc" id="heroDesc"></p>
+          <a class="btn" id="heroCta"></a>
+        </div>
+        <div class="home__media"><img id="heroImg" alt=""></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about-section animate">
+      <div class="about-inner">
+        <div class="about-hero">
+          <img id="aboutLogo" alt="AEIOU Healthcare Logo" class="about-logo" />
+          <h2 id="aboutTitle" class="about-title"></h2>
+          <p id="aboutSub" class="about-sub"></p>
+        </div>
+        <div id="aboutContent" class="about-content"></div>
+      </div>
+    </section>
+
+    <!-- PRODUCT (SANTZORB COMPONENT) -->
+    <section id="product" class="product-section animate">
+      <div class="product-inner">
+        <h2 id="productTitle" class="product-title"></h2>
+        <p id="productSub" class="product-sub"></p>
+
+        <div class="product-layout">
+          <!-- Qualities -->
+          <div class="box">
+            <h3 id="productQualitiesTitle" class="product-box-title"></h3>
+            <div id="productQualities" class="qualities-row"></div>
+          </div>
+
+          <!-- Range -->
+          <div class="box">
+            <h3 id="productRangeTitle" class="product-box-title"></h3>
+            <div id="productShowcase" class="product-row"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATALOG -->
+    <section id="all-products">
+      <section id="catalog" class="cat animate">
+        <div class="cat-inner">
+          <h2 class="cat-title" id="catTitle"></h2>
+          <button class="cat-arrow cat-prev" aria-label="Previous products"><span>‹</span></button>
+          <button class="cat-arrow cat-next" aria-label="Next products"><span>›</span></button>
+          <div class="cat-viewport">
+            <div class="cat-track" id="catTrack"></div>
+          </div>
+        </div>
+        <div class="cat-modal" id="catModal" aria-hidden="true">
+          <div class="cat-backdrop" data-close></div>
+          <div class="cat-dialog" role="dialog" aria-modal="true" aria-labelledby="catTitleModal">
+            <header class="cat-header">
+              <div>
+                <h3 id="catTitleModal" class="cat-modal-title"></h3>
+                <p id="catSubtitle" class="cat-modal-sub">Product information</p>
+              </div>
+              <button class="cat-close" aria-label="Close" data-close>×</button>
+            </header>
+            <div class="cat-body">
+              <div class="cat-body-media"><img id="catImg" alt=""></div>
+              <div class="cat-details">
+                <p id="catDesc"></p>
+                <div id="catPrice" class="cat-modal-price"></div>
+                <ul class="cat-bullets">
+                  <li>Discreet fit under clothing</li>
+                  <li>Quick-wick absorbent core</li>
+                  <li>Breathable & skin-friendly</li>
+                </ul>
+                <div class="cat-actions"><a href="#contact" class="cat-btn">Contact / Buy</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section animate">
+      <div class="contact-inner">
+        <h2 class="contact-title">Contact Us</h2>
+        <p class="contact-sub">We’re here to help — reach out anytime and we’ll get back to you shortly.</p>
+
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h3>Get in Touch</h3>
+            <p><strong>Phone:</strong> <a href="tel:+11234567890">+1 (123) 456-7890</a></p>
+            <p><strong>Email:</strong> <a href="mailto:info@aeiouhealth.com">info@aeiouhealth.com</a></p>
+            <p><strong>Address:</strong><br>
+              AEIOU Healthcare<br>
+              123 Wellness Avenue,<br>
+              Plano, TX 75024
+            </p>
+          </div>
+
+          <form class="contact-form" id="contactForm" onsubmit="return handleSubmit(event)">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="Your full name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+1 555-123-4567" pattern="\\+?[0-9\\-\\s]+" required />
+            </div>
+
+            <div class="form-group">
+              <label for="message">Leave us a message</label>
+              <textarea id="message" name="message" placeholder="Type your message here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn">Submit</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function handleSubmit(e){
+      e.preventDefault();
+      alert('Thank you! We will get back to you shortly.');
+      return false;
+    }
+
+    const $  = (sel, ctx=document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+    const money = (n) => new Intl.NumberFormat(undefined,{style:'currency',currency:'USD'}).format(n);
+    const stars = (r) => '★★★★★☆☆☆☆☆'.slice(5 - Math.round(r), 10 - Math.round(r));
+
+    async function loadData(){
+      const res = await fetch('data.json', { cache: 'no-store' });
+      if(!res.ok) throw new Error('Failed to load data.json');
+      return res.json();
+    }
+
+    function renderNav(items){
+      const primary = $('#primaryNav');
+      const mobile  = $('#mobileNav');
+      primary.innerHTML = items.map(i=>`<a href="${i.href}">${i.label}</a>`).join('');
+      mobile.innerHTML  = items.map(i=>`<a href="${i.href}">${i.label}</a>`).join('');
+    }
+
+    function renderHero(hero){
+      $('#heroEyebrow').textContent = hero.eyebrow || '';
+      $('#heroTitle').textContent   = hero.title || '';
+      $('#heroDesc').textContent    = hero.desc || '';
+      const cta = $('#heroCta');
+      cta.textContent = hero.ctaLabel || '';
+      cta.href        = hero.ctaHref || '#product';
+      const img = $('#heroImg');
+      img.src = hero.image || '';
+      img.alt = hero.title || 'Hero image';
+    }
+
+    function renderAbout(about){
+      if(!about) return;
+      $('#aboutLogo').src          = about.logo || '';
+      $('#aboutTitle').textContent = about.title || '';
+      $('#aboutSub').textContent   = about.subtitle || '';
+      $('#aboutContent').innerHTML = (about.paragraphs || []).map(p=>`<p>${p}</p>`).join('');
+    }
+
+    function renderProductSection(productSection, catalogProducts){
+      if(!productSection) return;
+      const products = catalogProducts || [];
+
+      $('#productTitle').textContent        = productSection.title || '';
+      $('#productSub').textContent          = productSection.subtitle || '';
+      $('#productQualitiesTitle').textContent = productSection.qualitiesTitle || 'Why Choose SantZorb?';
+      $('#productRangeTitle').textContent     = productSection.rangesTitle || 'Our Core Range';
+
+      // Qualities
+      const qWrap = $('#productQualities');
+      qWrap.innerHTML = '';
+      (productSection.qualities || []).forEach(q=>{
+        const div = document.createElement('div');
+        div.className = 'quality-item';
+        div.innerHTML = `
+          <div class="icon-wrap">
+            <img src="${q.icon}" alt="${q.label} icon">
+          </div>
+          <span>${q.label}</span>
+        `;
+        qWrap.appendChild(div);
+      });
+
+      // Range
+      const showcase = $('#productShowcase');
+      showcase.innerHTML = '';
+      const featuredIds = productSection.featuredIds || [];
+      const featuredProducts = featuredIds
+        .map(id => products.find(p => p.id === id))
+        .filter(Boolean);
+
+      featuredProducts.forEach(p=>{
+        const item = document.createElement('div');
+        item.className = 'product-item';
+        item.innerHTML = `
+          <div class="product-image">
+            <img src="${p.image}" alt="${p.titleFull || p.name}">
+          </div>
+          <h4>${p.name}</h4>
+          <p class="product-size">${p.subtitle || ''}</p>
+        `;
+        showcase.appendChild(item);
+      });
+    }
+
+    function createCard(p){
+      const el = document.createElement('article');
+      el.className = 'cat-card';
+      el.dataset.title = p.titleFull;
+      el.dataset.price = money(p.price);
+      el.dataset.desc  = p.desc;
+      el.dataset.img   = p.image;
+      el.innerHTML = `
+        <div class="cat-media"><img src="${p.image}" alt="${p.name}"></div>
+        <div class="cat-meta">
+          <h3 class="cat-name">${p.name}</h3>
+          <div class="cat-sub">${p.subtitle}</div>
+          <div class="cat-badges">${p.badges.map(b=>`<span>${b}</span>`).join('')}</div>
+          <div class="cat-rating" aria-label="Rated ${p.rating} out of 5">
+            ${stars(p.rating)} <small>${p.rating.toFixed(1)}</small>
+          </div>
+          <p class="cat-desc">${p.desc}</p>
+          <div class="cat-bottom">
+            <div class="cat-price">${money(p.price)}</div>
+            <button class="cat-cta" type="button">Details</button>
+          </div>
+        </div>`;
+      return el;
+    }
+
+    function wireCarousel(scope){
+      const track = $('#catTrack', scope);
+      const gapPx = parseFloat(getComputedStyle(track).gap)||18;
+      const prev  = $('.cat-prev', scope);
+      const next  = $('.cat-next', scope);
+      const cardWidth = ()=>{
+        const f = track.querySelector('.cat-card');
+        return f ? f.getBoundingClientRect().width + gapPx : 0;
+      };
+      const scrollByCards = (n)=> track.scrollBy({ left:n * cardWidth(), behavior:'smooth' });
+      prev.addEventListener('click', ()=>scrollByCards(-1));
+      next.addEventListener('click', ()=>scrollByCards(1));
+    }
+
+    function wireModal(scope){
+      const modal  = $('#catModal', scope);
+      const mTitle = $('#catTitleModal', scope);
+      const mImg   = $('#catImg', scope);
+      const mDesc  = $('#catDesc', scope);
+      const mPrice = $('#catPrice', scope);
+
+      const open = ({title,img,desc,price})=>{
+        mTitle.textContent = title || '';
+        mImg.src           = img || '';
+        mImg.alt           = title || '';
+        mDesc.textContent  = desc || '';
+        mPrice.textContent = price || '';
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+      };
+
+      const close = ()=>{
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+      };
+
+      $('#catTrack', scope).addEventListener('click', e=>{
+        const card = e.target.closest('.cat-card');
+        if(!card) return;
+        open({
+          title: card.dataset.title,
+          img:   card.dataset.img,
+          desc:  card.dataset.desc,
+          price: card.dataset.price
+        });
+      });
+
+      modal.addEventListener('click', e=>{
+        if(e.target.matches('[data-close], .cat-backdrop')) close();
+      });
+
+      window.addEventListener('keydown', e=>{
+        if(e.key === 'Escape' && modal.classList.contains('show')) close();
+      });
+    }
+
+    function revealOnScroll(){
+      const animated = $$('.animate');
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('show');
+            io.unobserve(entry.target);
+          }
+        });
+      },{threshold:0.2});
+      animated.forEach(el=>io.observe(el));
+    }
+
+    (async function init(){
+      try{
+        const data = await loadData();
+
+        // Brand & nav
+        document.title = data.site?.title || document.title;
+        const logo = $('#brandLogo');
+        if(data.site?.logo) logo.src = data.site.logo;
+        logo.alt = data.site?.brandName || 'Brand logo';
+
+        renderNav(data.nav || []);
+        renderHero(data.hero || {});
+        renderAbout(data.about || null);
+
+        // Product section
+        renderProductSection(data.productSection || null, data.catalog?.products || []);
+
+        // Catalog
+        $('#catTitle').textContent = data.catalog?.title || 'Catalog';
+        const track = $('#catTrack');
+        (data.catalog?.products || []).forEach(p=> track.appendChild(createCard(p)));
+        wireCarousel($('#catalog'));
+        wireModal($('#catalog'));
+
+        // Drawer
+        const menuBtn   = $('#menuBtn');
+        const mobileNav = $('#mobileNav');
+        function setDrawer(open){
+          mobileNav.classList.toggle('show', open);
+          mobileNav.setAttribute('aria-hidden', String(!open));
+          menuBtn.setAttribute('aria-expanded', String(open));
+          if(open) mobileNav.querySelector('a')?.focus();
+        }
+        menuBtn.addEventListener('click', ()=> setDrawer(!mobileNav.classList.contains('show')));
+        mobileNav.addEventListener('click', e=>{
+          if(e.target.tagName === 'A') setDrawer(false);
+        });
+        window.addEventListener('keydown', e=>{
+          if(e.key === 'Escape') setDrawer(false);
+        });
+
+        // Animations
+        revealOnScroll();
+      } catch(err){
+        console.error(err);
+      }
+    })();
+  </script>
+</body>
+</html>
