@@ -165,41 +165,38 @@ function buildTimeline(items){
     const teamText = [it.team].filter(Boolean).map(safeText).join("");
     if(teamText) detail.appendChild(el("p", "tTeam", teamText));
 
-    const detailsWrap = el("div", "tDetails");
-    if(it.description) detailsWrap.appendChild(el("p", "tDesc", safeText(it.description)));
+    const descText = safeText(it.description || "");
+    const descExcerpt = truncateWords(descText, wordLimit);
+
+    if(descExcerpt){
+      const excerpt = el("p", "tExcerpt", descExcerpt);
+      const fullDesc = el("p", "tDesc", descText);
+      fullDesc.hidden = true;
+
+      const toggle = el("button", "tMoreBtn", "Show more");
+      toggle.type = "button";
+      toggle.setAttribute("aria-expanded", "false");
+
+      toggle.addEventListener("click", () => {
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!expanded));
+        fullDesc.hidden = expanded;
+        excerpt.hidden = !expanded;
+        toggle.textContent = expanded ? "Show more" : "Show less";
+      });
+
+      detail.appendChild(excerpt);
+      detail.appendChild(fullDesc);
+      detail.appendChild(toggle);
+    }else if(descText){
+      detail.appendChild(el("p", "tDesc", descText));
+    }
 
     const achievements = it.achievements || [];
     if(achievements.length){
       const ul = el("ul", "tBullets");
       achievements.forEach(a => ul.appendChild(el("li", "", safeText(a))));
-      detailsWrap.appendChild(ul);
-    }
-
-    if(detailsWrap.childNodes.length){
-      const fullText = (detailsWrap.textContent || "").trim();
-      const excerptText = truncateWords(fullText, wordLimit);
-
-      if(excerptText){
-        const excerpt = el("p", "tExcerpt", excerptText);
-        const toggle = el("button", "tMoreBtn", "Show more");
-        toggle.type = "button";
-        toggle.setAttribute("aria-expanded", "false");
-        detailsWrap.hidden = true;
-
-        toggle.addEventListener("click", () => {
-          const expanded = toggle.getAttribute("aria-expanded") === "true";
-          toggle.setAttribute("aria-expanded", String(!expanded));
-          detailsWrap.hidden = expanded;
-          excerpt.hidden = !expanded;
-          toggle.textContent = expanded ? "Show more" : "Show less";
-        });
-
-        detail.appendChild(excerpt);
-        detail.appendChild(detailsWrap);
-        detail.appendChild(toggle);
-      }else{
-        detail.appendChild(detailsWrap);
-      }
+      detail.appendChild(ul);
     }
 
     metaCol.appendChild(meta);
