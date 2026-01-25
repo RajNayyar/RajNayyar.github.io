@@ -37,7 +37,7 @@
         "location": "Plano, TX • USA",
         "role": "VP, Lead Software Engineer",
         "company": "JPMorgan Chase & Co.",
-        "companyLogo": "assets/chase.png",
+        "companyLogo": "assets/logo-jpmc.svg",
         "team": "Chase Travel • Cart, Checkout & Loyalty",
         "description": "Leading technical strategy and execution for Checkout and Loyalty platforms within Chase Travel.",
         "achievements": [
@@ -52,7 +52,7 @@
         "location": "Plano, TX • USA",
         "role": "Associate Software Engineer III",
         "company": "JPMorgan Chase & Co.",
-        "companyLogo": "assets/chase.png",
+        "companyLogo": "assets/logo-jpmc.svg",
         "team": "Chase Travel • Cart & Checkout",
         "description": "Subject Matter Expert for Checkout loyalty and promotions. Owned production reliability and delivered major rewards initiatives across a high-availability travel e-commerce platform.",
         "achievements": [
@@ -68,7 +68,7 @@
         "location": "Pune, MH • India",
         "role": "Associate Software Engineer II",
         "company": "JPMorgan Chase & Co.",
-        "companyLogo": "assets/chase.png",
+        "companyLogo": "assets/logo-jpmc.svg",
         "team": "Chase Travel • Cart & Checkout",
         "description": "Code owner for Cart Engine with squad-level delivery leadership across Checkout initiatives, planning/estimation, and observability.",
         "achievements": [
@@ -86,7 +86,7 @@
         "location": "Pune, MH • India",
         "role": "Associate Software Engineer",
         "company": "JPMorgan Chase & Co.",
-        "companyLogo": "assets/chase.png",
+        "companyLogo": "assets/logo-jpmc.svg",
         "team": "Chase Travel • Cart & Payments",
         "description": "Backend and UI contributions across Cart/Checkout services, payments flows, asynchronous processing, and monitoring.",
         "achievements": [
@@ -104,7 +104,7 @@
         "location": "Pune, MH • India",
         "role": "Software Engineer Intern",
         "company": "Tavisca Solutions Pvt Ltd",
-        "companyLogo": "assets/cxloyalty.png",
+        "companyLogo": "assets/logo-company2.svg",
         "team": "ORXe • Data Analytics",
         "description": "Built a data analytics and visualization UI, integrating charts, material UI components, and reporting workflows.",
         "achievements": [
