@@ -72,6 +72,50 @@ function truncateWords(text, limit){
   return words.slice(0, limit).join(" ") + "...";
 }
 
+function buildTimelineExcerpt(descText, achievements, wordLimit){
+  const wrap = el("div", "tDetails tDetails--excerpt");
+  let remaining = wordLimit;
+  let hasMore = false;
+
+  const desc = safeText(descText || "");
+  if(desc){
+    const words = desc.trim().split(/\s+/).filter(Boolean);
+    if(remaining > 0 && words.length > remaining){
+      wrap.appendChild(el("p", "tExcerpt", words.slice(0, remaining).join(" ") + "..."));
+      return { wrap, hasMore: true };
+    }
+    wrap.appendChild(el("p", "tDesc", desc));
+    remaining -= words.length;
+  }
+
+  const items = achievements || [];
+  if(items.length){
+    const ul = el("ul", "tBullets");
+    for(let i=0;i<items.length;i++){
+      const text = safeText(items[i]);
+      const words = text.trim().split(/\s+/).filter(Boolean);
+      if(remaining > 0 && words.length > remaining){
+        if(remaining > 0){
+          ul.appendChild(el("li", "", words.slice(0, remaining).join(" ") + "..."));
+        }
+        hasMore = true;
+        break;
+      }
+      if(remaining > 0){
+        ul.appendChild(el("li", "", text));
+        remaining -= words.length;
+        if(remaining <= 0 && i < items.length - 1){
+          hasMore = true;
+          break;
+        }
+      }
+    }
+    if(ul.childNodes.length) wrap.appendChild(ul);
+  }
+
+  return { wrap, hasMore };
+}
+
 /* Theme toggle (dark/light) with localStorage + prefers-color-scheme */
 function setupTheme(){
   const root = document.documentElement;
@@ -168,8 +212,6 @@ function buildTimeline(items){
 
     const descText = safeText(it.description || "");
     const achievements = it.achievements || [];
-    const combinedText = [descText, ...achievements].filter(Boolean).join(" ");
-    const excerptText = truncateWords(combinedText, wordLimit);
 
     const fullWrap = el("div", "tDetails");
     if(descText) fullWrap.appendChild(el("p", "tDesc", descText));
@@ -179,8 +221,9 @@ function buildTimeline(items){
       fullWrap.appendChild(ul);
     }
 
-    if(excerptText){
-      const excerpt = el("p", "tExcerpt", excerptText);
+    const excerptInfo = wordLimit > 0 ? buildTimelineExcerpt(descText, achievements, wordLimit) : null;
+    if(excerptInfo && excerptInfo.hasMore && excerptInfo.wrap.childNodes.length){
+      const excerptWrap = excerptInfo.wrap;
       fullWrap.hidden = true;
 
       const toggle = el("button", "tMoreBtn", "Show more");
@@ -191,11 +234,11 @@ function buildTimeline(items){
         const expanded = toggle.getAttribute("aria-expanded") === "true";
         toggle.setAttribute("aria-expanded", String(!expanded));
         fullWrap.hidden = expanded;
-        excerpt.hidden = !expanded;
+        excerptWrap.hidden = !expanded;
         toggle.textContent = expanded ? "Show more" : "Show less";
       });
 
-      detail.appendChild(excerpt);
+      detail.appendChild(excerptWrap);
       detail.appendChild(fullWrap);
       detail.appendChild(toggle);
     }else if(fullWrap.childNodes.length){
