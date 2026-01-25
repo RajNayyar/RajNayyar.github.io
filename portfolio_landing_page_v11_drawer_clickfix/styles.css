@@ -447,8 +447,20 @@ html[data-theme="light"] .tLogo{ background: rgba(0,0,0,0.04); border-color: rgb
 .tRole{ margin: 0 0 6px; font-weight: 900; font-size: 18px; letter-spacing: 0.2px; }
 .tTeam{ margin: 0 0 10px; color: var(--muted); }
 .tDesc{ margin: 0 0 10px; color: var(--muted); }
+.tExcerpt{ margin: 0 0 10px; color: var(--muted); }
 .tBullets{ margin: 0; padding-left: 18px; color: var(--muted); }
 .tBullets li{ margin: 4px 0; }
+.tMoreBtn{
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+}
+.tMoreBtn:hover{ background: var(--panel); }
 
 
 /* Work mobile merge: company strip inside detail card */

@@ -65,6 +65,13 @@ function ratingDots(value, max=5){
   return wrap;
 }
 
+function truncateWords(text, limit){
+  if(!limit || limit <= 0) return "";
+  const words = text.trim().split(/\s+/);
+  if(words.length <= limit) return "";
+  return words.slice(0, limit).join(" ") + "...";
+}
+
 /* Theme toggle (dark/light) with localStorage + prefers-color-scheme */
 function setupTheme(){
   const root = document.documentElement;
@@ -96,6 +103,9 @@ function setupTheme(){
 function buildTimeline(items){
   const host = $("#workTimeline");
   host.innerHTML = "";
+
+  const wordLimit = buildTimeline.wordLimit > 0 ? buildTimeline.wordLimit : 0;
+  const previewCount = buildTimeline.previewCount > 0 ? buildTimeline.previewCount : 0;
 
   items.forEach((it, idx) => {
     const row = el("div", "tRow" + (idx % 2 === 1 ? " is-even" : ""));
@@ -156,11 +166,63 @@ function buildTimeline(items){
     const teamText = [it.team].filter(Boolean).map(safeText).join("");
     if(teamText) detail.appendChild(el("p", "tTeam", teamText));
 
-    if(it.description) detail.appendChild(el("p", "tDesc", safeText(it.description)));
+    const descText = safeText(it.description || "");
+    const descExcerpt = truncateWords(descText, wordLimit);
+    const hasDescExcerpt = Boolean(descExcerpt);
+    let fullDesc = null;
+    let excerpt = null;
 
-    const ul = el("ul", "tBullets");
-    (it.achievements || []).forEach(a => ul.appendChild(el("li", "", safeText(a))));
-    detail.appendChild(ul);
+    if(hasDescExcerpt){
+      excerpt = el("p", "tExcerpt", descExcerpt);
+      fullDesc = el("p", "tDesc", descText);
+      fullDesc.hidden = true;
+      detail.appendChild(excerpt);
+      detail.appendChild(fullDesc);
+    }else if(descText){
+      detail.appendChild(el("p", "tDesc", descText));
+    }
+
+    const achievements = it.achievements || [];
+    let moreList = null;
+    let hasHiddenBullets = false;
+
+    if(achievements.length){
+      const previewItems = previewCount ? achievements.slice(0, previewCount) : achievements;
+      const remainingItems = previewCount ? achievements.slice(previewCount) : [];
+
+      const ul = el("ul", "tBullets");
+      previewItems.forEach(a => ul.appendChild(el("li", "", safeText(a))));
+      detail.appendChild(ul);
+
+      if(remainingItems.length){
+        moreList = el("ul", "tBullets tBullets--more");
+        remainingItems.forEach(a => moreList.appendChild(el("li", "", safeText(a))));
+        moreList.hidden = true;
+        detail.appendChild(moreList);
+        hasHiddenBullets = true;
+      }
+    }
+
+    if(hasDescExcerpt || hasHiddenBullets){
+      const toggle = el("button", "tMoreBtn", "Show more");
+      toggle.type = "button";
+      toggle.setAttribute("aria-expanded", "false");
+
+      toggle.addEventListener("click", () => {
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!expanded));
+        if(fullDesc && excerpt){
+          fullDesc.hidden = expanded;
+          excerpt.hidden = !expanded;
+        }
+        if(moreList){
+          moreList.hidden = expanded;
+        }
+        toggle.textContent = expanded ? "Show more" : "Show less";
+      });
+
+      detail.appendChild(toggle);
+    }
 
     metaCol.appendChild(meta);
     detailCol.appendChild(detail);
@@ -424,6 +486,8 @@ function applyContent(c){
   resume.href = safeText(c.about?.resumeUrl || "#");
   resume.setAttribute("download", safeText(c.about?.resumeFileName || "Resume.pdf"));
 
+  buildTimeline.wordLimit = Number(c.work?.excerptWordLimit) || 0;
+  buildTimeline.previewCount = Number(c.work?.achievementPreviewCount) || 0;
   buildQuickLinks(c.quickLinks || []);
   buildTimeline(c.work?.timeline || []);
   buildSkills(c.skills?.groups || []);

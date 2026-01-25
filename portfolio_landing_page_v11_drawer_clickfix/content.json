@@ -29,6 +29,8 @@
     }
   ],
   "work": {
+    "excerptWordLimit": 12,
+    "achievementPreviewCount": 3,
     "timeline": [
       {
         "period": "2022 \u2014 Present",
