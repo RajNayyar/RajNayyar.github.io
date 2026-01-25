@@ -29,7 +29,8 @@
     }
   ],
   "work": {
-    "excerptWordLimit": 40,
+    "excerptWordLimit": 12,
+    "achievementPreviewCount": 3,
     "timeline": [
       {
         "period": "Oct 2023 — Feb 2026",
