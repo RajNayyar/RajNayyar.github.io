@@ -128,19 +128,15 @@
             "rating": 5
           },
           {
+            "name": "Java",
+            "rating": 4
+          },
+          {
             "name": "Python",
             "rating": 3
           },
           {
-            "name": "JavaScript",
-            "rating": 4
-          },
-          {
-            "name": "HTML",
-            "rating": 4
-          },
-          {
-            "name": "CSS / SCSS",
+            "name": "HTML CSS JS Stack",
             "rating": 4
           }
         ]
@@ -154,19 +150,11 @@
             "rating": 5
           },
           {
-            "name": "Java",
-            "rating": 4
-          },
-          {
             "name": "Spring Boot",
             "rating": 3
           },
           {
             "name": "Angular",
-            "rating": 4
-          },
-          {
-            "name": "HTML CSS JS Stack",
             "rating": 4
           }
         ]
