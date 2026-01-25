@@ -29,7 +29,7 @@
     }
   ],
   "work": {
-    "excerptWordLimit": 100,
+    "excerptWordLimit": 40,
     "achievementPreviewCount": 3,
     "timeline": [
       {
