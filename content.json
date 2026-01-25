@@ -5,8 +5,8 @@
   "about": {
     "name": "Rajpreet Singh Nayyar",
     "kicker": "Hi, I’m",
-    "title": "Software Engineer III | C# • .NET Core • Microservices • Checkout & Loyalty Systems",
-    "bio": "Software Engineer with specialized experience in travel e-commerce Checkout systems, including Cart, loyalty, rewards, promotions, and purchase flows. I build and operate high-availability, customer-facing platforms across India and the United States, focusing on clean APIs, pragmatic system design, and production reliability. I enjoy solving rules-heavy problems (like reward points decisioning), building observable services, and shipping features that hold up as products scale.",
+    "title": "VP Lead Software Engineer | C# • .NET Core • Java SpringBoot • Microservices • Chase Travel - Checkout & Loyalty Systems",
+    "bio": "VP, Lead Software Engineer specializing in travel e-commerce Checkout, loyalty, and rewards systems. I design and operate reliable, API-driven platforms with a focus on clean system design, production reliability, and scalable decisioning logic.",
     "image": "assets/rajpreet.png",
     "resumeUrl": "assets/Rajpreet-Singh-Nayyar-Resume.pdf",
     "resumeFileName": "Rajpreet-Singh-Nayyar-Resume.pdf"
@@ -37,7 +37,7 @@
         "location": "Plano, TX • USA",
         "role": "VP, Lead Software Engineer",
         "company": "JPMorgan Chase & Co.",
-        "companyLogo": "assets/logo-jpmc.svg",
+        "companyLogo": "assets/chase.png",
         "team": "Chase Travel • Cart, Checkout & Loyalty",
         "description": "Leading technical strategy and execution for Checkout and Loyalty platforms within Chase Travel.",
         "achievements": [
@@ -52,7 +52,7 @@
         "location": "Plano, TX • USA",
         "role": "Associate Software Engineer III",
         "company": "JPMorgan Chase & Co.",
-        "companyLogo": "assets/logo-jpmc.svg",
+        "companyLogo": "assets/chase.png",
         "team": "Chase Travel • Cart & Checkout",
         "description": "Subject Matter Expert for Checkout loyalty and promotions. Owned production reliability and delivered major rewards initiatives across a high-availability travel e-commerce platform.",
         "achievements": [
@@ -68,7 +68,7 @@
         "location": "Pune, MH • India",
         "role": "Associate Software Engineer II",
         "company": "JPMorgan Chase & Co.",
-        "companyLogo": "assets/logo-jpmc.svg",
+        "companyLogo": "assets/chase.png",
         "team": "Chase Travel • Cart & Checkout",
         "description": "Code owner for Cart Engine with squad-level delivery leadership across Checkout initiatives, planning/estimation, and observability.",
         "achievements": [
@@ -86,7 +86,7 @@
         "location": "Pune, MH • India",
         "role": "Associate Software Engineer",
         "company": "JPMorgan Chase & Co.",
-        "companyLogo": "assets/logo-jpmc.svg",
+        "companyLogo": "assets/chase.png",
         "team": "Chase Travel • Cart & Payments",
         "description": "Backend and UI contributions across Cart/Checkout services, payments flows, asynchronous processing, and monitoring.",
         "achievements": [
@@ -154,21 +154,25 @@
             "rating": 5
           },
           {
-            "name": ".NET Framework",
+            "name": "Java",
             "rating": 4
+          },
+          {
+            "name": "Spring Boot",
+            "rating": 3
           },
           {
             "name": "Angular",
             "rating": 4
           },
           {
-            "name": "Lit Elements",
-            "rating": 3
+            "name": "HTML CSS JS Stack",
+            "rating": 4
           }
         ]
       },
       {
-        "title": "Cloud & Messaging",
+        "title": "Cloud",
         "maxRating": 5,
         "items": [
           {
@@ -200,14 +204,6 @@
           {
             "name": "Jenkins",
             "rating": 3
-          },
-          {
-            "name": "BrowserStack",
-            "rating": 3
-          },
-          {
-            "name": "Visual Studio",
-            "rating": 4
           }
         ]
       },
@@ -229,6 +225,10 @@
           },
           {
             "name": "Jest / Karma",
+            "rating": 3
+          },
+          {
+            "name": "browserstack",
             "rating": 3
           }
         ]
@@ -258,10 +258,6 @@
             "rating": 4
           },
           {
-            "name": "BFF Pattern",
-            "rating": 3
-          },
-          {
             "name": "Data Structures & Algorithms",
             "rating": 4
           }
@@ -273,7 +269,7 @@
         "items": [
           {
             "name": "GitHub",
-            "rating": 4
+            "rating": 5
           },
           {
             "name": "Jira",
@@ -290,16 +286,35 @@
   "projects": {
     "items": [
       {
-        "title": "Virtual Traveler Map",
-        "tagline": "Interest-driven travel heatmap experience",
-        "description": "An interactive map where users enter destination + dates and get personalized hotel/resort/activity recommendations.",
-        "image": "assets/project-travel.svg",
+        "title": "Virtual Tourister",
+        "tagline": "AI-powered, map-first travel planning experience",
+        "description": "A map-based travel planning platform where users drop a pin and select travel dates to receive AI-curated recommendations for nearby hotels, events, activities, and experiences. The system builds time-aware itineraries and adapts suggestions based on seasonal and festival-specific context for the destination.",
+        "image": "assets/project-virtual-tourister.svg",
+        "links": [
+          {
+            "label": "Case Study",
+            "url": "https://example.com"
+          }
+        ]
+      },
+      {
+        "title": "Test Suite Genie",
+        "tagline": "Generate functional tests directly from API documentation",
+        "description": "An AI-driven tool that converts application API documentation into a complete functional test suite. Includes a facade layer to abstract test intent, simplify assertions, and standardize test structure across services, significantly accelerating test creation and coverage.",
+        "image": "assets/project-test-suite-genie.svg",
         "links": [
           {
             "label": "Repo",
             "url": "https://github.com/"
           }
         ]
+      },
+      {
+        "title": "ORXe Data Analyzer",
+        "tagline": "Internal analytics and visualization platform",
+        "description": "An internal data analytics tool built at Tavisca to visualize application metrics and trends, similar to Grafana. Enabled teams to explore data through interactive charts, dashboards, and automated reporting workflows for operational and business insights.",
+        "image": "assets/project-orxe-analytics.svg",
+        "links": []
       }
     ]
   },
