@@ -5,8 +5,8 @@
   "about": {
     "name": "Rajpreet Singh Nayyar",
     "kicker": "Hi, I’m",
-    "title": "Software Engineer III | C# • .NET Core • Microservices • Checkout & Loyalty Systems",
-    "bio": "Software Engineer with specialized experience in travel e-commerce Checkout systems, including Cart, loyalty, rewards, promotions, and purchase flows. I build and operate high-availability, customer-facing platforms across India and the United States, focusing on clean APIs, pragmatic system design, and production reliability. I enjoy solving rules-heavy problems (like reward points decisioning), building observable services, and shipping features that hold up as products scale.",
+    "title": "VP, Lead Software Engineer | C# • .NET Core • Java Spring Boot • Checkout & Loyalty Systems",
+    "bio": "VP, Lead Software Engineer specializing in travel e-commerce Checkout, loyalty, and rewards systems. I design and operate reliable, API-driven platforms with a focus on clean system design, production reliability, and scalable decisioning logic.",
     "image": "assets/rajpreet.png",
     "resumeUrl": "assets/Rajpreet-Singh-Nayyar-Resume.pdf",
     "resumeFileName": "Rajpreet-Singh-Nayyar-Resume.pdf"
@@ -29,23 +29,36 @@
     }
   ],
   "work": {
-    "excerptWordLimit": 12,
-    "achievementPreviewCount": 3,
     "timeline": [
       {
-        "period": "Oct 2023 — Feb 2026",
+        "period": "Feb 2026 — Present",
+        "location": "Plano, TX • USA",
+        "role": "VP, Lead Software Engineer",
+        "company": "JPMorgan Chase & Co.",
+        "companyLogo": "assets/logo-jpmc.svg",
+        "team": "Chase Travel • Cart, Checkout & Loyalty",
+        "description": "Leading technical strategy and execution for Checkout and Loyalty platforms within Chase Travel, focusing on scalability, reliability, and complex reward decisioning systems.",
+        "achievements": [
+          "Provide technical leadership for Cart, Checkout, and Loyalty platforms supporting large-scale travel e-commerce.",
+          "Drive system design, architectural direction, and engineering standards across distributed backend services.",
+          "Guide teams on production reliability, observability, and evolution of rules-heavy reward and promotion systems.",
+          "Partner closely with product, business, and platform stakeholders to deliver resilient, customer-facing Checkout experiences."
+        ]
+      },
+      {
+        "period": "Oct 2023 — Jan 2026",
         "location": "Plano, TX • USA",
         "role": "Associate Software Engineer III",
         "company": "JPMorgan Chase & Co.",
         "companyLogo": "assets/logo-jpmc.svg",
         "team": "Chase Travel • Cart & Checkout",
-        "description": "Subject Matter Expert for Checkout loyalty and promotions. Owned production reliability and delivered major rewards initiatives across a high-availability travel e-commerce platform.",
+        "description": "Subject Matter Expert for Checkout loyalty and promotions with strong ownership of production reliability and rewards initiatives.",
         "achievements": [
           "Served as SME for Cart & Checkout, owning technical and business workflows across booking, rewards, and purchase flows.",
-          "Led knowledge transfer for US-based teams through architecture walkthroughs, business-flow deep dives, and production-readiness reviews.",
-          "Provided heavy production support (SEV triage, RCA, resolution) and partnered with SRE/platform teams to improve operational stability and incident response.",
-          "Delivered major initiatives including Dynamic Points Burn, Chase Promotional Offers, Preserve Burn, and Cruise onboarding by extending Checkout workflows for new validations and booking requirements.",
-          "Designed and implemented a rule-driven points allocation algorithm for Preserve Burn to optimally apply preserved and newly earned points under distinct accrual/burn rules; presented and validated the solution during on-site workshops in India prior to go-live."
+          "Led knowledge transfer and enablement for US-based teams through architecture walkthroughs and production-readiness reviews.",
+          "Provided heavy production support including SEV triage, root-cause analysis, and resolution in partnership with SRE teams.",
+          "Delivered major initiatives including Dynamic Burn, Preserve Burn, Chase Promotions, and Cruise onboarding.",
+          "Designed and implemented a dynamic reward points allocation algorithm for Preserve Burn and presented the solution during on-site workshops in India prior to go-live."
         ]
       },
       {
@@ -55,15 +68,13 @@
         "company": "JPMorgan Chase & Co.",
         "companyLogo": "assets/logo-jpmc.svg",
         "team": "Chase Travel • Cart & Checkout",
-        "description": "Code owner for Cart Engine with squad-level delivery leadership across Checkout initiatives, planning/estimation, and observability.",
+        "description": "Code owner for Cart Engine with squad-level delivery leadership across Checkout initiatives.",
         "achievements": [
-          "Served as code owner for Cart Engine, responsible for architecture decisions, daily code reviews, and code quality.",
-          "Led delivery squads from a technical and business perspective, contributing to capacity planning, estimation, requirement analysis, and full-stack development.",
-          "Led a cross-functional squad (3 developers, 1 QA, 1 Business Analyst) to deliver Fee in Points, enabling customers to pay order fees using reward points.",
-          "Led a larger cross-functional group (developers, QA, DevOps, BA) to deliver the Traveler Information Page, a critical Checkout component gathering traveler data required for booking.",
-          "Supported multiple client launches (from Q3 2022 onward) from the Cart platform in collaboration with Chase and external client teams.",
-          "Invited to Plano, Texas (Dec 2022) for a working session with a major client to evaluate technical and business feasibility of promotional offers in Checkout.",
-          "Built and maintained real-time dashboards using Grafana and Kibana; used Dynatrace for system health analysis, performance monitoring, and end-to-end user session tracing."
+          "Owned Cart Engine architecture, code quality, and daily code reviews.",
+          "Led cross-functional squads delivering Fee in Points and Traveler Information Page initiatives.",
+          "Contributed to capacity planning, estimation, roadmap discussions, and full-stack development.",
+          "Supported multiple client launches and participated in on-site solutioning sessions in Plano, Texas.",
+          "Built real-time observability dashboards using Grafana and Kibana and monitored systems using Dynatrace."
         ]
       },
       {
@@ -73,15 +84,13 @@
         "company": "JPMorgan Chase & Co.",
         "companyLogo": "assets/logo-jpmc.svg",
         "team": "Chase Travel • Cart & Payments",
-        "description": "Backend and UI contributions across Cart/Checkout services, payments flows, asynchronous processing, and monitoring.",
+        "description": "Backend and UI engineering across Cart, Checkout, and Payments platforms.",
         "achievements": [
-          "Developed backend APIs for Cart and Checkout using C# and .NET Core to support core booking and purchase flows.",
-          "Delivered Cart-Level Payments and contributed to Checkout-adjacent services including Payments (PCI-compliant), Fraud Check, One-Use Card, OFAC Watchdog, BIN Validation, and X-Factor.",
-          "Built and optimized asynchronous processing using RabbitMQ (actor-based queuing) to improve throughput and system performance.",
-          "Implemented observability with Grafana, Kibana, and Dynatrace to improve visibility into system health, booking failures, and performance metrics.",
-          "Worked on Angular-based UI for Cart/Checkout flows; built reusable UI components using Lit Elements and styling with SCSS, Flexbox, and CSS Grid; applied microservices and BFF patterns.",
-          "Applied strong engineering practices including TDD, code coverage (Coverlet), and centralized configuration management (Consul).",
-          "Supported analytics enablement by integrating DNA Analytics to improve insights into user behavior and feature adoption."
+          "Developed backend APIs using C# and .NET Core across Cart, Payments, Fraud, and Compliance services.",
+          "Implemented asynchronous processing using RabbitMQ and improved system throughput.",
+          "Worked on Angular-based Checkout UI using microservices and BFF patterns.",
+          "Improved monitoring and observability using Grafana, Kibana, and Dynatrace.",
+          "Applied TDD, code coverage, and centralized configuration management."
         ]
       },
       {
@@ -91,13 +100,12 @@
         "company": "Tavisca Solutions Pvt Ltd",
         "companyLogo": "assets/logo-tavisca.svg",
         "team": "ORXe • Data Analytics",
-        "description": "Built a data analytics and visualization UI, integrating charts, material UI components, and reporting workflows.",
+        "description": "Frontend and analytics tooling for internal data analysis platforms.",
         "achievements": [
-          "Developed a data visualization UI using Angular for the ORXe Data Analyzer tool.",
-          "Implemented interactive charts and graphs using CanvasJS by consuming trends from backend APIs.",
-          "Integrated Angular Material components (forms, autocomplete, tabs) for a clean, responsive UX.",
-          "Built an Email API to automate delivery of statistical reports to specified recipients.",
-          "Implemented Angular fundamentals (directives, routing, services) to meet functional requirements; wrote UI tests using Jest."
+          "Built Angular-based UI for a data analytics and visualization tool.",
+          "Implemented interactive charts using CanvasJS and integrated Angular Material components.",
+          "Developed backend email APIs to automate reporting workflows.",
+          "Applied Angular fundamentals including routing, services, and directives."
         ]
       }
     ]
@@ -109,10 +117,9 @@
         "maxRating": 5,
         "items": [
           { "name": "C#", "rating": 5 },
+          { "name": "Java", "rating": 4 },
           { "name": "Python", "rating": 3 },
-          { "name": "JavaScript", "rating": 4 },
-          { "name": "HTML", "rating": 4 },
-          { "name": "CSS / SCSS", "rating": 4 }
+          { "name": "JavaScript", "rating": 4 }
         ]
       },
       {
@@ -120,141 +127,9 @@
         "maxRating": 5,
         "items": [
           { "name": ".NET Core / ASP.NET Core", "rating": 5 },
-          { "name": ".NET Framework", "rating": 4 },
-          { "name": "Angular", "rating": 4 },
-          { "name": "Lit Elements", "rating": 3 }
+          { "name": "Spring Boot", "rating": 4 },
+          { "name": "Angular", "rating": 4 }
         ]
-      },
-      {
-        "title": "Cloud & Messaging",
-        "maxRating": 5,
-        "items": [
-          { "name": "AWS (S3, Lambda, API Gateway)", "rating": 3 },
-          { "name": "RabbitMQ (Actor-based queuing)", "rating": 4 }
-        ]
-      },
-      {
-        "title": "Observability & Dev Tools",
-        "maxRating": 5,
-        "items": [
-          { "name": "Dynatrace", "rating": 4 },
-          { "name": "Grafana", "rating": 4 },
-          { "name": "Kibana", "rating": 4 },
-          { "name": "Jenkins", "rating": 3 },
-          { "name": "BrowserStack", "rating": 3 },
-          { "name": "Visual Studio", "rating": 4 }
-        ]
-      },
-      {
-        "title": "Testing",
-        "maxRating": 5,
-        "items": [
-          { "name": "xUnit", "rating": 4 },
-          { "name": "Moq", "rating": 4 },
-          { "name": "SpecFlow", "rating": 3 },
-          { "name": "Jest / Karma", "rating": 3 }
-        ]
-      },
-      {
-        "title": "Concepts",
-        "maxRating": 5,
-        "items": [
-          { "name": "Microservices Architecture", "rating": 4 },
-          { "name": "REST APIs", "rating": 5 },
-          { "name": "SOLID Principles", "rating": 4 },
-          { "name": "Design Patterns", "rating": 4 },
-          { "name": "Actor Model", "rating": 4 },
-          { "name": "BFF Pattern", "rating": 3 },
-          { "name": "Data Structures & Algorithms", "rating": 4 }
-        ]
-      },
-      {
-        "title": "Collaboration",
-        "maxRating": 5,
-        "items": [
-          { "name": "GitHub", "rating": 4 },
-          { "name": "Jira", "rating": 4 },
-          { "name": "Confluence", "rating": 4 }
-        ]
-      }
-    ]
-  },
-  "projects": {
-    "items": [
-      {
-        "title": "Virtual Traveler Map",
-        "tagline": "Interest-driven travel heatmap experience",
-        "description": "An interactive map where users enter destination + dates and get personalized hotel/resort/activity recommendations.",
-        "image": "assets/project-travel.svg",
-        "links": [
-          { "label": "Repo", "url": "https://github.com/" }
-        ]
-      }
-    ]
-  },
-  "educationAndCertifications": {
-    "items": [
-      {
-        "org": "Chitkara University (Punjab Campus)",
-        "logo": "assets/logo-university.svg",
-        "title": "Bachelor of Engineering — Computer Science",
-        "year": "2015 — 2019",
-        "description": "Undergraduate degree focused on computer science fundamentals and software engineering."
-      },
-      {
-        "org": "AWS",
-        "logo": "assets/logo-aws.svg",
-        "title": "AWS Certified Cloud Practitioner",
-        "year": "",
-        "description": "Cloud fundamentals including compute, storage, networking, security, and pricing."
-      },
-      {
-        "org": "Udacity",
-        "logo": "assets/logo-udacity.svg",
-        "title": "Nanodegree Programs",
-        "year": "",
-        "description": "Completed iOS Developer Nanodegree and Frontend Developer Nanodegree."
-      }
-    ]
-  },
-  "contact": {
-    "emailTo": "rajpreetsinghnayyar@gmail.com",
-    "details": [
-      {
-        "type": "phone",
-        "label": "US Phone",
-        "value": "+1 (469) 507-4543",
-        "url": "tel:+14695074543"
-      },
-      {
-        "type": "phone",
-        "label": "India Phone",
-        "value": "+91-9779748042",
-        "url": "tel:+919779748042"
-      },
-      {
-        "type": "email",
-        "label": "Email",
-        "value": "rajpreetsinghnayyar@gmail.com",
-        "url": "mailto:rajpreetsinghnayyar@gmail.com"
-      },
-      {
-        "type": "linkedin",
-        "label": "LinkedIn",
-        "value": "linkedin.com/in/rajpreetnayyar",
-        "url": "https://www.linkedin.com/in/rajpreetnayyar"
-      },
-      {
-        "type": "website",
-        "label": "Website",
-        "value": "rajpreetsinghnayyar.com",
-        "url": "https://rajpreetsinghnayyar.com"
-      },
-      {
-        "type": "github",
-        "label": "GitHub",
-        "value": "github.com/rajpreetnayyar",
-        "url": "https://github.com/"
       }
     ]
   },
