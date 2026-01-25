@@ -65,6 +65,13 @@ function ratingDots(value, max=5){
   return wrap;
 }
 
+function truncateWords(text, limit){
+  if(!limit || limit <= 0) return "";
+  const words = text.trim().split(/\s+/);
+  if(words.length <= limit) return "";
+  return words.slice(0, limit).join(" ") + "...";
+}
+
 /* Theme toggle (dark/light) with localStorage + prefers-color-scheme */
 function setupTheme(){
   const root = document.documentElement;
@@ -96,6 +103,8 @@ function setupTheme(){
 function buildTimeline(items){
   const host = $("#workTimeline");
   host.innerHTML = "";
+
+  const wordLimit = buildTimeline.wordLimit > 0 ? buildTimeline.wordLimit : 0;
 
   items.forEach((it, idx) => {
     const row = el("div", "tRow" + (idx % 2 === 1 ? " is-even" : ""));
@@ -156,11 +165,42 @@ function buildTimeline(items){
     const teamText = [it.team].filter(Boolean).map(safeText).join("");
     if(teamText) detail.appendChild(el("p", "tTeam", teamText));
 
-    if(it.description) detail.appendChild(el("p", "tDesc", safeText(it.description)));
+    const detailsWrap = el("div", "tDetails");
+    if(it.description) detailsWrap.appendChild(el("p", "tDesc", safeText(it.description)));
 
-    const ul = el("ul", "tBullets");
-    (it.achievements || []).forEach(a => ul.appendChild(el("li", "", safeText(a))));
-    detail.appendChild(ul);
+    const achievements = it.achievements || [];
+    if(achievements.length){
+      const ul = el("ul", "tBullets");
+      achievements.forEach(a => ul.appendChild(el("li", "", safeText(a))));
+      detailsWrap.appendChild(ul);
+    }
+
+    if(detailsWrap.childNodes.length){
+      const fullText = (detailsWrap.textContent || "").trim();
+      const excerptText = truncateWords(fullText, wordLimit);
+
+      if(excerptText){
+        const excerpt = el("p", "tExcerpt", excerptText);
+        const toggle = el("button", "tMoreBtn", "Show more");
+        toggle.type = "button";
+        toggle.setAttribute("aria-expanded", "false");
+        detailsWrap.hidden = true;
+
+        toggle.addEventListener("click", () => {
+          const expanded = toggle.getAttribute("aria-expanded") === "true";
+          toggle.setAttribute("aria-expanded", String(!expanded));
+          detailsWrap.hidden = expanded;
+          excerpt.hidden = !expanded;
+          toggle.textContent = expanded ? "Show more" : "Show less";
+        });
+
+        detail.appendChild(excerpt);
+        detail.appendChild(detailsWrap);
+        detail.appendChild(toggle);
+      }else{
+        detail.appendChild(detailsWrap);
+      }
+    }
 
     metaCol.appendChild(meta);
     detailCol.appendChild(detail);
@@ -424,6 +464,7 @@ function applyContent(c){
   resume.href = safeText(c.about?.resumeUrl || "#");
   resume.setAttribute("download", safeText(c.about?.resumeFileName || "Resume.pdf"));
 
+  buildTimeline.wordLimit = Number(c.work?.excerptWordLimit) || 0;
   buildQuickLinks(c.quickLinks || []);
   buildTimeline(c.work?.timeline || []);
   buildSkills(c.skills?.groups || []);
