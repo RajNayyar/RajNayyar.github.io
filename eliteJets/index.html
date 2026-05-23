@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Jets — Private Charter India</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --wine:#6B1E2E;--wine-dark:#4A0F1E;--wine-deep:#2E0810;--wine-light:#8B2E42;
+  --gold:#C9A96E;--gold-light:#E0C99A;--gold-pale:#F5EDD6;
+  --beige:#F2EAD8;--beige-warm:#EDE1C8;--cream:#FAF6EE;
+  --charcoal:#1C1C1C;--muted:#6B6157;--border:rgba(107,30,46,0.15);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Montserrat',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--charcoal);overflow-x:hidden}
+
+/* ─── ANIMATION KEYFRAMES ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideLeft{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.94)}to{opacity:1;transform:scale(1)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes floatPlane{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-8px) translateX(6px)}}
+@keyframes goldPulse{0%,100%{opacity:0.6}50%{opacity:1}}
+@keyframes drawLine{from{width:0}to{width:36px}}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── PAGE SYSTEM ─── */
+.page{display:none;min-height:100vh}
+.page.active{display:block;animation:pageIn 0.45s ease forwards}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:rgba(46,8,16,0.97);backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(201,169,110,0.18);
+  padding:0 4rem;height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo-wrap{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none}
+.logo-mark{width:40px;height:40px;flex-shrink:0;transition:transform 0.4s ease}
+.logo-wrap:hover .logo-mark{transform:rotate(15deg) scale(1.05)}
+.logo-name{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--gold-light);letter-spacing:0.1em;line-height:1}
+.logo-sub{font-size:0.48rem;letter-spacing:0.38em;text-transform:uppercase;color:rgba(201,169,110,0.45);margin-top:2px}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{
+  color:rgba(240,230,210,0.55);text-decoration:none;font-size:0.64rem;font-weight:500;
+  letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;
+  transition:color 0.25s;position:relative;padding-bottom:2px;
+}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s ease}
+.nav-links a:hover{color:var(--gold-light)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  background:var(--gold);color:var(--wine-deep);border:none;padding:10px 24px;
+  font-family:var(--sans);font-size:0.63rem;font-weight:600;letter-spacing:0.2em;
+  text-transform:uppercase;cursor:pointer;transition:all 0.25s;
+}
+.nav-cta:hover{background:var(--gold-light);transform:translateY(-1px)}
+
+/* ════════════════════════════
+   HOME PAGE
+════════════════════════════ */
+#hero{
+  min-height:100vh;background:var(--wine-deep);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;padding-top:72px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 68% 42%,rgba(107,30,46,0.65) 0%,transparent 58%),
+             radial-gradient(ellipse at 12% 88%,rgba(201,169,110,0.05) 0%,transparent 48%),
+             linear-gradient(150deg,#180408 0%,#3A0C18 55%,#180408 100%);
+}
+.hero-grid-lines{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(201,169,110,0.032) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(201,169,110,0.032) 1px,transparent 1px);
+  background-size:72px 72px;
+  animation:fadeIn 2s ease forwards;
+}
+.hero-photo{
+  position:absolute;right:0;top:0;bottom:0;width:48%;overflow:hidden;
+}
+.hero-photo img{width:100%;height:100%;object-fit:cover;opacity:0.16;animation:scaleIn 2s ease forwards}
+.hero-photo::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,var(--wine-deep) 0%,rgba(46,8,16,0.6) 40%,transparent 100%);
+}
+.hero-content{
+  position:relative;z-index:2;text-align:center;
+  padding:0 2rem;max-width:900px;width:100%;
+}
+.hero-eyebrow{
+  font-size:0.6rem;letter-spacing:0.42em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:1.6rem;display:flex;align-items:center;justify-content:center;gap:14px;
+  animation:fadeUp 0.8s 0.3s ease both;
+}
+.hero-eyebrow span{display:block;width:36px;height:1px;background:var(--gold);opacity:0.55;animation:drawLine 0.8s 0.8s ease both}
+.hero-title{
+  font-family:var(--serif);font-size:clamp(3rem,6.5vw,5.8rem);font-weight:300;
+  color:var(--gold-pale);line-height:1.05;letter-spacing:0.02em;
+  margin-bottom:0.3em;animation:fadeUp 0.9s 0.5s ease both;
+}
+.hero-title em{font-style:italic;color:var(--gold-light)}
+.hero-sub{
+  font-size:0.74rem;letter-spacing:0.2em;color:rgba(240,220,185,0.42);
+  text-transform:uppercase;margin-bottom:3.5rem;
+  animation:fadeUp 0.9s 0.7s ease both;
+}
+/* floating plane decoration */
+.hero-plane{
+  position:absolute;right:18%;top:38%;z-index:3;opacity:0.25;
+  animation:floatPlane 6s ease-in-out infinite;
+}
+
+/* ─── BOOKING WIDGET ─── */
+.bw{
+  background:rgba(250,246,238,0.97);border:1px solid var(--gold);
+  padding:2.4rem;max-width:900px;width:100%;position:relative;
+  animation:fadeUp 1s 0.9s ease both;
+}
+.bw::before{
+  content:'';position:absolute;top:-1px;left:60px;right:60px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.bw-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:1.8rem}
+.bw-tab{
+  padding:0.55rem 1.4rem;font-size:0.62rem;letter-spacing:0.18em;
+  text-transform:uppercase;font-weight:600;cursor:pointer;border:none;
+  background:none;color:var(--muted);border-bottom:2px solid transparent;
+  margin-bottom:-1px;transition:all 0.22s;font-family:var(--sans);
+}
+.bw-tab.active{color:var(--wine);border-bottom-color:var(--wine)}
+.bw-form{display:grid;grid-template-columns:1fr 1fr 155px auto;gap:1rem;align-items:end}
+.fg{display:flex;flex-direction:column;gap:5px}
+.lbl{font-size:0.57rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.inp,.sel{
+  border:1px solid rgba(107,30,46,0.22);padding:11px 13px;font-family:var(--sans);
+  font-size:0.83rem;color:var(--charcoal);background:white;outline:none;
+  transition:border-color 0.22s,box-shadow 0.22s;width:100%;
+}
+.inp:focus,.sel:focus{border-color:var(--wine);box-shadow:0 0 0 3px rgba(107,30,46,0.08)}
+.inp::placeholder{color:rgba(107,97,87,0.42)}
+.ac-wrap{position:relative}
+.ac-drop{
+  position:absolute;top:100%;left:0;right:0;z-index:300;
+  background:white;border:1px solid var(--wine);border-top:none;
+  max-height:200px;overflow-y:auto;display:none;
+  box-shadow:0 10px 30px rgba(46,8,16,0.14);
+}
+.ac-drop.open{display:block;animation:fadeUp 0.15s ease}
+.ac-item{padding:9px 13px;font-size:0.78rem;cursor:pointer;border-bottom:1px solid var(--border)}
+.ac-item:hover{background:var(--beige)}
+.ac-item small{display:block;font-size:0.63rem;color:var(--muted);margin-top:1px}
+.search-btn{
+  background:var(--wine);color:var(--gold-light);border:none;padding:12px 26px;
+  font-family:var(--sans);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;
+  font-weight:600;cursor:pointer;transition:all 0.22s;white-space:nowrap;height:44px;
+}
+.search-btn:hover{background:var(--wine-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(107,30,46,0.3)}
+
+/* ─── SECTION HEADER ─── */
+.sh{text-align:center;margin-bottom:3.5rem}
+.sh-eye{
+  font-size:0.57rem;letter-spacing:0.42em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:12px;
+}
+.sh-eye::before,.sh-eye::after{content:'';display:block;width:24px;height:1px;background:var(--gold);opacity:0.6}
+.sh-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--wine-dark);line-height:1.15}
+.sh-title em{font-style:italic;color:var(--wine-light)}
+
+/* ─── FLEET PREVIEW ─── */
+#fleet-sec{padding:6rem 5rem;background:var(--cream)}
+.fleet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1200px;margin:0 auto}
+
+/* ─── JET CARD ─── */
+.jc{
+  background:white;border:1px solid var(--border);overflow:hidden;
+  cursor:pointer;transition:transform 0.35s cubic-bezier(.17,.67,.34,1.1),box-shadow 0.35s ease;
+  position:relative;
+}
+.jc:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 28px 60px rgba(107,30,46,0.14)}
+.jc:hover .jc-img{transform:scale(1.04)}
+.jc-img-wrap{overflow:hidden;height:210px}
+.jc-img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;display:block}
+.jc-body{padding:1.5rem}
+.bdg{display:inline-block;padding:3px 10px;font-size:0.54rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;margin-bottom:0.7rem}
+.bdg-h{background:var(--wine-deep);color:var(--gold)}
+.bdg-m{background:var(--wine);color:var(--gold-light)}
+.bdg-l{background:var(--beige-warm);color:var(--wine)}
+.jc-name{font-family:var(--serif);font-size:1.55rem;font-weight:400;color:var(--wine-dark);margin-bottom:0.15rem}
+.jc-model{font-size:0.7rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:0.04em}
+.jc-specs{display:grid;grid-template-columns:repeat(3,1fr);padding:0.9rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:1.2rem}
+.sv{display:block;font-family:var(--serif);font-size:1.22rem;color:var(--wine);font-weight:500;text-align:center}
+.sk{font-size:0.54rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-align:center}
+.jc-foot{display:flex;align-items:center;justify-content:space-between}
+.jc-price{font-family:var(--serif);font-size:1.28rem;color:var(--wine-dark)}
+.jc-price small{font-family:var(--sans);font-size:0.6rem;color:var(--muted);display:block}
+.avail-tag{position:absolute;top:12px;right:12px;background:rgba(46,8,16,0.82);color:var(--gold);padding:4px 10px;font-size:0.54rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:600}
+.btn-w{background:var(--wine);color:var(--gold-light);border:none;padding:10px 20px;font-family:var(--sans);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all 0.22s}
+.btn-w:hover{background:var(--wine-dark);transform:translateY(-1px)}
+.btn-o{border:1px solid var(--wine);color:var(--wine);background:none;padding:10px 20px;font-family:var(--sans);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all 0.22s}
+.btn-o:hover{background:var(--wine);color:var(--gold-light);transform:translateY(-1px)}
+
+/* ─── ROUTES ─── */
+#routes-sec{padding:6rem 5rem;background:var(--wine-deep);position:relative;overflow:hidden}
+.r-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(201,169,110,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,110,0.028) 1px,transparent 1px);background-size:60px 60px}
+.r-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto}
+.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px;margin-top:2.5rem}
+.ct{
+  background:rgba(255,255,255,0.038);border:1px solid rgba(201,169,110,0.15);
+  padding:13px 15px;cursor:pointer;transition:all 0.25s;
+  display:flex;align-items:center;gap:10px;
+}
+.ct:hover{background:rgba(201,169,110,0.1);border-color:var(--gold);transform:translateX(3px)}
+.ct-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;animation:goldPulse 2.5s ease infinite}
+.ct-name{font-size:0.77rem;color:var(--gold-light);font-weight:500;letter-spacing:0.04em}
+.ct-code{font-size:0.56rem;color:rgba(201,169,110,0.48);letter-spacing:0.18em;text-transform:uppercase}
+
+/* ─── WHY ─── */
+#why-sec{padding:6rem 5rem;background:var(--beige)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(107,30,46,0.1);border:1px solid var(--border);max-width:1100px;margin:2rem auto 0}
+.wi{background:white;padding:2.5rem;transition:background 0.3s}
+.wi:hover{background:var(--cream)}
+.wi-num{font-family:var(--serif);font-size:3rem;font-weight:300;color:rgba(107,30,46,0.1);line-height:1;margin-bottom:1.5rem;transition:color 0.3s}
+.wi:hover .wi-num{color:rgba(107,30,46,0.2)}
+.wi-title{font-family:var(--serif);font-size:1.3rem;color:var(--wine-dark);margin-bottom:0.75rem}
+.wi-desc{font-size:0.77rem;color:var(--muted);line-height:1.88}
+
+/* ─── FOOTER ─── */
+footer{background:var(--wine-deep);padding:4rem 5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;border-top:1px solid rgba(201,169,110,0.1)}
+.f-tagline{font-family:var(--serif);font-size:0.9rem;color:rgba(240,220,185,0.42);font-style:italic;margin:1rem 0 1.5rem;line-height:1.75}
+.f-col-title{font-size:0.57rem;letter-spacing:0.28em;text-transform:uppercase;font-weight:600;color:var(--gold);margin-bottom:1.2rem}
+.f-links{list-style:none;display:flex;flex-direction:column;gap:0.7rem}
+.f-links a{color:rgba(240,220,185,0.38);text-decoration:none;font-size:0.75rem;transition:color 0.22s;cursor:pointer}
+.f-links a:hover{color:var(--gold-light)}
+.f-bottom{background:#150307;padding:1.4rem 5rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,169,110,0.07)}
+.f-bottom p{font-size:0.63rem;color:rgba(240,220,185,0.26);letter-spacing:0.07em}
+
+/* ════════════════════════════
+   SEARCH RESULTS PAGE
+════════════════════════════ */
+#page-results{padding-top:72px;min-height:100vh;background:var(--cream)}
+.res-hero{background:var(--wine-dark);padding:2.5rem 5rem;position:relative;overflow:hidden}
+.res-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(201,169,110,0.05) 100%);pointer-events:none}
+.breadcrumb{font-size:0.6rem;letter-spacing:0.15em;color:rgba(240,220,185,0.38);text-transform:uppercase;margin-bottom:0.9rem;cursor:pointer}
+.breadcrumb span{color:var(--gold);transition:opacity 0.2s}
+.breadcrumb span:hover{opacity:0.7}
+.res-route-title{font-family:var(--serif);font-size:2.4rem;font-weight:400;color:var(--gold-pale);animation:slideRight 0.5s ease both}
+.res-meta-text{font-size:0.7rem;color:rgba(240,220,185,0.46);margin-top:0.4rem;letter-spacing:0.07em}
+
+.res-body{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 200px)}
+
+/* Filter sidebar */
+.f-sidebar{background:white;border-right:1px solid var(--border);padding:1.8rem;position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto}
+.f-sec-title{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:600;color:var(--wine);margin-bottom:0.9rem;margin-top:1.4rem;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.f-sec-title:first-child{margin-top:0}
+.f-opt{display:flex;align-items:center;gap:9px;padding:6px 0;cursor:pointer;font-size:0.77rem;color:var(--charcoal);transition:color 0.2s}
+.f-opt input[type=checkbox]{accent-color:var(--wine);width:14px;height:14px;cursor:pointer}
+.f-opt:hover{color:var(--wine)}
+.f-range{width:100%;accent-color:var(--wine);margin-top:5px}
+.f-range-lbls{display:flex;justify-content:space-between;font-size:0.63rem;color:var(--muted);margin-top:3px}
+.f-clear{background:none;border:1px solid var(--border);padding:8px 14px;font-family:var(--sans);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;width:100%;margin-top:1.4rem;transition:all 0.2s}
+.f-clear:hover{border-color:var(--wine);color:var(--wine)}
+
+/* Results list */
+.res-list{padding:2rem 2.5rem}
+.res-top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.res-count{font-size:0.7rem;color:var(--muted);letter-spacing:0.07em}
+.sort-wrap{display:flex;align-items:center;gap:9px;font-size:0.68rem;color:var(--muted)}
+.sort-sel{border:1px solid var(--border);padding:6px 11px;font-family:var(--sans);font-size:0.68rem;color:var(--charcoal);background:white;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none}
+.res-cards{display:flex;flex-direction:column;gap:1.2rem}
+
+/* Horizontal result card */
+.rc{
+  background:white;border:1px solid var(--border);
+  display:grid;grid-template-columns:270px 1fr 175px;overflow:hidden;
+  transition:transform 0.3s cubic-bezier(.17,.67,.34,1.05),box-shadow 0.3s ease;
+  position:relative;
+}
+.rc:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(107,30,46,0.11)}
+.rc:hover .rc-img{transform:scale(1.05)}
+.rc-img-wrap{overflow:hidden;height:100%;min-height:190px}
+.rc-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.55s ease}
+.rc-body{padding:1.5rem 1.8rem;display:flex;flex-direction:column;justify-content:space-between}
+.rc-feats{display:flex;flex-wrap:wrap;gap:5px;margin-top:0.7rem}
+.rc-feat{background:var(--beige);color:var(--wine);font-size:0.58rem;letter-spacing:0.09em;padding:3px 8px;font-weight:500}
+.rc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:0.9rem}
+.rc-pricing{background:var(--wine-dark);padding:1.5rem;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:0.7rem}
+.rcp-from{font-size:0.56rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,220,185,0.45)}
+.rcp-price{font-family:var(--serif);font-size:1.8rem;color:var(--gold);line-height:1}
+.rcp-unit{font-size:0.6rem;color:rgba(240,220,185,0.38)}
+.rcp-avail{font-size:0.6rem;color:var(--gold-light);letter-spacing:0.06em;text-align:center}
+
+/* ════════════════════════════
+   JET DETAIL PAGE
+════════════════════════════ */
+#page-detail{padding-top:72px;min-height:100vh;background:var(--cream)}
+.dh{position:relative;height:520px;overflow:hidden}
+.dh-img{width:100%;height:100%;object-fit:cover;transition:transform 0.8s ease}
+.dh:hover .dh-img{transform:scale(1.02)}
+.dh-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(46,8,16,0.88) 0%,rgba(46,8,16,0.45) 55%,transparent 100%);
+  display:flex;align-items:flex-end;padding:3rem 5rem;
+}
+.dh-bc{font-size:0.6rem;letter-spacing:0.15em;color:rgba(240,220,185,0.4);text-transform:uppercase;margin-bottom:1.1rem;cursor:pointer}
+.dh-bc span{color:var(--gold)}
+.dh-badge{display:inline-block;padding:4px 12px;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;margin-bottom:0.7rem}
+.dh-name{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:var(--gold-pale);line-height:1.05;margin-bottom:0.25rem;animation:slideRight 0.5s ease both}
+.dh-model{font-size:0.78rem;color:rgba(240,220,185,0.5);letter-spacing:0.09em;margin-bottom:1.4rem}
+.dh-qspecs{display:flex;gap:2rem}
+.dqs{text-align:left}
+.dqs-v{font-family:var(--serif);font-size:1.55rem;color:var(--gold);display:block}
+.dqs-k{font-size:0.56rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(240,220,185,0.38)}
+
+/* Detail layout */
+.d-body{display:grid;grid-template-columns:1fr 350px;align-items:start}
+.d-main{padding:3rem 4rem}
+
+/* Gallery */
+.d-gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:2.5rem}
+.d-gal-img{width:100%;height:145px;object-fit:cover;cursor:pointer;transition:all 0.25s;border:2px solid transparent;display:block}
+.d-gal-img:hover{opacity:0.82;transform:scale(1.02)}
+.d-gal-img.active{border-color:var(--gold)}
+
+/* Detail tabs */
+.d-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.d-tab{padding:0.65rem 1.4rem;font-size:0.61rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.22s;font-family:var(--sans)}
+.d-tab.active{color:var(--wine);border-bottom-color:var(--wine)}
+.d-tc{display:none;animation:fadeUp 0.3s ease both}
+.d-tc.active{display:block}
+.spec-tbl{width:100%;border-collapse:collapse}
+.spec-tbl tr{border-bottom:1px solid var(--border);transition:background 0.2s}
+.spec-tbl tr:hover{background:var(--beige)}
+.spec-tbl td{padding:11px 0;font-size:0.8rem}
+.spec-tbl td:first-child{color:var(--muted);font-size:0.7rem;letter-spacing:0.07em;width:44%}
+.spec-tbl td:last-child{font-weight:500}
+.amen-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:1rem}
+.amen-item{display:flex;align-items:center;gap:9px;font-size:0.77rem;transition:color 0.2s;cursor:default}
+.amen-item:hover{color:var(--wine)}
+.amen-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+/* ─── SIDEBAR ─── */
+.d-sidebar{padding:2.5rem;background:white;border-left:1px solid var(--border);position:sticky;top:72px;min-height:500px}
+.sb-title{font-family:var(--serif);font-size:1.45rem;color:var(--wine-dark);margin-bottom:0.25rem}
+.sb-price{font-family:var(--serif);font-size:1.9rem;color:var(--wine);margin-bottom:1.5rem}
+.sb-price small{font-family:var(--sans);font-size:0.63rem;color:var(--muted);display:block}
+
+/* Calendar */
+.cal-wrap .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem}
+.cal-nav{background:none;border:1px solid var(--border);padding:5px 9px;cursor:pointer;font-size:0.75rem;color:var(--wine);transition:all 0.2s;font-family:var(--sans)}
+.cal-nav:hover{background:var(--wine);color:white;border-color:var(--wine)}
+.cal-month{font-family:var(--serif);font-size:1.08rem;color:var(--wine-dark)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-dn{text-align:center;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:5px 0;font-weight:600}
+.cal-d{
+  aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:0.7rem;border:1px solid transparent;border-radius:2px;
+  transition:all 0.18s;color:var(--charcoal);
+}
+.cal-d.avail{background:rgba(107,30,46,0.06);font-weight:500;cursor:pointer}
+.cal-d.avail:hover{border-color:var(--wine);color:var(--wine)}
+.cal-d.sel{background:var(--wine)!important;color:var(--gold-light)!important;border-color:var(--wine)!important}
+.cal-d.past{color:rgba(107,97,87,0.24);cursor:default}
+.cal-d.empty{cursor:default}
+.cal-d.today{border-color:var(--gold)}
+.av-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);margin-top:1px}
+
+/* Date/time info pill */
+.info-pill{
+  background:var(--beige);border-left:3px solid var(--gold);
+  padding:10px 13px;font-size:0.71rem;color:var(--wine-dark);
+  margin:1rem 0;display:none;animation:fadeIn 0.3s ease;
+}
+.info-pill.show{display:block}
+
+/* Time slots */
+.ts-wrap{margin-top:1.2rem;display:none;animation:fadeUp 0.3s ease both}
+.ts-wrap.show{display:block}
+.ts-lbl{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:0.7rem;display:block}
+.ts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.ts{
+  padding:8px 4px;text-align:center;font-size:0.68rem;border:1px solid var(--border);
+  cursor:pointer;color:var(--charcoal);transition:all 0.18s;font-family:var(--sans);background:white;
+}
+.ts:hover{border-color:var(--wine);color:var(--wine);transform:scale(1.03)}
+.ts.sel{background:var(--wine);color:var(--gold-light);border-color:var(--wine)}
+.ts.na{background:var(--beige);color:rgba(107,97,87,0.3);cursor:default;border-color:transparent}
+.ts.na:hover{transform:none;border-color:transparent;color:rgba(107,97,87,0.3)}
+
+/* Pax */
+.pax-row{display:flex;align-items:center;gap:10px;margin:1rem 0}
+.pax-btn{width:30px;height:30px;border:1px solid var(--wine);background:none;color:var(--wine);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.18s}
+.pax-btn:hover{background:var(--wine);color:white}
+.pax-n{font-family:var(--serif);font-size:1.75rem;color:var(--wine-dark);min-width:26px;text-align:center}
+.pax-info{font-size:0.68rem;color:var(--muted)}
+
+/* Total box */
+.total-box{background:var(--beige);border-left:2px solid var(--gold);padding:1rem 1.2rem;margin:1rem 0;display:none;animation:fadeIn 0.3s ease}
+.total-box.show{display:block}
+.tb-row{display:flex;justify-content:space-between;font-size:0.73rem;margin-bottom:3px}
+.tb-row strong{font-family:var(--serif);font-size:0.95rem;color:var(--wine-dark)}
+.tb-note{font-size:0.6rem;color:var(--muted);margin-top:6px}
+
+.book-btn{
+  background:var(--wine);color:var(--gold-light);border:none;padding:14px;
+  font-family:var(--sans);font-size:0.63rem;letter-spacing:0.22em;text-transform:uppercase;
+  font-weight:600;cursor:pointer;width:100%;transition:all 0.25s;margin-top:0.5rem;
+}
+.book-btn:hover{background:var(--wine-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(107,30,46,0.3)}
+.sb-note{font-size:0.6rem;color:var(--muted);text-align:center;margin-top:0.7rem}
+
+/* ════════════════════════════
+   BOOKING MODAL
+════════════════════════════ */
+.m-overlay{
+  display:none;position:fixed;inset:0;z-index:2000;
+  background:rgba(30,5,10,0.9);backdrop-filter:blur(12px);
+  align-items:flex-start;justify-content:center;
+  padding:2rem;overflow-y:auto;
+}
+.m-overlay.open{display:flex}
+.modal{
+  background:var(--cream);border:1px solid var(--gold);
+  max-width:680px;width:100%;margin:auto;position:relative;
+  animation:scaleIn 0.32s cubic-bezier(.17,.67,.34,1.1) both;
+}
+.m-head{background:var(--wine-dark);padding:1.8rem 2.4rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,169,110,0.22)}
+.m-head h2{font-family:var(--serif);font-size:1.65rem;font-weight:400;color:var(--gold-light)}
+.m-close{background:none;border:none;color:var(--gold);font-size:1.2rem;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;transition:color 0.2s;border-radius:50%}
+.m-close:hover{color:white;background:rgba(255,255,255,0.08)}
+.m-steps{display:flex;border-bottom:1px solid var(--border)}
+.m-st{flex:1;padding:9px;text-align:center;font-size:0.57rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--sans);transition:all 0.22s}
+.m-st.active{color:var(--wine);border-bottom-color:var(--wine)}
+.m-st.done{color:var(--gold);border-bottom-color:var(--gold)}
+.m-body{padding:2rem 2.4rem}
+.m-step{display:none}
+.m-step.active{display:block;animation:fadeUp 0.3s ease both}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-full{margin-bottom:1rem}
+textarea.inp{resize:none;min-height:78px}
+.bsb{background:var(--beige);padding:1.2rem 1.4rem;border-left:3px solid var(--gold);margin-bottom:1.5rem}
+.bsb-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:0.79rem}
+.bsb-row:last-child{border-bottom:none}
+.bsb-row strong{color:var(--wine-dark);font-weight:600}
+.price-bar{background:var(--wine-dark);padding:1.3rem 1.7rem;display:flex;align-items:center;justify-content:space-between;margin-top:1.4rem}
+.pb-lbl{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,220,185,0.48)}
+.pb-total{font-family:var(--serif);font-size:1.9rem;color:var(--gold)}
+.pb-note{font-size:0.62rem;color:rgba(240,220,185,0.38);margin-top:3px}
+.m-foot{padding:1.3rem 2.4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.btn-back{background:none;border:1px solid var(--border);padding:10px 20px;font-family:var(--sans);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;cursor:pointer;color:var(--muted);transition:all 0.2s}
+.btn-back:hover{border-color:var(--wine);color:var(--wine)}
+.btn-fwd{background:var(--wine);color:var(--gold-light);border:none;padding:11px 26px;font-family:var(--sans);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all 0.22s}
+.btn-fwd:hover{background:var(--wine-dark);transform:translateY(-1px)}
+/* Confirm step */
+.confirm-c{text-align:center;padding:2.5rem 1.5rem}
+.confirm-icon{font-size:3.2rem;color:var(--gold);margin-bottom:1.1rem;animation:scaleIn 0.4s 0.1s ease both}
+.confirm-h{font-family:var(--serif);font-size:2.2rem;color:var(--wine-dark);margin-bottom:0.35rem}
+.confirm-ref{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:1.6rem}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .fleet-grid{grid-template-columns:repeat(2,1fr)}
+  .d-body{grid-template-columns:1fr}
+  .d-sidebar{position:static;border-left:none;border-top:1px solid var(--border)}
+  .res-body{grid-template-columns:1fr}
+  .f-sidebar{display:none}
+}
+@media(max-width:768px){
+  nav{padding:0 1.5rem}
+  .nav-links{display:none}
+  .bw-form{grid-template-columns:1fr 1fr}
+  .search-btn{grid-column:span 2}
+  #fleet-sec,#routes-sec,#why-sec{padding:4rem 1.5rem}
+  .fleet-grid,.why-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr 1fr;padding:3rem 1.5rem}
+  .f-bottom{padding:1.4rem 1.5rem;flex-direction:column;gap:0.7rem;text-align:center}
+  .res-hero,.res-list{padding:2rem 1.5rem}
+  .rc{grid-template-columns:1fr}
+  .rc-img-wrap{height:200px}
+  .rc-pricing{flex-direction:row;justify-content:space-between}
+  .dh{height:350px}
+  .dh-overlay{padding:2rem 1.5rem}
+  .d-main{padding:2rem 1.5rem}
+  .d-sidebar{padding:1.5rem}
+  .form-row2{grid-template-columns:1fr}
+  .m-body{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ NAV ══════ -->
+<nav>
+  <div class="logo-wrap" onclick="goHome()">
+    <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="20,2 38,20 20,38 2,20" fill="none" stroke="#C9A96E" stroke-width="1.2"/>
+      <polygon points="20,8 32,20 20,32 8,20" fill="rgba(201,169,110,0.07)" stroke="#C9A96E" stroke-width="0.5"/>
+      <path d="M7 21.5L20 11L33 17.5V20L20 14.5L7 24Z" fill="#C9A96E" opacity="0.88"/>
+      <path d="M21.5 11.5L24.5 5.5L25.5 5.8L22.5 11.5Z" fill="#C9A96E" opacity="0.55"/>
+      <path d="M16.5 24L18.5 30L19.2 30L17.2 24Z" fill="#C9A96E" opacity="0.5"/>
+      <ellipse cx="33" cy="18.7" rx="3" ry="1.8" fill="#C9A96E" opacity="0.68"/>
+    </svg>
+    <div style="display:flex;flex-direction:column;line-height:1">
+      <span class="logo-name">Elite Jets</span>
+      <span class="logo-sub">Private Charter India</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="goHome()">Home</a></li>
+    <li><a onclick="toFleet()">Fleet</a></li>
+    <li><a onclick="toRoutes()">Routes</a></li>
+    <li><a href="#">Concierge</a></li>
+  </ul>
+  <button class="nav-cta" onclick="doSearchAll()">Book Now</button>
+</nav>
+
+<!-- ══════════════════════════════
+     PAGE: HOME
+══════════════════════════════ -->
+<div id="page-home" class="page active">
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-photo">
+      <img src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=1000&q=80" alt="Private jet">
+    </div>
+    <!-- floating plane SVG -->
+    <svg class="hero-plane" width="90" height="40" viewBox="0 0 90 40" fill="none">
+      <path d="M5 22L45 8L85 18V22L45 13L5 27Z" fill="#C9A96E" opacity="0.8"/>
+      <path d="M48 9L54 2L56 2.5L50 9Z" fill="#C9A96E" opacity="0.6"/>
+      <ellipse cx="85" cy="19.5" rx="6" ry="3.5" fill="#C9A96E" opacity="0.7"/>
+    </svg>
+    <div class="hero-content">
+      <p class="hero-eyebrow"><span></span>India's Premier Private Charter<span></span></p>
+      <h1 class="hero-title">Fly Beyond<br><em>The Ordinary</em></h1>
+      <p class="hero-sub" style="animation:fadeUp 0.9s 0.7s ease both">Six Exceptional Aircraft · Eighteen Destinations</p>
+      <!-- BOOKING WIDGET -->
+      <div class="bw">
+        <div class="bw-tabs">
+          <button class="bw-tab active" id="tab-ow" onclick="setTab('ow')">One Way</button>
+          <button class="bw-tab" id="tab-rt" onclick="setTab('rt')">Round Trip</button>
+          <button class="bw-tab" id="tab-ml" onclick="setTab('ml')">Multi-Leg</button>
+        </div>
+        <div class="bw-form">
+          <div class="fg">
+            <label class="lbl">From</label>
+            <div class="ac-wrap">
+              <input class="inp" id="hw-from" placeholder="City or airport" autocomplete="off" oninput="showAC(this,'hw-from-drop')">
+              <div class="ac-drop" id="hw-from-drop"></div>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="lbl">To</label>
+            <div class="ac-wrap">
+              <input class="inp" id="hw-to" placeholder="City or airport" autocomplete="off" oninput="showAC(this,'hw-to-drop')">
+              <div class="ac-drop" id="hw-to-drop"></div>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="lbl">Date</label>
+            <input class="inp" type="date" id="hw-date">
+          </div>
+          <button class="search-btn" onclick="doSearch()">Search →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLEET -->
+  <section id="fleet-sec">
+    <div class="sh reveal">
+      <p class="sh-eye">Our Aircraft</p>
+      <h2 class="sh-title">The <em>Fleet</em></h2>
+    </div>
+    <div class="fleet-grid" id="home-fleet"></div>
+  </section>
+
+  <!-- ROUTES -->
+  <section id="routes-sec">
+    <div class="r-grid-bg"></div>
+    <div class="r-inner">
+      <div class="sh reveal">
+        <p class="sh-eye" style="color:var(--gold)">Destinations</p>
+        <h2 class="sh-title" style="color:var(--gold-pale)">Across <em>India</em></h2>
+      </div>
+      <div class="city-grid" id="city-grid"></div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why-sec">
+    <div class="sh reveal">
+      <p class="sh-eye">The Elite Standard</p>
+      <h2 class="sh-title">Why <em>Elite Jets</em></h2>
+    </div>
+    <div class="why-grid">
+      <div class="wi reveal"><span class="wi-num">01</span><h3 class="wi-title">Seamless Departures</h3><p class="wi-desc">Arrive 20 minutes before flight. Private FBO lounges, no queues — your aircraft awaits, ready on your schedule.</p></div>
+      <div class="wi reveal" style="transition-delay:0.12s"><span class="wi-num">02</span><h3 class="wi-title">Curated Catering</h3><p class="wi-desc">Bespoke menus by award-winning chefs. Rajasthani thali to continental — tailored entirely to your preferences.</p></div>
+      <div class="wi reveal" style="transition-delay:0.24s"><span class="wi-num">03</span><h3 class="wi-title">Complete Privacy</h3><p class="wi-desc">Your schedule, your aircraft, your terms. Ground transfers and concierge arrangements handled with total discretion.</p></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="logo-wrap" onclick="goHome()" style="margin-bottom:0.5rem">
+        <svg width="30" height="30" viewBox="0 0 40 40" fill="none"><polygon points="20,2 38,20 20,38 2,20" fill="none" stroke="#C9A96E" stroke-width="1.2"/><path d="M7 21.5L20 11L33 17.5V20L20 14.5L7 24Z" fill="#C9A96E" opacity="0.88"/><ellipse cx="33" cy="18.7" rx="3" ry="1.8" fill="#C9A96E" opacity="0.68"/></svg>
+        <div style="display:flex;flex-direction:column;line-height:1;margin-left:8px">
+          <span class="logo-name">Elite Jets</span>
+          <span class="logo-sub">Private Charter India</span>
+        </div>
+      </div>
+      <p class="f-tagline">Elevating India's skies through exceptional private aviation since 2018.</p>
+      <p style="font-size:0.65rem;color:rgba(240,220,185,0.32)">+91 98100 00000<br>reservations@elitejets.in</p>
+    </div>
+    <div><p class="f-col-title">Services</p><ul class="f-links"><li><a>Charter Flights</a></li><li><a>Corporate Aviation</a></li><li><a>Wedding Charters</a></li><li><a>Air Ambulance</a></li></ul></div>
+    <div><p class="f-col-title">Company</p><ul class="f-links"><li><a>About Us</a></li><li><a>Safety Record</a></li><li><a>Careers</a></li><li><a>Press</a></li></ul></div>
+    <div><p class="f-col-title">Support</p><ul class="f-links"><li><a>FAQs</a></li><li><a>Booking Policy</a></li><li><a>Privacy</a></li><li><a>Terms</a></li></ul></div>
+  </footer>
+  <div class="f-bottom">
+    <p>© 2025 Elite Jets Aviation Pvt. Ltd. All rights reserved.</p>
+    <p>DGCA Approved Operator · AOC No. EJ-CHR-2018</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PAGE: SEARCH RESULTS
+══════════════════════════════ -->
+<div id="page-results" class="page">
+  <div class="res-hero">
+    <div class="breadcrumb"><span onclick="goHome()">Home</span> / Search Results</div>
+    <div id="res-route-title" class="res-route-title">Available Aircraft</div>
+    <div id="res-meta-text" class="res-meta-text"></div>
+  </div>
+  <div class="res-body">
+    <!-- Filters -->
+    <aside class="f-sidebar">
+      <p class="f-sec-title">Aircraft Class</p>
+      <label class="f-opt"><input type="checkbox" class="fc-class" value="Ultra Long Range" checked onchange="renderResults()"> Ultra Long Range</label>
+      <label class="f-opt"><input type="checkbox" class="fc-class" value="Super Midsize" checked onchange="renderResults()"> Super Midsize</label>
+      <label class="f-opt"><input type="checkbox" class="fc-class" value="Light Jet" checked onchange="renderResults()"> Light Jet</label>
+      <label class="f-opt"><input type="checkbox" class="fc-class" value="Very Light Jet" checked onchange="renderResults()"> Very Light Jet</label>
+      <p class="f-sec-title">Max Price / Hour</p>
+      <input type="range" class="f-range" id="price-range" min="50000" max="500000" value="500000" step="10000" oninput="onPriceRange(this)">
+      <div class="f-range-lbls"><span>₹50K</span><span id="price-range-val">₹5,00,000</span></div>
+      <p class="f-sec-title">Seats</p>
+      <label class="f-opt"><input type="checkbox" class="fc-seats" value="1-5" checked onchange="renderResults()"> 1–5 seats</label>
+      <label class="f-opt"><input type="checkbox" class="fc-seats" value="6-10" checked onchange="renderResults()"> 6–10 seats</label>
+      <label class="f-opt"><input type="checkbox" class="fc-seats" value="11+" checked onchange="renderResults()"> 11+ seats</label>
+      <button class="f-clear" onclick="clearFilters()">Clear Filters</button>
+    </aside>
+    <!-- Results -->
+    <div class="res-list">
+      <div class="res-top-bar">
+        <span id="res-count" class="res-count">6 aircraft found</span>
+        <div class="sort-wrap">
+          Sort by
+          <select class="sort-sel" id="sort-sel" onchange="renderResults()">
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+            <option value="seats-desc">Most Seats</option>
+          </select>
+        </div>
+      </div>
+      <div class="res-cards" id="res-cards"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PAGE: JET DETAIL
+══════════════════════════════ -->
+<div id="page-detail" class="page">
+  <div class="dh">
+    <img id="dh-img" class="dh-img" src="" alt="Jet">
+    <div class="dh-overlay">
+      <div>
+        <div class="dh-bc">
+          <span onclick="goBack()">← Back to Results</span>
+        </div>
+        <span class="dh-badge" id="dh-badge"></span>
+        <h1 class="dh-name" id="dh-name"></h1>
+        <p class="dh-model" id="dh-model"></p>
+        <div class="dh-qspecs" id="dh-qspecs"></div>
+      </div>
+    </div>
+  </div>
+  <div class="d-body">
+    <div class="d-main">
+      <div class="d-gal" id="d-gallery"></div>
+      <div class="d-tabs">
+        <button class="d-tab active" onclick="switchTab(this,'dt-overview')">Overview</button>
+        <button class="d-tab" onclick="switchTab(this,'dt-specs')">Specifications</button>
+        <button class="d-tab" onclick="switchTab(this,'dt-amenities')">Amenities</button>
+      </div>
+      <div class="d-tc active" id="dt-overview">
+        <p id="dt-overview-text" style="font-size:0.84rem;color:var(--muted);line-height:1.9;margin-bottom:1.5rem"></p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div style="background:var(--beige);padding:1.15rem;border-left:2px solid var(--gold)"><p style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Registration</p><p id="dt-reg" style="font-family:var(--serif);font-size:1.2rem;color:var(--wine-dark)"></p></div>
+          <div style="background:var(--beige);padding:1.15rem;border-left:2px solid var(--gold)"><p style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Home Base</p><p id="dt-base" style="font-family:var(--serif);font-size:1.2rem;color:var(--wine-dark)"></p></div>
+        </div>
+      </div>
+      <div class="d-tc" id="dt-specs">
+        <table class="spec-tbl" id="dt-spec-tbl"></table>
+      </div>
+      <div class="d-tc" id="dt-amenities">
+        <div class="amen-grid" id="dt-amen-grid"></div>
+      </div>
+    </div>
+    <!-- SIDEBAR -->
+    <div class="d-sidebar">
+      <p class="sb-title" id="sb-name"></p>
+      <p class="sb-price" id="sb-price"></p>
+      <!-- Calendar -->
+      <div class="cal-wrap">
+        <div class="cal-head">
+          <button class="cal-nav" onclick="calPrev()">‹</button>
+          <span class="cal-month" id="cal-month"></span>
+          <button class="cal-nav" onclick="calNext()">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div style="display:flex;gap:12px;margin-top:7px;font-size:0.6rem;color:var(--muted)">
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;background:rgba(107,30,46,0.1);display:inline-block"></span> Available</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;background:var(--wine);display:inline-block"></span> Selected</span>
+        </div>
+      </div>
+      <!-- Selected date pill -->
+      <div class="info-pill" id="sel-pill"></div>
+      <!-- Time slots -->
+      <div class="ts-wrap" id="ts-wrap">
+        <span class="ts-lbl">Departure Time (IST)</span>
+        <div class="ts-grid" id="ts-grid"></div>
+      </div>
+      <!-- Passengers -->
+      <div style="margin-top:1.1rem">
+        <span class="ts-lbl">Passengers</span>
+        <div class="pax-row">
+          <button class="pax-btn" onclick="changePax(-1)">−</button>
+          <span class="pax-n" id="pax-n">2</span>
+          <button class="pax-btn" onclick="changePax(1)">+</button>
+          <span class="pax-info">guests (max <span id="pax-max">8</span>)</span>
+        </div>
+      </div>
+      <!-- Total -->
+      <div class="total-box" id="total-box">
+        <div class="tb-row"><span>Est. hours</span><span>~2 hrs</span></div>
+        <div class="tb-row"><span>Rate</span><span id="tb-rate"></span></div>
+        <div class="tb-row"><span style="font-weight:600">Est. Total</span><strong id="tb-total"></strong></div>
+        <p class="tb-note">Final price confirmed on booking.</p>
+      </div>
+      <button class="book-btn" onclick="openModal()">Reserve This Aircraft</button>
+      <p class="sb-note">No charge until confirmed · Free cancellation 72 hrs prior</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     BOOKING MODAL
+══════════════════════════════ -->
+<div class="m-overlay" id="modal" onclick="onOverlayClick(event)">
+  <div class="modal">
+    <div class="m-head">
+      <h2 id="m-title">Reserve Your Aircraft</h2>
+      <button class="m-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="m-steps">
+      <div class="m-st active" id="mst-1">1. Details</div>
+      <div class="m-st" id="mst-2">2. Review</div>
+      <div class="m-st" id="mst-3">3. Confirmed</div>
+    </div>
+    <div class="m-body">
+      <!-- Step 1 -->
+      <div class="m-step active" id="ms-1">
+        <div class="bsb" id="ms1-info"></div>
+        <div class="form-row2">
+          <div class="fg"><label class="lbl">First Name</label><input class="inp" id="m-first" placeholder="Priya"></div>
+          <div class="fg"><label class="lbl">Last Name</label><input class="inp" id="m-last" placeholder="Mehta"></div>
+        </div>
+        <div class="form-row2">
+          <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="m-email" placeholder="priya@example.com"></div>
+          <div class="fg"><label class="lbl">Phone</label><input class="inp" type="tel" id="m-phone" placeholder="+91 98XXX XXXXX"></div>
+        </div>
+        <div class="form-row2">
+          <div class="fg"><label class="lbl">From</label>
+            <div class="ac-wrap"><input class="inp" id="m-from" placeholder="Departure city" oninput="showAC(this,'m-from-drop')"><div class="ac-drop" id="m-from-drop"></div></div>
+          </div>
+          <div class="fg"><label class="lbl">To</label>
+            <div class="ac-wrap"><input class="inp" id="m-to" placeholder="Destination city" oninput="showAC(this,'m-to-drop')"><div class="ac-drop" id="m-to-drop"></div></div>
+          </div>
+        </div>
+        <div class="form-full"><label class="lbl">Special Requests</label><textarea class="inp" id="m-req" placeholder="Dietary requirements, ground transport, catering…"></textarea></div>
+      </div>
+      <!-- Step 2 -->
+      <div class="m-step" id="ms-2">
+        <div class="bsb" id="ms2-review"></div>
+        <div class="price-bar">
+          <div><p class="pb-lbl">Total Estimated Charter</p><p class="pb-total" id="pb-total">₹0</p><p class="pb-note" id="pb-note"></p></div>
+          <div style="text-align:right"><p style="font-size:0.6rem;color:rgba(240,220,185,0.44);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px">Payment</p><p style="font-size:0.73rem;color:var(--gold-light)">50% advance on booking</p><p style="font-size:0.63rem;color:rgba(240,220,185,0.38)">Balance 48 hrs before departure</p></div>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="m-step" id="ms-3">
+        <div class="confirm-c">
+          <div class="confirm-icon">✦</div>
+          <h2 class="confirm-h">Booking Confirmed</h2>
+          <p class="confirm-ref" id="confirm-ref">REF: EJ-000000</p>
+          <div class="bsb" id="ms3-confirm"></div>
+          <p style="font-size:0.76rem;color:var(--muted);line-height:1.85;margin-top:1rem">A confirmation has been sent to your email. Our concierge will contact you within 2 hours to finalise your journey.</p>
+          <button class="btn-w" style="margin-top:1.5rem;padding:12px 28px" onclick="closeModal();goHome()">Return to Home</button>
+        </div>
+      </div>
+    </div>
+    <div class="m-foot" id="m-foot">
+      <button class="btn-back" id="btn-back" onclick="mPrev()">← Back</button>
+      <button class="btn-fwd" id="btn-fwd" onclick="mNext()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+<script>
+/* ── DATA ── */
+const CITIES=[
+  {name:"Mumbai",code:"BOM",airport:"Chhatrapati Shivaji Intl",state:"Maharashtra"},
+  {name:"Delhi",code:"DEL",airport:"Indira Gandhi Intl",state:"Delhi"},
+  {name:"Bengaluru",code:"BLR",airport:"Kempegowda Intl",state:"Karnataka"},
+  {name:"Hyderabad",code:"HYD",airport:"Rajiv Gandhi Intl",state:"Telangana"},
+  {name:"Chennai",code:"MAA",airport:"Chennai Intl",state:"Tamil Nadu"},
+  {name:"Kolkata",code:"CCU",airport:"Netaji Subhas Chandra Bose",state:"West Bengal"},
+  {name:"Goa",code:"GOI",airport:"Manohar Intl Airport",state:"Goa"},
+  {name:"Jaipur",code:"JAI",airport:"Jaipur Intl Airport",state:"Rajasthan"},
+  {name:"Udaipur",code:"UDR",airport:"Maharana Pratap Airport",state:"Rajasthan"},
+  {name:"Amritsar",code:"ATQ",airport:"Sri Guru Ram Dass Jee Intl",state:"Punjab"},
+  {name:"Pune",code:"PNQ",airport:"Pune Airport",state:"Maharashtra"},
+  {name:"Ahmedabad",code:"AMD",airport:"Sardar Vallabhbhai Patel Intl",state:"Gujarat"},
+  {name:"Srinagar",code:"SXR",airport:"Sheikh ul-Alam Airport",state:"J&K"},
+  {name:"Leh",code:"IXL",airport:"Kushok Bakula Rimpochhe",state:"Ladakh"},
+  {name:"Coimbatore",code:"CJB",airport:"Coimbatore Intl",state:"Tamil Nadu"},
+  {name:"Varanasi",code:"VNS",airport:"Lal Bahadur Shastri Intl",state:"UP"},
+  {name:"Kochi",code:"COK",airport:"Cochin Intl Airport",state:"Kerala"},
+  {name:"Bhubaneswar",code:"BBI",airport:"Biju Patnaik Intl",state:"Odisha"}
+];
+
+const IMGS=[
+  ["https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=900&q=80","https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=600&q=75","https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=600&q=75","https://images.unsplash.com/photo-1578637387939-43c525550085?w=600&q=75"],
+  ["https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=900&q=80","https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=600&q=75","https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=75","https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=600&q=75"],
+  ["https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=900&q=80","https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?w=600&q=75","https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=600&q=75","https://images.unsplash.com/photo-1578637387939-43c525550085?w=600&q=75"],
+  ["https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?w=900&q=80","https://images.unsplash.com/photo-1567473030492-533b30c5494c?w=600&q=75","https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=75","https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=600&q=75"],
+  ["https://images.unsplash.com/photo-1578637387939-43c525550085?w=900&q=80","https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=600&q=75","https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?w=600&q=75","https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=600&q=75"],
+  ["https://images.unsplash.com/photo-1567473030492-533b30c5494c?w=900&q=80","https://images.unsplash.com/photo-1578637387939-43c525550085?w=600&q=75","https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=600&q=75","https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=75"]
+];
+
+function mkDates(offsets){
+  const base=new Date(); base.setDate(1);
+  return offsets.map(o=>{
+    const d=new Date(base); d.setDate(d.getDate()+o);
+    return d.toISOString().split('T')[0];
+  });
+}
+
+const JETS=[
+  {id:"j1",reg:"VT-EJA",name:"Maharaja",model:"Bombardier Global 6500",klass:"Ultra Long Range",badge:"bdg-h",
+   seats:14,range:"11,112 km",speed:"956 km/h",ceiling:"51,000 ft",crew:3,base:"Mumbai",
+   pph:380000,pplabel:"₹3,80,000",
+   dates:mkDates([3,5,8,10,14,17,20,22,26,29,33]),
+   times:["06:00","07:30","09:00","10:30","14:00","15:30","17:00","18:30","20:00"],
+   naSlots:[2,6],
+   feats:["Private bedroom","Full stand-up cabin","Satcom WiFi","4-zone entertainment"],
+   amenities:["Private Bedroom Suite","Full Stand-up Cabin","Satcom WiFi","4K Entertainment","Conference Table","Full Galley Kitchen","Lie-flat Seats","Dedicated Crew","Ground Transfer","Custom Catering"],
+   overview:"The Maharaja is the pinnacle of intercontinental private aviation. Built on the Bombardier Global 6500 airframe, it combines ultra-long range capability with a cabin environment that rivals the finest five-star hotels. Perfect for India's business elite and discerning travellers who demand the extraordinary."
+  },
+  {id:"j2",reg:"VT-EJB",name:"Rajdhani",model:"Gulfstream G650",klass:"Ultra Long Range",badge:"bdg-h",
+   seats:16,range:"12,964 km",speed:"1,040 km/h",ceiling:"51,000 ft",crew:4,base:"Delhi",
+   pph:420000,pplabel:"₹4,20,000",
+   dates:mkDates([1,4,7,11,13,16,19,23,25,28,32]),
+   times:["07:00","08:30","10:00","11:30","13:00","15:00","16:30","19:00","21:00"],
+   naSlots:[1,5],
+   feats:["Four cabin zones","Chef galley","HD entertainment","Satellite phone"],
+   amenities:["Four Cabin Zones","Master Chef Galley","HD Entertainment","Satellite Comms","Private Office","Lie-flat Loungers","Shower Suite","Dedicated Butler","Priority Clearance","Bespoke Catering"],
+   overview:"The Rajdhani commands the skies with the Gulfstream G650, the world's most iconic ultra-long-range business jet. With four distinct cabin zones and the longest range of any aircraft in our fleet, it is the natural choice for heads of state, global CEOs, and those who accept only the very best."
+  },
+  {id:"j3",reg:"VT-EJC",name:"Vayudoot",model:"Cessna Citation Longitude",klass:"Super Midsize",badge:"bdg-m",
+   seats:10,range:"6,482 km",speed:"884 km/h",ceiling:"47,000 ft",crew:2,base:"Bengaluru",
+   pph:190000,pplabel:"₹1,90,000",
+   dates:mkDates([2,6,9,12,15,18,21,24,27,31,35]),
+   times:["06:30","08:00","09:30","11:00","12:30","14:30","16:00","18:00","20:30"],
+   naSlots:[3,7],
+   feats:["Flat-bed seats","WiFi","Whisper-quiet","Stand-up cabin"],
+   amenities:["Flat-bed Seats","High-speed WiFi","Whisper-quiet Cabin","Premium Leather","Mood Lighting","Galley Service","Entertainment","Ground Transfers","Custom Catering","Priority Slots"],
+   overview:"The Vayudoot represents the ideal balance of comfort, performance, and economy. The Citation Longitude's stand-up cabin and flat-bed seats make it perfect for longer domestic sectors, while its operating efficiency makes it the smart choice for frequent business travellers."
+  },
+  {id:"j4",reg:"VT-EJD",name:"Shivalik",model:"Embraer Phenom 300E",klass:"Light Jet",badge:"bdg-l",
+   seats:7,range:"3,650 km",speed:"834 km/h",ceiling:"45,000 ft",crew:1,base:"Hyderabad",
+   pph:110000,pplabel:"₹1,10,000",
+   dates:mkDates([1,4,8,11,14,17,20,23,26,30,34]),
+   times:["06:00","07:30","09:00","10:30","12:00","14:00","16:30","18:00","19:30"],
+   naSlots:[0,4],
+   feats:["Premium leather","WiFi","Large luggage hold","Fast boarding"],
+   amenities:["Premium Leather Seats","High-speed WiFi","Large Luggage Hold","Fast Boarding","Mood Lighting","Catering Service","Entertainment","Ground Transport","Priority Handling","Flexible Scheduling"],
+   overview:"The Shivalik — powered by the world's most technologically advanced light jet, the Embraer Phenom 300E — delivers a level of style and performance that far exceeds its category. Ideal for groups of up to seven, it covers every key domestic route with quiet efficiency."
+  },
+  {id:"j5",reg:"VT-EJE",name:"Deccan",model:"Pilatus PC-24",klass:"Light Jet",badge:"bdg-l",
+   seats:8,range:"3,300 km",speed:"815 km/h",ceiling:"45,000 ft",crew:1,base:"Goa",
+   pph:95000,pplabel:"₹95,000",
+   dates:mkDates([3,6,9,12,16,19,22,25,28,32,36]),
+   times:["07:00","08:30","10:00","11:30","13:30","15:00","17:00","19:00","21:00"],
+   naSlots:[2,6],
+   feats:["Short runway capable","Mountain certified","Cargo flex interior","Remote access"],
+   amenities:["Short-field Capability","Mountain Certified","Flexible Interior","Large Cargo Door","Catering","WiFi","Entertainment","Ground Transport","Remote Airstrip Access","Adventure Ready"],
+   overview:"The Deccan is our most versatile aircraft — a Swiss-engineered Pilatus PC-24 capable of accessing remote airstrips that larger jets cannot reach. Perfect for Leh, Srinagar, and remote leisure destinations, it combines jet performance with turboprop accessibility."
+  },
+  {id:"j6",reg:"VT-EJF",name:"Kingfisher",model:"HondaJet Elite II",klass:"Very Light Jet",badge:"bdg-l",
+   seats:5,range:"2,661 km",speed:"782 km/h",ceiling:"43,000 ft",crew:1,base:"Chennai",
+   pph:72000,pplabel:"₹72,000",
+   dates:mkDates([2,5,8,11,14,18,21,24,27,30,33]),
+   times:["06:30","08:00","09:30","11:00","13:00","15:30","17:30","19:00","20:30"],
+   naSlots:[1,5],
+   feats:["Over-nacelle engines","Spacious for class","Fuel efficient","City-hop specialist"],
+   amenities:["Innovative Engine Design","Best-in-class Cabin","Premium Seats","WiFi","Entertainment","Catering","Ground Transport","Fuel Efficient","Rapid Turnaround","City-hop Specialist"],
+   overview:"The Kingfisher is the HondaJet Elite II — the most fuel-efficient very light jet in its class. Its unique over-the-nacelle engine design creates an unexpectedly spacious cabin, making it the perfect choice for intimate travel and quick regional hops between India's major cities."
+  }
+];
+
+/* ── STATE ── */
+let curJet=null, selDate=null, selTime=null, pax=2;
+let calY=new Date().getFullYear(), calM=new Date().getMonth();
+let mStep=1, priceMax=500000;
+let prevPage='page-home';
+
+/* ── PAGE NAV ── */
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  setTimeout(initReveal,100);
+}
+function goHome(){showPage('page-home')}
+function goBack(){showPage(prevPage||'page-results')}
+function toFleet(){goHome();setTimeout(()=>document.getElementById('fleet-sec').scrollIntoView({behavior:'smooth'}),100)}
+function toRoutes(){goHome();setTimeout(()=>document.getElementById('routes-sec').scrollIntoView({behavior:'smooth'}),100)}
+
+/* ── TABS ── */
+function setTab(id){
+  ['ow','rt','ml'].forEach(t=>document.getElementById('tab-'+t).classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+/* ── AUTOCOMPLETE ── */
+function showAC(input,dropId){
+  const val=input.value.toLowerCase().trim();
+  const drop=document.getElementById(dropId);
+  if(!val){drop.classList.remove('open');return;}
+  const matches=CITIES.filter(c=>
+    c.name.toLowerCase().includes(val)||c.code.toLowerCase().startsWith(val)||c.state.toLowerCase().includes(val)
+  ).slice(0,6);
+  if(!matches.length){drop.classList.remove('open');return;}
+  drop.innerHTML=matches.map(c=>`<div class="ac-item" onclick="pickCity(event,'${input.id}','${dropId}','${c.name}','${c.code}')"><strong>${c.name} (${c.code})</strong><small>${c.airport} · ${c.state}</small></div>`).join('');
+  drop.classList.add('open');
+}
+function pickCity(e,inpId,dropId,name,code){
+  e.stopPropagation();
+  document.getElementById(inpId).value=name+' ('+code+')';
+  document.getElementById(dropId).classList.remove('open');
+}
+document.addEventListener('click',()=>{document.querySelectorAll('.ac-drop').forEach(d=>d.classList.remove('open'))});
+
+/* ── SEARCH ── */
+function doSearch(){
+  const from=document.getElementById('hw-from').value;
+  const to=document.getElementById('hw-to').value;
+  const date=document.getElementById('hw-date').value;
+  document.getElementById('res-route-title').textContent=(from&&to)?from+' → '+to:'All Available Aircraft';
+  const dl=date?new Date(date+'T00:00:00').toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):'Any Date';
+  document.getElementById('res-meta-text').textContent=dl+' · '+JETS.length+' aircraft in fleet';
+  document.getElementById('m-from').value=from;
+  document.getElementById('m-to').value=to;
+  prevPage='page-results';
+  renderResults(date);
+  showPage('page-results');
+}
+
+/* ── RESULTS ── */
+function onPriceRange(el){
+  priceMax=parseInt(el.value);
+  document.getElementById('price-range-val').textContent='₹'+priceMax.toLocaleString('en-IN');
+  renderResults();
+}
+function clearFilters(){
+  document.querySelectorAll('.fc-class,.fc-seats').forEach(cb=>cb.checked=true);
+  priceMax=500000;
+  document.getElementById('price-range').value=500000;
+  document.getElementById('price-range-val').textContent='₹5,00,000';
+  renderResults();
+}
+
+function renderResults(dateFilter){
+  const df=dateFilter||document.getElementById('res-meta-text').textContent.split(' · ')[0];
+  const checkedClasses=[...document.querySelectorAll('.fc-class:checked')].map(cb=>cb.value);
+  const seatRanges=[...document.querySelectorAll('.fc-seats:checked')].map(cb=>cb.value);
+  const sortVal=document.getElementById('sort-sel').value;
+
+  function seatOk(j){
+    for(const r of seatRanges){
+      if(r==='1-5'&&j.seats<=5)return true;
+      if(r==='6-10'&&j.seats>=6&&j.seats<=10)return true;
+      if(r==='11+'&&j.seats>=11)return true;
+    }
+    return false;
+  }
+
+  let list=JETS.filter(j=>checkedClasses.includes(j.klass)&&j.pph<=priceMax&&seatOk(j));
+  if(sortVal==='price-asc')list.sort((a,b)=>a.pph-b.pph);
+  else if(sortVal==='price-desc')list.sort((a,b)=>b.pph-a.pph);
+  else list.sort((a,b)=>b.seats-a.seats);
+
+  document.getElementById('res-count').textContent=list.length+' aircraft found';
+  document.getElementById('res-cards').innerHTML=list.map(j=>{
+    const idx=JETS.indexOf(j);
+    const avLbl=j.dates.length+' dates open';
+    return `<div class="rc">
+      <div class="rc-img-wrap" onclick="openDetail('${j.id}')" style="cursor:pointer"><img class="rc-img" src="${IMGS[idx][0]}" alt="${j.name}" loading="lazy"></div>
+      <div class="rc-body">
+        <div>
+          <span class="bdg ${j.badge}">${j.klass}</span>
+          <h3 style="font-family:var(--serif);font-size:1.55rem;color:var(--wine-dark);margin:0.25rem 0 0.12rem;cursor:pointer" onclick="openDetail('${j.id}')">${j.name}</h3>
+          <p style="font-size:0.7rem;color:var(--muted);margin-bottom:0.7rem">${j.model} · Reg: ${j.reg}</p>
+          <div style="display:flex;gap:1.5rem;font-size:0.77rem">
+            <span><strong style="font-family:var(--serif);font-size:1rem;color:var(--wine)">${j.seats}</strong> seats</span>
+            <span><strong style="font-family:var(--serif);font-size:1rem;color:var(--wine)">${j.speed.split(' ')[0]}</strong> km/h</span>
+            <span><strong style="font-family:var(--serif);font-size:1rem;color:var(--wine)">${j.range.split(',').join('')}</strong></span>
+          </div>
+          <div class="rc-feats">${j.feats.map(f=>`<span class="rc-feat">${f}</span>`).join('')}</div>
+        </div>
+        <div class="rc-foot">
+          <span style="font-size:0.67rem;color:var(--muted)">Based: ${j.base}</span>
+          <button class="btn-o" onclick="openDetail('${j.id}')">View Details →</button>
+        </div>
+      </div>
+      <div class="rc-pricing">
+        <p class="rcp-from">From</p>
+        <p class="rcp-price">${j.pplabel}</p>
+        <p class="rcp-unit">per flight hour</p>
+        <p class="rcp-avail">${avLbl}</p>
+        <button class="btn-w" style="margin-top:0.6rem;padding:9px 14px;font-size:0.58rem" onclick="openDetail('${j.id}')">Reserve Now</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── DETAIL ── */
+function openDetail(id){
+  curJet=JETS.find(j=>j.id===id);
+  const idx=JETS.indexOf(curJet);
+  selDate=null; selTime=null; pax=2;
+  calY=new Date().getFullYear(); calM=new Date().getMonth();
+
+  // Hero
+  document.getElementById('dh-img').src=IMGS[idx][0];
+  document.getElementById('dh-name').textContent=curJet.name;
+  document.getElementById('dh-model').textContent=curJet.model;
+  document.getElementById('dh-badge').className='dh-badge '+curJet.badge;
+  document.getElementById('dh-badge').textContent=curJet.klass;
+  document.getElementById('dh-qspecs').innerHTML=[{k:'Seats',v:String(curJet.seats)},{k:'Range',v:curJet.range.replace(',','')},{k:'Speed',v:curJet.speed}].map(s=>`<div class="dqs"><span class="dqs-v">${s.v.split(' ')[0]}</span><span class="dqs-k">${s.k}</span></div>`).join('');
+
+  // Gallery
+  document.getElementById('d-gallery').innerHTML=IMGS[idx].map((src,i)=>`<img class="d-gal-img${i===0?' active':''}" src="${src}" loading="lazy" alt="View ${i+1}" onclick="swapMain(this,'${src}')">`).join('');
+
+  // Tabs
+  document.getElementById('dt-overview-text').textContent=curJet.overview;
+  document.getElementById('dt-reg').textContent=curJet.reg;
+  document.getElementById('dt-base').textContent=curJet.base;
+  document.getElementById('dt-spec-tbl').innerHTML=[['Aircraft',curJet.model],['Registration',curJet.reg],['Max Passengers',curJet.seats],['Range',curJet.range],['Cruise Speed',curJet.speed],['Service Ceiling',curJet.ceiling],['Flight Crew',curJet.crew],['Home Base',curJet.base]].map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+  document.getElementById('dt-amen-grid').innerHTML=curJet.amenities.map(a=>`<div class="amen-item"><span class="amen-dot"></span>${a}</div>`).join('');
+
+  // Reset detail tabs
+  document.querySelectorAll('.d-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.d-tc').forEach(c=>c.classList.remove('active'));
+  document.querySelector('.d-tab').classList.add('active');
+  document.getElementById('dt-overview').classList.add('active');
+
+  // Sidebar
+  document.getElementById('sb-name').textContent=curJet.name;
+  document.getElementById('sb-price').innerHTML=curJet.pplabel+'<small>per flight hour</small>';
+  document.getElementById('pax-max').textContent=curJet.seats;
+  document.getElementById('pax-n').textContent=pax;
+  document.getElementById('sel-pill').classList.remove('show');
+  document.getElementById('ts-wrap').classList.remove('show');
+  document.getElementById('total-box').classList.remove('show');
+
+  renderCal();
+  prevPage='page-results';
+  showPage('page-detail');
+}
+
+function swapMain(el,src){
+  document.getElementById('dh-img').src=src;
+  document.querySelectorAll('.d-gal-img').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+}
+function switchTab(el,id){
+  document.querySelectorAll('.d-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.d-tc').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+/* ── CALENDAR ── */
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function renderCal(){
+  document.getElementById('cal-month').textContent=MONTHS[calM]+' '+calY;
+  const fd=new Date(calY,calM,1).getDay();
+  const dim=new Date(calY,calM+1,0).getDate();
+  const today=new Date(); today.setHours(0,0,0,0);
+  const DNS=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  let h=DNS.map(d=>`<div class="cal-dn">${d}</div>`).join('');
+  for(let i=0;i<fd;i++)h+=`<div class="cal-d empty"></div>`;
+  for(let d=1;d<=dim;d++){
+    const ds=calY+'-'+String(calM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const dayDate=new Date(calY,calM,d);
+    const isPast=dayDate<today;
+    const isAvail=curJet&&curJet.dates.includes(ds);
+    const isSel=ds===selDate;
+    const isToday=dayDate.getTime()===today.getTime();
+    let cls='cal-d';
+    if(isPast){cls+=' past';}
+    else if(isSel){cls+=' sel';}
+    else if(isAvail){cls+=' avail';}
+    if(isToday&&!isSel)cls+=' today';
+    const click=(!isPast)?`onclick="pickDate('${ds}')"`:''
+    h+=`<div class="${cls}" ${click}>${d}${isAvail&&!isSel?'<span class="av-dot"></span>':''}</div>`;
+  }
+  document.getElementById('cal-grid').innerHTML=h;
+}
+function calPrev(){calM--;if(calM<0){calM=11;calY--;}renderCal()}
+function calNext(){calM++;if(calM>11){calM=0;calY++;}renderCal()}
+
+function pickDate(ds){
+  selDate=ds; selTime=null;
+  renderCal();
+  const d=new Date(ds+'T00:00:00');
+  const pill=document.getElementById('sel-pill');
+  pill.innerHTML='<strong>Selected:</strong> '+d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  pill.classList.add('show');
+  renderTimes();
+  document.getElementById('ts-wrap').classList.add('show');
+  document.getElementById('total-box').classList.remove('show');
+}
+
+/* ── TIMES ── */
+function renderTimes(){
+  document.getElementById('ts-grid').innerHTML=curJet.times.map((t,i)=>{
+    const isNA=curJet.naSlots.includes(i);
+    const isSel=t===selTime;
+    return `<div class="ts${isNA?' na':isSel?' sel':''}" ${(!isNA)?`onclick="pickTime('${t}')"`:''} >${t}</div>`;
+  }).join('');
+}
+function pickTime(t){
+  selTime=t;
+  renderTimes();
+  const total=curJet.pph*2;
+  document.getElementById('tb-rate').textContent=curJet.pplabel+'/hr';
+  document.getElementById('tb-total').textContent='₹'+total.toLocaleString('en-IN');
+  document.getElementById('total-box').classList.add('show');
+}
+function changePax(d){
+  pax=Math.max(1,Math.min(curJet?curJet.seats:16,pax+d));
+  document.getElementById('pax-n').textContent=pax;
+}
+
+/* ── MODAL ── */
+function openModal(){
+  if(!selDate){alert('Please select a departure date.');return;}
+  if(!selTime){alert('Please select a departure time.');return;}
+  mStep=1;
+  const d=new Date(selDate+'T00:00:00');
+  const ds=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const idx=JETS.indexOf(curJet);
+  document.getElementById('ms1-info').innerHTML=`<div style="display:flex;gap:12px;align-items:center"><img src="${IMGS[idx][0]}" style="width:88px;height:58px;object-fit:cover;flex-shrink:0"><div><p style="font-family:var(--serif);font-size:1.15rem;color:var(--wine-dark)">${curJet.name}</p><p style="font-size:0.68rem;color:var(--muted);margin-top:1px">${curJet.model} · ${curJet.reg}</p><p style="font-size:0.65rem;color:var(--gold);margin-top:3px;letter-spacing:0.04em">${ds} · ${selTime} IST</p></div></div>`;
+  document.getElementById('m-title').textContent='Reserve — '+curJet.name;
+  updateModalUI();
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function onOverlayClick(e){if(e.target===document.getElementById('modal'))closeModal();}
+
+function updateModalUI(){
+  [1,2,3].forEach(n=>{
+    document.getElementById('ms-'+n).classList.toggle('active',n===mStep);
+    const t=document.getElementById('mst-'+n);
+    t.classList.toggle('active',n===mStep);
+    t.classList.toggle('done',n<mStep);
+  });
+  const foot=document.getElementById('m-foot');
+  foot.style.display=mStep===3?'none':'flex';
+  document.getElementById('btn-back').style.visibility=mStep===1?'hidden':'visible';
+  document.getElementById('btn-fwd').textContent=mStep===2?'Confirm Booking ✦':'Continue →';
+}
+function mNext(){
+  if(mStep===1){
+    const f=document.getElementById('m-first').value.trim();
+    const em=document.getElementById('m-email').value.trim();
+    if(!f||!em){alert('Please enter your name and email.');return;}
+    buildReview();
+    mStep=2;
+  } else if(mStep===2){
+    doConfirm();
+    return;
+  }
+  updateModalUI();
+}
+function mPrev(){if(mStep>1){mStep--;updateModalUI();}}
+
+function buildReview(){
+  const d=new Date(selDate+'T00:00:00');
+  const ds=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const total=curJet.pph*2;
+  document.getElementById('ms2-review').innerHTML=[
+    ['Aircraft',curJet.name+' ('+curJet.model+')'],
+    ['Registration',curJet.reg],
+    ['Date',ds],
+    ['Departure Time',selTime+' IST'],
+    ['Passengers',pax],
+    ['Route',(document.getElementById('m-from').value||'—')+' → '+(document.getElementById('m-to').value||'—')],
+    ['Lead Passenger',document.getElementById('m-first').value+' '+document.getElementById('m-last').value],
+    ['Email',document.getElementById('m-email').value]
+  ].map(([k,v])=>`<div class="bsb-row"><span>${k}</span><strong>${v}</strong></div>`).join('');
+  document.getElementById('pb-total').textContent='₹'+total.toLocaleString('en-IN');
+  document.getElementById('pb-note').textContent=curJet.pplabel+'/hr × ~2 hrs · Final on confirmation';
+}
+function doConfirm(){
+  const ref='EJ-'+Math.floor(100000+Math.random()*900000);
+  document.getElementById('confirm-ref').textContent='Booking Reference: '+ref;
+  const d=new Date(selDate+'T00:00:00');
+  const ds=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('ms3-confirm').innerHTML=[
+    ['Aircraft',curJet.name],
+    ['Date & Time',ds+' · '+selTime+' IST'],
+    ['Passengers',pax],
+    ['Contact',document.getElementById('m-email').value]
+  ].map(([k,v])=>`<div class="bsb-row"><span>${k}</span><strong>${v}</strong></div>`).join('');
+  mStep=3;
+  document.querySelectorAll('.m-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('ms-3').classList.add('active');
+  document.getElementById('m-foot').style.display='none';
+  document.querySelectorAll('.m-st').forEach(t=>{t.classList.remove('active');t.classList.add('done');});
+}
+
+/* ── HOME FLEET ── */
+function renderHomeFleet(){
+  document.getElementById('home-fleet').innerHTML=JETS.map((j,i)=>`
+    <div class="jc reveal" style="transition-delay:${i*0.08}s" onclick="openDetail('${j.id}')">
+      <div class="jc-img-wrap"><img class="jc-img" src="${IMGS[i][0]}" alt="${j.name}" loading="lazy"></div>
+      <div class="avail-tag">${j.dates.length} dates open</div>
+      <div class="jc-body">
+        <span class="bdg ${j.badge}">${j.klass}</span>
+        <h3 class="jc-name">${j.name}</h3>
+        <p class="jc-model">${j.model} · ${j.reg}</p>
+        <div class="jc-specs">
+          <div><span class="sv">${j.seats}</span><span class="sk">Seats</span></div>
+          <div><span class="sv">${j.range.split(',').join('').split(' ')[0]}</span><span class="sk">km range</span></div>
+          <div><span class="sv">${j.speed.split(' ')[0]}</span><span class="sk">km/h</span></div>
+        </div>
+        <div class="jc-foot">
+          <div class="jc-price"><small>From</small>${j.pplabel}<span style="font-size:0.62rem;font-family:var(--sans);color:var(--muted)">/hr</span></div>
+          <button class="btn-w" onclick="event.stopPropagation();openDetail('${j.id}')">Book Now</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── CITIES ── */
+function renderCities(){
+  document.getElementById('city-grid').innerHTML=CITIES.map((c,i)=>`
+    <div class="ct reveal" style="transition-delay:${i*0.04}s" onclick="selectCity2('${c.name}','${c.code}')">
+      <div class="ct-dot"></div>
+      <div><div class="ct-name">${c.name}</div><div class="ct-code">${c.code} · ${c.state}</div></div>
+    </div>`).join('');
+}
+function selectCity2(name,code){
+  document.getElementById('hw-from').value=name+' ('+code+')';
+  goHome();
+  setTimeout(()=>document.getElementById('hero').scrollIntoView({behavior:'smooth'}),100);
+}
+
+/* ── SCROLL REVEAL ── */
+function initReveal(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
+}
+
+/* ── INIT ── */
+document.getElementById('hw-date').min=new Date().toISOString().split('T')[0];
+renderHomeFleet();
+renderCities();
+initReveal();
+renderResults();
+
+function doSearchAll(){
+  document.getElementById('res-route-title').textContent='All Available Aircraft';
+  document.getElementById('res-meta-text').textContent='All dates · '+JETS.length+' aircraft in fleet';
+  renderResults();
+  showPage('page-results');
+}
+</script>
+</body>
+</html>
