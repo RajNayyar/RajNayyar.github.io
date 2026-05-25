@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackWings Club — Private Charter & Helicopter</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --black:#080809;
+  --surface:#0E0E10;
+  --surface2:#141416;
+  --surface3:#1A1A1D;
+  --glass:rgba(255,255,255,0.038);
+  --glass-hover:rgba(255,255,255,0.068);
+  --glass-border:rgba(255,255,255,0.075);
+  --glass-border-2:rgba(255,255,255,0.12);
+  --platinum:#C8C8D0;
+  --platinum-dim:rgba(200,200,208,0.55);
+  --platinum-ghost:rgba(200,200,208,0.2);
+  --gold:#C9A84C;
+  --gold-dim:rgba(201,168,76,0.55);
+  --gold-ghost:rgba(201,168,76,0.12);
+  --silver:#9898A8;
+  --white:rgba(255,255,255,0.92);
+  --muted:rgba(255,255,255,0.38);
+  --border:rgba(255,255,255,0.07);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Space Grotesk','Inter',sans-serif;
+  --glow:rgba(201,168,76,0.15);
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--black);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ─── KEYFRAMES ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px var(--glow)}50%{box-shadow:0 0 60px rgba(201,168,76,0.28),0 0 120px rgba(201,168,76,0.08)}}
+@keyframes shimmerSweep{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+@keyframes rotateRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes rotateRingRev{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
+@keyframes dashDraw{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
+@keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes floatCraft{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+@keyframes scanLine{0%{top:-4px}100%{top:calc(100% + 4px)}}
+@keyframes counterSpin{from{transform:rotate(0)}to{transform:rotate(-360deg)}}
+@keyframes dotPulse{0%,80%,100%{opacity:0.3;transform:scale(0.8)}40%{opacity:1;transform:scale(1)}}
+@keyframes progressFill{from{width:0}to{width:100%}}
+
+/* ─── PAGE SYSTEM ─── */
+.page{display:none;min-height:100vh;animation:pageIn 0.5s ease forwards}
+.page.active{display:block}
+
+/* ═══════════════════════════
+   SPLASH LOADER
+═══════════════════════════ */
+#splash{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--black);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 0.8s ease, visibility 0.8s ease;
+}
+#splash.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.splash-logo{
+  position:relative;width:120px;height:120px;margin-bottom:2.5rem;
+}
+.splash-ring{position:absolute;inset:0}
+.splash-ring svg{width:100%;height:100%}
+.ring-outer{animation:rotateRing 3s linear infinite}
+.ring-inner{animation:rotateRingRev 2s linear infinite}
+.splash-icon{
+  position:absolute;inset:20px;display:flex;align-items:center;justify-content:center;
+  background:var(--surface2);border-radius:50%;border:1px solid var(--glass-border);
+}
+.splash-name{
+  font-family:var(--serif);font-size:2rem;font-weight:300;
+  color:var(--platinum);letter-spacing:0.18em;margin-bottom:0.3rem;
+  animation:fadeIn 1s 0.5s ease both;
+}
+.splash-sub{
+  font-size:0.55rem;letter-spacing:0.45em;text-transform:uppercase;
+  color:var(--gold-dim);animation:fadeIn 1s 0.8s ease both;margin-bottom:2.5rem;
+}
+.splash-bar{
+  width:200px;height:1px;background:var(--surface3);position:relative;overflow:hidden;
+}
+.splash-bar-fill{
+  position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  animation:progressFill 3s ease forwards;
+}
+.splash-dots{display:flex;gap:8px;margin-top:1.5rem}
+.splash-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--glass-border-2);
+  animation:dotPulse 1.4s ease-in-out infinite;
+}
+.splash-dot:nth-child(2){animation-delay:0.2s}
+.splash-dot:nth-child(3){animation-delay:0.4s}
+
+/* ═══════════════════════════
+   TRANSITION LOADER
+═══════════════════════════ */
+#transition-loader{
+  position:fixed;inset:0;z-index:8000;
+  background:rgba(8,8,9,0.92);backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0.3s ease;
+}
+#transition-loader.show{opacity:1;visibility:visible}
+.tl-craft{
+  width:80px;height:80px;margin-bottom:1.5rem;
+  animation:floatCraft 2s ease-in-out infinite;
+}
+.tl-text{
+  font-size:0.62rem;letter-spacing:0.35em;text-transform:uppercase;
+  color:var(--platinum-dim);margin-top:0.5rem;
+}
+.tl-bar{width:180px;height:1px;background:var(--surface3);position:relative;overflow:hidden;margin-top:1rem}
+.tl-bar-fill{
+  position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,transparent,var(--platinum),transparent);
+  width:0;
+}
+
+/* ═══════════════════════════
+   PAYMENT LOADER
+═══════════════════════════ */
+#payment-loader{
+  position:fixed;inset:0;z-index:8000;
+  background:rgba(8,8,9,0.97);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:opacity 0.4s ease,visibility 0.4s ease;
+}
+#payment-loader.show{opacity:1;visibility:visible}
+.pl-ring{position:relative;width:100px;height:100px;margin-bottom:2rem}
+.pl-ring svg{width:100%;height:100%}
+.pl-track{fill:none;stroke:var(--surface3);stroke-width:2}
+.pl-fill{fill:none;stroke:var(--gold);stroke-width:2;stroke-linecap:round;stroke-dasharray:251;stroke-dashoffset:251;transition:stroke-dashoffset 0.5s ease}
+.pl-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.pl-status{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--platinum-dim);min-height:1.5em;text-align:center;transition:all 0.3s ease}
+.pl-checkmark{opacity:0;font-size:2.5rem;margin-bottom:0.5rem;transition:all 0.5s ease;transform:scale(0.5)}
+.pl-checkmark.show{opacity:1;transform:scale(1)}
+.pl-success-text{font-family:var(--serif);font-size:1.8rem;color:var(--gold);opacity:0;transition:all 0.6s 0.3s ease;transform:translateY(10px)}
+.pl-success-text.show{opacity:1;transform:translateY(0)}
+
+/* ═══════════════════════════
+   NAV
+═══════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:rgba(8,8,9,0.85);backdrop-filter:blur(30px) saturate(1.2);
+  border-bottom:1px solid var(--glass-border);
+  padding:0 3.5rem;height:70px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{display:flex;align-items:center;gap:14px;cursor:pointer;text-decoration:none}
+.nav-logo-mark{
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--glass-border-2);background:var(--glass);
+  transition:all 0.35s ease;
+}
+.nav-logo:hover .nav-logo-mark{border-color:var(--gold-dim);background:var(--gold-ghost);box-shadow:0 0 20px var(--glow)}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1}
+.nav-brand{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--platinum);letter-spacing:0.12em}
+.nav-tagline{font-size:0.44rem;letter-spacing:0.5em;text-transform:uppercase;color:var(--gold-dim);margin-top:2px}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:0.65rem;font-weight:500;
+  letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;
+  transition:color 0.25s;position:relative;padding-bottom:2px;
+}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s ease}
+.nav-links a:hover{color:var(--platinum)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  background:transparent;border:1px solid var(--gold-dim);color:var(--gold);
+  padding:9px 22px;font-family:var(--sans);font-size:0.6rem;font-weight:500;
+  letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;
+  transition:all 0.28s ease;position:relative;overflow:hidden;
+}
+.nav-cta::before{
+  content:'';position:absolute;inset:0;background:var(--gold-ghost);
+  opacity:0;transition:opacity 0.28s ease;
+}
+.nav-cta:hover{border-color:var(--gold);color:var(--gold);box-shadow:0 0 20px var(--glow)}
+.nav-cta:hover::before{opacity:1}
+
+/* ═══════════════════════════
+   HOME — HERO
+═══════════════════════════ */
+#page-home{background:var(--black)}
+
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;padding-top:70px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 50% at 70% 45%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    linear-gradient(170deg, #040405 0%, #080809 100%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size:80px 80px;
+}
+.hero-scan{
+  position:absolute;inset:0;overflow:hidden;pointer-events:none;
+}
+.hero-scan::after{
+  content:'';position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, transparent, rgba(201,168,76,0.25), transparent);
+  animation:scanLine 8s linear infinite;
+}
+.hero-img-wrap{
+  position:absolute;inset:0;overflow:hidden;
+}
+/* Hero slideshow slides */
+.hero-slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center 45%;background-repeat:no-repeat;
+  opacity:0;transition:opacity 1.4s cubic-bezier(0.45,0,0.25,1);
+  filter:brightness(1.06) contrast(1.04) saturate(0.88);
+  will-change:opacity,transform;
+}
+.hero-slide.active{
+  opacity:0.62;
+  animation:heroBurns 7s ease-in-out forwards;
+}
+@keyframes heroBurns{
+  0%  {transform:scale(1);   background-position:center 48%;}
+  100%{transform:scale(1.07);background-position:center 42%;}
+}
+/* Premium transition shade — sits above gradients during slide change */
+.hero-shade{
+  position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:rgba(8,8,9,0.92);
+  opacity:0;
+}
+.hero-img-wrap::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(100deg,
+    rgba(8,8,9,0.96) 0%,
+    rgba(8,8,9,0.82) 28%,
+    rgba(8,8,9,0.42) 52%,
+    rgba(8,8,9,0.12) 72%,
+    transparent 100%
+  );
+}
+.hero-img-wrap::after{
+  content:'';position:absolute;inset:0;z-index:2;
+  background:linear-gradient(to bottom,
+    rgba(8,8,9,0.55) 0%,
+    transparent 18%,
+    transparent 78%,
+    rgba(8,8,9,0.75) 100%
+  );
+}
+.hero-content{
+  position:relative;z-index:2;padding:0 3.5rem;max-width:780px;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-size:0.55rem;letter-spacing:0.5em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:2rem;animation:fadeUp 0.9s 0.4s ease both;
+}
+.hero-eyebrow span{display:block;width:28px;height:1px;background:var(--gold);opacity:0.5}
+.hero-h1{
+  font-family:var(--serif);font-size:clamp(3.2rem,6vw,5.5rem);font-weight:300;
+  color:var(--platinum);line-height:1.04;letter-spacing:0.02em;
+  margin-bottom:0.2em;animation:fadeUp 0.9s 0.6s ease both;
+}
+.hero-h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{
+  font-size:0.7rem;letter-spacing:0.25em;color:var(--muted);text-transform:uppercase;
+  margin-bottom:3rem;animation:fadeUp 0.9s 0.8s ease both;
+}
+.hero-actions{display:flex;gap:1.2rem;animation:fadeUp 0.9s 1s ease both}
+.btn-primary{
+  background:var(--gold);color:var(--black);border:none;
+  padding:14px 32px;font-family:var(--sans);font-size:0.62rem;
+  font-weight:600;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;
+  transition:all 0.28s ease;position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transition:left 0.5s ease;
+}
+.btn-primary:hover{box-shadow:0 8px 40px rgba(201,168,76,0.35);transform:translateY(-2px)}
+.btn-primary:hover::before{left:200%}
+.btn-ghost{
+  background:transparent;border:1px solid var(--glass-border-2);color:var(--platinum-dim);
+  padding:14px 32px;font-family:var(--sans);font-size:0.62rem;
+  font-weight:500;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;
+  transition:all 0.28s ease;
+}
+.btn-ghost:hover{border-color:var(--platinum-ghost);color:var(--platinum);background:var(--glass)}
+
+/* Stats bar */
+.hero-stats{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(14,14,16,0.7);backdrop-filter:blur(20px);
+  border-top:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;gap:0;
+  animation:fadeIn 1.2s 1.4s ease both;
+}
+.hs-item{
+  padding:1.4rem 3rem;display:flex;flex-direction:column;align-items:center;gap:4px;
+  border-right:1px solid var(--glass-border);flex:1;max-width:200px;
+}
+.hs-item:last-child{border-right:none}
+.hs-val{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--platinum)}
+.hs-lbl{font-size:0.5rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--muted)}
+
+/* Floating craft decoration */
+.hero-craft{display:none}
+
+/* ═══════════════════════════
+   FLEET SECTION (HOME)
+═══════════════════════════ */
+.fleet-section{padding:7rem 3.5rem;position:relative}
+.fleet-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg, transparent, var(--glass-border-2), transparent);
+}
+.sh{text-align:center;margin-bottom:4rem}
+.sh-eye{
+  font-size:0.55rem;letter-spacing:0.5em;text-transform:uppercase;
+  color:var(--gold-dim);margin-bottom:1.2rem;
+  display:flex;align-items:center;justify-content:center;gap:16px;
+}
+.sh-eye::before,.sh-eye::after{content:'';display:block;width:30px;height:1px;background:var(--gold);opacity:0.4}
+.sh-title{
+  font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:300;
+  color:var(--platinum);line-height:1.15;
+}
+.sh-title em{font-style:italic;color:var(--gold)}
+.sh-desc{font-size:0.75rem;color:var(--muted);margin-top:0.8rem;letter-spacing:0.05em;line-height:1.8}
+
+/* Fleet tabs */
+.fleet-tabs{display:flex;justify-content:center;gap:0;margin-bottom:3rem;border:1px solid var(--glass-border)}
+.ftab{
+  padding:12px 32px;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;
+  font-weight:500;cursor:pointer;border:none;background:transparent;
+  color:var(--muted);transition:all 0.25s;font-family:var(--sans);position:relative;
+}
+.ftab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.25s ease}
+.ftab.active{color:var(--gold);background:var(--gold-ghost)}
+.ftab.active::after{transform:scaleX(1)}
+.ftab:hover:not(.active){color:var(--platinum-dim);background:var(--glass)}
+
+.fleet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;max-width:1300px;margin:0 auto}
+
+/* Aircraft Card */
+.ac{
+  background:var(--glass);border:1px solid var(--glass-border);
+  overflow:hidden;cursor:pointer;position:relative;
+  transition:transform 0.4s cubic-bezier(.17,.67,.34,1.1),border-color 0.3s,box-shadow 0.4s;
+}
+.ac:hover{
+  transform:translateY(-8px);
+  border-color:rgba(201,168,76,0.22);
+  box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(201,168,76,0.06);
+}
+.ac-img-wrap{overflow:hidden;height:200px;position:relative}
+.ac-img{width:100%;height:100%;object-fit:cover;transition:transform 0.7s ease;display:block;filter:brightness(0.88) saturate(0.85)}
+.ac:hover .ac-img{transform:scale(1.07);filter:brightness(0.98) saturate(0.95)}
+.ac-img-wrap::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom, transparent 40%, rgba(8,8,9,0.85) 100%);
+}
+.ac-type-badge{
+  position:absolute;top:12px;left:12px;z-index:2;
+  background:rgba(8,8,9,0.82);backdrop-filter:blur(8px);
+  border:1px solid var(--glass-border-2);
+  padding:4px 12px;font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;
+}
+.ac-type-badge.helicopter{color:#7ECFA8;border-color:rgba(126,207,168,0.25)}
+.ac-type-badge.jet{color:var(--gold);border-color:rgba(201,168,76,0.25)}
+.ac-avail{
+  position:absolute;top:12px;right:12px;z-index:2;
+  width:8px;height:8px;border-radius:50%;background:#4CAF7E;
+  box-shadow:0 0 10px rgba(76,175,126,0.5);
+}
+.ac-body{padding:1.4rem}
+.ac-cat{font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+.ac-name{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:var(--platinum);margin-bottom:0.2rem}
+.ac-model{font-size:0.68rem;color:var(--silver);margin-bottom:1.1rem}
+.ac-specs{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);
+  padding:0.85rem 0;margin-bottom:1.1rem;gap:0;
+}
+.acspec{text-align:center;border-right:1px solid var(--glass-border);padding:0 8px}
+.acspec:last-child{border-right:none}
+.acspec-v{display:block;font-family:var(--serif);font-size:1.1rem;color:var(--platinum);margin-bottom:2px}
+.acspec-k{font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.ac-foot{display:flex;align-items:flex-end;justify-content:space-between}
+.ac-price{display:flex;flex-direction:column}
+.ac-price-val{font-family:var(--serif);font-size:1.35rem;color:var(--gold)}
+.ac-price-unit{font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.btn-sm{
+  background:transparent;border:1px solid var(--glass-border-2);
+  color:var(--platinum-dim);padding:8px 18px;
+  font-family:var(--sans);font-size:0.55rem;font-weight:500;
+  letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;
+  transition:all 0.25s ease;
+}
+.btn-sm:hover{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-ghost)}
+/* shimmer on hover */
+.ac::before{
+  content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;z-index:5;
+  background:linear-gradient(105deg, transparent, rgba(255,255,255,0.025), transparent);
+  transition:left 0.7s ease;pointer-events:none;
+}
+.ac:hover::before{left:200%}
+
+/* ═══════════════════════════
+   RESERVE SECTION
+═══════════════════════════ */
+#page-reserve{background:var(--black);padding-top:70px}
+.reserve-hero{
+  padding:4rem 3.5rem 3rem;
+  background:linear-gradient(180deg, var(--surface) 0%, var(--black) 100%);
+  border-bottom:1px solid var(--glass-border);
+  position:relative;overflow:hidden;
+}
+.reserve-hero::before{
+  content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;
+  border-radius:50%;background:radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.breadcrumb{
+  font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:1rem;cursor:pointer;display:flex;align-items:center;gap:8px;
+}
+.breadcrumb span{color:var(--gold-dim);transition:color 0.2s}
+.breadcrumb span:hover{color:var(--gold)}
+.rh-title{
+  font-family:var(--serif);font-size:2.5rem;font-weight:300;
+  color:var(--platinum);margin-bottom:0.3rem;
+}
+.rh-sub{font-size:0.72rem;color:var(--muted);letter-spacing:0.1em}
+
+/* Glass card base */
+.glass-card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);
+  position:relative;overflow:hidden;
+}
+.glass-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg, transparent, var(--glass-border-2), transparent);
+}
+
+/* Aircraft summary in reserve */
+.aircraft-summary{
+  display:grid;grid-template-columns:280px 1fr;
+  padding:3.5rem 3.5rem;gap:3rem;
+}
+.asim-img{
+  position:relative;overflow:hidden;
+}
+.asim-img img{width:100%;height:180px;object-fit:cover;filter:brightness(0.92) saturate(0.9)}
+.asim-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg, transparent 50%, rgba(8,8,9,0.7) 100%);
+}
+.asim-info{}
+.asim-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold-ghost);border:1px solid rgba(201,168,76,0.2);
+  padding:4px 12px;font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:0.8rem;
+}
+.asim-name{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--platinum);margin-bottom:0.2rem}
+.asim-model{font-size:0.72rem;color:var(--silver);margin-bottom:1.2rem}
+.asim-specs{display:flex;gap:2rem}
+.aspec{display:flex;flex-direction:column;gap:3px}
+.aspec-v{font-family:var(--serif);font-size:1.2rem;color:var(--gold)}
+.aspec-k{font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+
+/* Duration picker */
+.reserve-body{padding:0 3.5rem 4rem;display:grid;grid-template-columns:1fr 370px;gap:2rem;align-items:start}
+.res-main{}
+.res-sidebar{}
+
+.duration-card{padding:2rem;margin-bottom:1.2rem}
+.section-label{font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block}
+.dur-inputs{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.fg{display:flex;flex-direction:column;gap:6px}
+.lbl{font-size:0.56rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.inp,.sel{
+  background:var(--surface2);border:1px solid var(--glass-border);
+  padding:12px 14px;font-family:var(--sans);font-size:0.83rem;
+  color:var(--white);outline:none;
+  transition:border-color 0.25s,box-shadow 0.25s;width:100%;
+  -webkit-appearance:none;appearance:none;
+}
+.inp:focus,.sel:focus{border-color:rgba(201,168,76,0.4);box-shadow:0 0 0 3px rgba(201,168,76,0.08)}
+.inp::placeholder{color:var(--muted)}
+input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.5)}
+.sel option{background:var(--surface2)}
+
+/* Duration slider */
+.dur-slider-wrap{margin-top:0.5rem}
+.dur-display{
+  font-family:var(--serif);font-size:3rem;font-weight:300;
+  color:var(--platinum);text-align:center;margin:1rem 0 0.5rem;
+}
+.dur-display span{font-size:1rem;color:var(--muted);font-family:var(--sans);font-weight:300;margin-left:4px;vertical-align:middle}
+.dur-slider{
+  -webkit-appearance:none;appearance:none;width:100%;height:2px;
+  background:var(--surface3);outline:none;
+}
+.dur-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+  background:var(--gold);cursor:pointer;border:2px solid var(--black);
+  box-shadow:0 0 12px rgba(201,168,76,0.4);transition:transform 0.2s;
+}
+.dur-slider::-webkit-slider-thumb:hover{transform:scale(1.25)}
+.dur-range-labels{display:flex;justify-content:space-between;font-size:0.55rem;color:var(--muted);margin-top:8px}
+
+/* Passenger */
+.pax-card{padding:2rem;margin-bottom:1.2rem}
+.pax-ctrl{display:flex;align-items:center;gap:1rem;margin-top:0.8rem}
+.pax-btn{
+  width:36px;height:36px;border:1px solid var(--glass-border-2);
+  background:var(--glass);color:var(--platinum);
+  font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;font-family:var(--sans);
+}
+.pax-btn:hover{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-ghost)}
+.pax-num{font-family:var(--serif);font-size:2.2rem;color:var(--platinum);min-width:40px;text-align:center}
+.pax-label{font-size:0.65rem;color:var(--muted);line-height:1.6}
+
+/* Extras */
+.extras-card{padding:2rem;margin-bottom:1.2rem}
+.extra-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 0;border-bottom:1px solid var(--glass-border);
+}
+.extra-item:last-child{border-bottom:none}
+.extra-info{display:flex;flex-direction:column;gap:3px}
+.extra-name{font-size:0.8rem;color:var(--platinum)}
+.extra-price{font-size:0.6rem;color:var(--muted)}
+.toggle{
+  position:relative;width:42px;height:22px;cursor:pointer;
+}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{
+  position:absolute;inset:0;background:var(--surface3);
+  border:1px solid var(--glass-border);transition:all 0.3s;
+}
+.toggle input:checked + .toggle-track{background:var(--gold-ghost);border-color:var(--gold-dim)}
+.toggle-thumb{
+  position:absolute;top:3px;left:3px;width:14px;height:14px;
+  background:var(--silver);transition:all 0.3s;
+}
+.toggle input:checked + .toggle-track + .toggle-thumb,
+.toggle input:checked ~ .toggle-thumb{left:23px;background:var(--gold)}
+
+/* sidebar pricing */
+.price-summary{padding:2rem;position:sticky;top:90px}
+.ps-craft{
+  display:flex;align-items:center;gap:12px;padding-bottom:1.2rem;
+  margin-bottom:1.2rem;border-bottom:1px solid var(--glass-border);
+}
+.ps-craft-img{width:60px;height:60px;object-fit:cover;filter:brightness(0.8) saturate(0.8)}
+.ps-craft-info{}
+.ps-name{font-family:var(--serif);font-size:1rem;color:var(--platinum)}
+.ps-model{font-size:0.6rem;color:var(--muted)}
+.ps-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.8rem}
+.ps-row-label{font-size:0.65rem;color:var(--muted)}
+.ps-row-val{font-size:0.78rem;color:var(--platinum)}
+.ps-divider{height:1px;background:var(--glass-border);margin:1rem 0}
+.ps-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.4rem}
+.ps-total-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.ps-total-val{font-family:var(--serif);font-size:1.8rem;color:var(--gold)}
+.ps-note{font-size:0.58rem;color:var(--muted);line-height:1.7;margin-bottom:1.4rem;border-left:2px solid var(--gold-ghost);padding-left:10px}
+.reserve-btn{
+  width:100%;background:var(--gold);color:var(--black);border:none;
+  padding:15px;font-family:var(--sans);font-size:0.62rem;font-weight:600;
+  letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;
+  transition:all 0.28s ease;position:relative;overflow:hidden;
+}
+.reserve-btn::before{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition:left 0.5s ease;
+}
+.reserve-btn:hover{box-shadow:0 8px 40px rgba(201,168,76,0.4);transform:translateY(-2px)}
+.reserve-btn:hover::before{left:200%}
+
+/* ─── RESERVATION MODE TABS ─── */
+.res-mode-tabs{
+  display:flex;margin:0 3.5rem 2rem;border:1px solid var(--glass-border);width:fit-content;
+}
+.rmt{
+  padding:13px 30px;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;
+  font-weight:500;cursor:pointer;border:none;background:transparent;
+  color:var(--muted);transition:all 0.25s;font-family:var(--sans);
+  display:flex;align-items:center;gap:9px;
+}
+.rmt.active{color:var(--gold);background:var(--gold-ghost)}
+.rmt:hover:not(.active){color:var(--platinum-dim);background:var(--glass)}
+
+/* Route chips */
+.route-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.4rem}
+.route-chip{
+  padding:7px 14px;font-size:0.57rem;letter-spacing:0.12em;text-transform:uppercase;
+  border:1px solid var(--glass-border);background:var(--glass);color:var(--muted);
+  cursor:pointer;transition:all 0.22s;font-family:var(--sans);
+}
+.route-chip:hover{border-color:rgba(201,168,76,0.3);color:var(--platinum-dim)}
+.route-chip.active{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-ghost)}
+
+/* Flight route visual */
+.frv{display:flex;align-items:center;gap:1.2rem;padding:1.4rem 0;margin-bottom:0.8rem;border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);margin-top:0.5rem}
+.frv-city{flex:1}
+.frv-code{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--platinum);line-height:1}
+.frv-name{font-size:0.56rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.frv-mid{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto}
+.frv-line{position:relative;width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.frv-plane{font-size:1rem;color:var(--gold-dim);position:absolute;top:-9px;left:50%;transform:translateX(-50%)}
+.frv-dur{font-size:0.53rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim)}
+
+/* Return toggle row */
+.return-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 0;border-top:1px solid var(--glass-border);margin-top:1rem;
+}
+.rr-label{font-size:0.72rem;color:var(--platinum)}
+.rr-sub{font-size:0.58rem;color:var(--muted);margin-top:2px}
+
+/* P2P from/to row */
+.p2p-from-to{display:grid;grid-template-columns:1fr 38px 1fr;gap:0;align-items:end;margin-bottom:1.2rem}
+.p2p-swap{
+  width:38px;height:42px;display:flex;align-items:center;justify-content:center;
+  background:var(--glass);border:1px solid var(--glass-border);cursor:pointer;
+  color:var(--muted);font-size:0.95rem;transition:all 0.2s;border-left:none;border-right:none;
+}
+.p2p-swap:hover{color:var(--gold);background:var(--gold-ghost)}
+
+/* Time slot grid */
+.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:0.8rem;margin-bottom:0.5rem}
+.time-slot{
+  padding:8px 4px;text-align:center;font-size:0.6rem;letter-spacing:0.08em;
+  border:1px solid var(--glass-border);background:var(--glass);color:var(--muted);
+  cursor:pointer;transition:all 0.2s;font-family:var(--sans);
+}
+.time-slot:hover{border-color:rgba(201,168,76,0.3);color:var(--platinum-dim)}
+.time-slot.active{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-ghost)}
+
+/* ═══════════════════════════
+   PAYMENT PAGE
+═══════════════════════════ */
+#page-payment{background:var(--black);padding-top:70px}
+.payment-hero{
+  padding:3.5rem;
+  background:linear-gradient(180deg, var(--surface) 0%, var(--black) 100%);
+  border-bottom:1px solid var(--glass-border);
+}
+.ph-step{display:flex;align-items:center;gap:0;margin-top:1.5rem}
+.ph-step-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--muted);padding:8px 0;position:relative;
+}
+.ph-step-item.active{color:var(--gold)}
+.ph-step-item.done{color:var(--silver)}
+.ph-step-num{
+  width:24px;height:24px;border-radius:50%;
+  border:1px solid var(--glass-border-2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.6rem;font-weight:600;background:var(--glass);
+}
+.ph-step-item.active .ph-step-num{background:var(--gold-ghost);border-color:var(--gold-dim);color:var(--gold)}
+.ph-step-item.done .ph-step-num{background:var(--surface3);color:var(--silver)}
+.ph-step-connector{width:60px;height:1px;background:var(--glass-border);margin:0 1rem}
+
+.payment-body{
+  padding:3rem 3.5rem;
+  display:grid;grid-template-columns:1fr 380px;gap:2.5rem;align-items:start;
+}
+
+/* Card input */
+.card-section{padding:2rem;margin-bottom:1.2rem}
+.cs-title{font-family:var(--serif);font-size:1.2rem;color:var(--platinum);margin-bottom:0.2rem}
+.cs-sub{font-size:0.65rem;color:var(--muted);margin-bottom:1.5rem}
+.card-visual{
+  background:linear-gradient(135deg, var(--surface3) 0%, var(--surface2) 100%);
+  border:1px solid var(--glass-border-2);
+  padding:1.8rem;margin-bottom:1.8rem;position:relative;overflow:hidden;
+  height:180px;display:flex;flex-direction:column;justify-content:space-between;
+}
+.card-visual::before{
+  content:'';position:absolute;top:-50%;right:-20%;width:250px;height:250px;
+  border-radius:50%;background:radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+}
+.cv-chip{
+  width:36px;height:26px;background:linear-gradient(135deg, #D4A84B, #C9A84C, #B8943C);
+  border-radius:3px;border:1px solid rgba(255,220,100,0.4);position:relative;
+}
+.cv-chip::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(0,0,0,0.3);transform:translateY(-50%)}
+.cv-chip::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(0,0,0,0.2)}
+.cv-number{font-family:var(--serif);font-size:1.4rem;letter-spacing:0.2em;color:var(--platinum);font-weight:300}
+.cv-info{display:flex;justify-content:space-between;align-items:flex-end}
+.cv-name{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--platinum-dim)}
+.cv-expiry{text-align:right}
+.cv-exp-lbl{font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.cv-exp-val{font-size:0.75rem;color:var(--platinum-dim);letter-spacing:0.1em}
+.cv-brand{position:absolute;bottom:1.5rem;right:1.5rem;display:flex;gap:-6px}
+.cv-circle{width:28px;height:28px;border-radius:50%;opacity:0.85}
+.cv-circle:first-child{background:#EB001B;margin-right:-12px}
+.cv-circle:last-child{background:#F79E1B}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-full{margin-bottom:1rem}
+.inp-icon{position:relative}
+.inp-icon .inp{padding-left:38px}
+.inp-icon-sym{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.85rem}
+
+/* Billing summary */
+.billing-card{padding:2rem;position:sticky;top:90px}
+.bc-title{font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.bc-craft{
+  display:flex;gap:12px;align-items:center;padding-bottom:1.2rem;
+  margin-bottom:1.2rem;border-bottom:1px solid var(--glass-border);
+}
+.bc-craft-img{width:70px;height:50px;object-fit:cover;filter:brightness(0.8)}
+.bc-craft-info{}
+.bc-craft-name{font-family:var(--serif);font-size:1rem;color:var(--platinum)}
+.bc-craft-model{font-size:0.6rem;color:var(--muted);margin-top:2px}
+.bc-row{display:flex;justify-content:space-between;margin-bottom:0.8rem}
+.bc-row-l{font-size:0.67rem;color:var(--muted)}
+.bc-row-v{font-size:0.67rem;color:var(--platinum);text-align:right}
+.bc-divider{height:1px;background:var(--glass-border);margin:1rem 0}
+.bc-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.5rem}
+.bc-total-l{font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.bc-total-v{font-family:var(--serif);font-size:2rem;color:var(--gold)}
+.bc-advance{font-size:0.6rem;color:var(--muted);text-align:right;margin-bottom:1.5rem}
+.bc-secure{
+  display:flex;align-items:center;gap:8px;font-size:0.58rem;color:var(--muted);
+  padding:10px 12px;background:var(--glass);border:1px solid var(--glass-border);
+  margin-bottom:1.2rem;
+}
+.pay-btn{
+  width:100%;background:var(--gold);color:var(--black);border:none;
+  padding:16px;font-family:var(--sans);font-size:0.65rem;font-weight:600;
+  letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;
+  transition:all 0.28s ease;position:relative;overflow:hidden;
+}
+.pay-btn::before{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition:left 0.5s ease;
+}
+.pay-btn:hover{box-shadow:0 10px 50px rgba(201,168,76,0.45);transform:translateY(-2px)}
+.pay-btn:hover::before{left:200%}
+.bc-note{font-size:0.55rem;color:var(--muted);text-align:center;margin-top:0.8rem;line-height:1.6}
+
+/* ═══════════════════════════
+   CONFIRMATION PAGE v2
+═══════════════════════════ */
+#page-confirm{background:var(--black);padding-top:70px;min-height:100vh}
+.conf-wrap{max-width:960px;margin:0 auto;padding:2.5rem 3.5rem 5rem}
+
+.conf-status-bar{
+  display:flex;align-items:center;gap:1.5rem;
+  padding:1.4rem 2rem;margin-bottom:2rem;
+  background:linear-gradient(135deg,rgba(201,168,76,0.07) 0%,transparent 60%);
+  border:1px solid rgba(201,168,76,0.2);position:relative;overflow:hidden;
+}
+.conf-status-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.conf-check-ring{
+  width:52px;height:52px;flex-shrink:0;
+  border:1px solid rgba(201,168,76,0.4);background:var(--gold-ghost);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;animation:glowPulse 3s ease-in-out infinite;
+}
+.conf-status-text{display:flex;flex-direction:column;gap:2px}
+.conf-status-eyebrow{font-size:0.52rem;letter-spacing:0.42em;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem}
+.conf-status-headline{font-family:var(--serif);font-size:1.9rem;font-weight:300;color:var(--platinum)}
+.conf-ref-pill{
+  margin-left:auto;flex-shrink:0;padding:0.6rem 1.2rem;
+  background:var(--surface3);border:1px solid var(--glass-border-2);
+  display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+}
+.conf-ref-pill-lbl{font-size:0.45rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--muted)}
+.conf-ref-pill-val{font-family:var(--serif);font-size:1.1rem;color:var(--gold);letter-spacing:0.06em}
+
+/* Aircraft banner */
+.conf-aircraft{display:grid;grid-template-columns:300px 1fr;border:1px solid var(--glass-border);margin-bottom:1.5rem;overflow:hidden}
+.conf-ac-img{position:relative;height:220px}
+.conf-ac-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.9) saturate(0.88);display:block}
+.conf-ac-img::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,rgba(8,8,9,0.75) 100%)}
+.conf-ac-info{background:var(--glass);padding:2rem;display:flex;flex-direction:column;justify-content:center}
+.conf-ac-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-ghost);border:1px solid rgba(201,168,76,0.2);padding:4px 12px;font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;width:fit-content}
+.conf-ac-name{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--platinum);margin-bottom:0.15rem}
+.conf-ac-model{font-size:0.7rem;color:var(--silver);margin-bottom:1.5rem}
+.conf-ac-specs-row{display:flex;gap:2rem}
+.conf-ac-spec{display:flex;flex-direction:column;gap:3px}
+.conf-ac-spec-v{font-family:var(--serif);font-size:1.1rem;color:var(--gold)}
+.conf-ac-spec-k{font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+
+/* Flight strip */
+.conf-flight-strip{display:grid;border:1px solid var(--glass-border);background:var(--glass);margin-bottom:1.5rem;overflow:hidden}
+.conf-strip-inner{display:flex;align-items:stretch}
+.conf-strip-city{flex:1;padding:1.8rem 2.2rem;display:flex;flex-direction:column;gap:4px}
+.conf-strip-city.right{text-align:right;align-items:flex-end}
+.conf-strip-code{font-family:var(--serif);font-size:2.8rem;font-weight:300;color:var(--platinum);line-height:1}
+.conf-strip-name{font-size:0.56rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.conf-strip-date{font-size:0.68rem;color:var(--silver);margin-top:4px}
+.conf-strip-time{font-family:var(--serif);font-size:1.3rem;color:var(--gold)}
+.conf-strip-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0 2rem;border-left:1px solid var(--glass-border);border-right:1px solid var(--glass-border)}
+.conf-strip-mid-line{width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);position:relative}
+.conf-strip-mid-plane{font-size:1rem;color:var(--gold-dim);position:absolute;top:-9px;left:50%;transform:translateX(-50%)}
+.conf-strip-mid-dur{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dim);white-space:nowrap}
+.conf-strip-divider{width:1px;background:var(--glass-border)}
+.conf-strip-pax{padding:1.8rem 2.2rem;display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:140px}
+.conf-strip-pax-lbl{font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted)}
+.conf-strip-pax-val{font-family:var(--serif);font-size:2rem;color:var(--platinum)}
+.conf-strip-pax-sub{font-size:0.6rem;color:var(--muted)}
+
+/* Details grid */
+.conf-details-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--glass-border);border:1px solid var(--glass-border);margin-bottom:1.5rem}
+.conf-detail{background:var(--glass);padding:1.3rem 1.6rem}
+.conf-detail-lbl{font-size:0.48rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+.conf-detail-val{font-size:0.82rem;color:var(--platinum);line-height:1.5}
+.conf-detail-val.conf-val-gold{color:var(--gold);font-family:var(--serif);font-size:1.25rem}
+
+/* What happens next */
+.conf-next{border:1px solid var(--glass-border);background:var(--glass);padding:2rem;margin-bottom:1.5rem}
+.conf-section-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+.conf-steps{display:flex;gap:0}
+.conf-step{flex:1;padding:0 1.5rem 0 0;position:relative}
+.conf-step:not(:last-child)::after{content:'→';position:absolute;right:0.3rem;top:0.7rem;color:var(--glass-border-2);font-size:1rem}
+.conf-step-num{width:28px;height:28px;border:1px solid var(--gold-dim);background:var(--gold-ghost);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:600;color:var(--gold);margin-bottom:0.8rem}
+.conf-step-title{font-size:0.75rem;color:var(--platinum);margin-bottom:4px}
+.conf-step-desc{font-size:0.63rem;color:var(--muted);line-height:1.65}
+
+/* Bottom row */
+.conf-bottom{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.conf-concierge{border:1px solid var(--glass-border);background:var(--glass);padding:1.6rem 2rem;display:flex;flex-direction:column;gap:0.5rem}
+.conf-conc-lbl{font-size:0.48rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-dim)}
+.conf-conc-name{font-family:var(--serif);font-size:1.1rem;color:var(--platinum)}
+.conf-conc-contact{font-size:0.68rem;color:var(--muted);line-height:1.8}
+.conf-conc-status{display:flex;align-items:center;gap:8px;font-size:0.6rem;color:var(--muted);margin-top:0.3rem}
+.conf-conc-dot{width:8px;height:8px;border-radius:50%;background:#4CAF7E;box-shadow:0 0 8px rgba(76,175,126,0.5);flex-shrink:0}
+.conf-financial{border:1px solid var(--glass-border);background:var(--glass);padding:1.6rem 2rem;display:flex;flex-direction:column;gap:0.6rem}
+.conf-fin-row{display:flex;justify-content:space-between;align-items:baseline}
+.conf-fin-lbl{font-size:0.63rem;color:var(--muted)}
+.conf-fin-val{font-size:0.72rem;color:var(--platinum)}
+.conf-fin-divider{height:1px;background:var(--glass-border);margin:0.4rem 0}
+.conf-fin-total{display:flex;justify-content:space-between;align-items:baseline}
+.conf-fin-total-lbl{font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.conf-fin-total-val{font-family:var(--serif);font-size:1.6rem;color:var(--gold)}
+.conf-fin-note{font-size:0.58rem;color:var(--muted);line-height:1.6;margin-top:0.3rem}
+
+.conf-actions{display:flex;gap:1rem}
+
+@media(max-width:768px){
+  .conf-wrap{padding:1.5rem}
+  .conf-aircraft{grid-template-columns:1fr}
+  .conf-strip-inner{flex-direction:column}
+  .conf-details-grid{grid-template-columns:1fr 1fr}
+  .conf-steps{flex-direction:column;gap:1rem}
+  .conf-step:not(:last-child)::after{display:none}
+  .conf-bottom{grid-template-columns:1fr}
+}
+
+/* ═══════════════════════════
+   WHY SECTION
+═══════════════════════════ */
+.why-section{padding:7rem 3.5rem;background:var(--surface)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--glass-border);border:1px solid var(--glass-border);max-width:1200px;margin:2.5rem auto 0}
+.wi{background:var(--surface);padding:2.5rem;transition:background 0.3s;position:relative;overflow:hidden}
+.wi:hover{background:var(--surface2)}
+.wi::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:var(--gold);transition:height 0.4s ease}
+.wi:hover::before{height:100%}
+.wi-num{font-family:var(--serif);font-size:3.5rem;font-weight:300;color:rgba(201,168,76,0.08);line-height:1;margin-bottom:1.5rem;transition:color 0.3s}
+.wi:hover .wi-num{color:rgba(201,168,76,0.15)}
+.wi-title{font-family:var(--serif);font-size:1.25rem;color:var(--platinum);margin-bottom:0.7rem}
+.wi-desc{font-size:0.74rem;color:var(--muted);line-height:1.9}
+
+/* ═══════════════════════════
+   FOOTER
+═══════════════════════════ */
+footer{
+  background:var(--surface);padding:4rem 3.5rem;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;
+  border-top:1px solid var(--glass-border);
+}
+.f-brand{font-family:var(--serif);font-size:1.3rem;color:var(--platinum);letter-spacing:0.12em;margin-bottom:0.3rem}
+.f-tagline{font-size:0.72rem;color:var(--muted);line-height:1.8;margin:0.8rem 0 1.2rem;font-style:italic}
+.f-contact{font-size:0.65rem;color:var(--muted);line-height:1.8}
+.f-col-title{font-size:0.52rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:1.2rem;font-weight:600}
+.f-links{list-style:none;display:flex;flex-direction:column;gap:0.65rem}
+.f-links a{color:var(--muted);text-decoration:none;font-size:0.72rem;transition:color 0.22s;cursor:pointer}
+.f-links a:hover{color:var(--platinum)}
+.f-bottom{
+  background:var(--black);padding:1.2rem 3.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--glass-border);
+}
+.f-bottom p{font-size:0.6rem;color:rgba(255,255,255,0.18);letter-spacing:0.07em}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .fleet-grid{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:1fr}
+  .reserve-body{grid-template-columns:1fr}
+  .payment-body{grid-template-columns:1fr}
+  .aircraft-summary{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none}
+  .hero-content{padding:0 1.5rem}
+  .fleet-section,.why-section{padding:4rem 1.5rem}
+  .fleet-grid{grid-template-columns:1fr}
+  .hs-item{padding:1rem 1.5rem}
+  footer{grid-template-columns:1fr 1fr;padding:3rem 1.5rem}
+  .f-bottom{padding:1.2rem 1.5rem;flex-direction:column;gap:0.5rem;text-align:center}
+  .reserve-hero,.reserve-body{padding-left:1.5rem;padding-right:1.5rem}
+  .payment-hero,.payment-body{padding-left:1.5rem;padding-right:1.5rem}
+  .form-grid{grid-template-columns:1fr}
+  .dur-inputs{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     SPLASH LOADER
+══════════════════════════════ -->
+<div id="splash">
+  <div class="splash-logo">
+    <div class="splash-ring ring-outer">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="55" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1" stroke-dasharray="8 6"/>
+        <circle cx="60" cy="60" r="55" fill="none" stroke="rgba(201,168,76,0.7)" stroke-width="1.5" stroke-dasharray="30 315"/>
+      </svg>
+    </div>
+    <div class="splash-ring ring-inner" style="inset:14px">
+      <svg viewBox="0 0 92 92">
+        <circle cx="46" cy="46" r="42" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="4 8"/>
+        <circle cx="46" cy="46" r="42" fill="none" stroke="rgba(201,168,76,0.45)" stroke-width="1" stroke-dasharray="15 250"/>
+      </svg>
+    </div>
+    <div class="splash-icon">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <path d="M3 19L18 8L33 14V18L18 11L3 22Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M19.5 8.5L22 3L23 3.4L20.5 8.5Z" fill="#C9A84C" opacity="0.55"/>
+        <ellipse cx="33" cy="15" rx="3" ry="2" fill="#C9A84C" opacity="0.7"/>
+        <path d="M14 22L15.5 28L16.2 28L14.7 22Z" fill="#C9A84C" opacity="0.45"/>
+      </svg>
+    </div>
+  </div>
+  <div class="splash-name">BlackWings Club</div>
+  <div class="splash-sub">Private Charter &amp; Helicopter</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+  <div class="splash-dots">
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     TRANSITION LOADER
+══════════════════════════════ -->
+<div id="transition-loader">
+  <div class="tl-craft">
+    <svg viewBox="0 0 80 80" fill="none">
+      <path d="M5 42L40 24L75 36V40L40 28L5 46Z" fill="#C9A84C" opacity="0.85"/>
+      <path d="M42 24.5L46 16L47.5 16.5L43.5 24.5Z" fill="#C9A84C" opacity="0.55"/>
+      <ellipse cx="75" cy="37" rx="5" ry="3" fill="#C9A84C" opacity="0.7"/>
+      <path d="M32 45L34 54L35 54L33 45Z" fill="#C9A84C" opacity="0.4"/>
+    </svg>
+  </div>
+  <div class="tl-text" id="tl-text">Preparing your experience</div>
+  <div class="tl-bar"><div class="tl-bar-fill" id="tl-fill"></div></div>
+</div>
+
+<!-- ══════════════════════════════
+     PAYMENT LOADER
+══════════════════════════════ -->
+<div id="payment-loader">
+  <div class="pl-checkmark" id="pl-check">✦</div>
+  <div class="pl-ring" id="pl-ring">
+    <svg viewBox="0 0 100 100">
+      <circle class="pl-track" cx="50" cy="50" r="40"/>
+      <circle class="pl-fill" id="pl-arc" cx="50" cy="50" r="40" transform="rotate(-90 50 50)"/>
+    </svg>
+    <div class="pl-icon" id="pl-icon">🔒</div>
+  </div>
+  <div class="pl-status" id="pl-status">Initiating secure connection</div>
+  <div class="pl-success-text" id="pl-success">Reservation Confirmed</div>
+</div>
+
+<!-- ══════════════════════════════
+     NAV
+══════════════════════════════ -->
+<nav>
+  <div class="nav-logo" onclick="goHome()">
+    <div class="nav-logo-mark">
+      <svg width="22" height="22" viewBox="0 0 36 36" fill="none">
+        <path d="M3 19L18 8L33 14V18L18 11L3 22Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M19.5 8.5L22 3L23 3.4L20.5 8.5Z" fill="#C9A84C" opacity="0.6"/>
+        <ellipse cx="33" cy="15" rx="3" ry="2" fill="#C9A84C" opacity="0.75"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="nav-brand">BlackWings</span>
+      <span class="nav-tagline">Private Charter Club</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="goHome()">Home</a></li>
+    <li><a onclick="goHome();setTimeout(()=>document.getElementById('fleet-home').scrollIntoView({behavior:'smooth'}),100)">Fleet</a></li>
+    <li><a onclick="goHome();setTimeout(()=>document.getElementById('why-home').scrollIntoView({behavior:'smooth'}),100)">Services</a></li>
+    <li><a href="#">Concierge</a></li>
+  </ul>
+  <button class="nav-cta" onclick="goHome();setTimeout(()=>document.getElementById('fleet-home').scrollIntoView({behavior:'smooth'}),100)">Reserve Now</button>
+</nav>
+
+<!-- ══════════════════════════════
+     PAGE: HOME
+══════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-scan"></div>
+    <div class="hero-img-wrap">
+      <div class="hero-slide active" style="background-image:url('https://images.prestigeonline.com/wp-content/uploads/sites/8/2023/05/24165116/Global-8000-Head-On-Range-With-Moon_1069x750.jpeg?tr=w-1920')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.prestigeonline.com/wp-content/uploads/sites/8/2023/05/24165106/d_g700_a_mkt_00041_v02_webPROD-1024x846.jpeg')"></div>
+      <div class="hero-slide" style="background-image:url('https://gate.shyaviation.com/media/d2cpi5um/what-are-the-most-luxurious-private-jetst-4800-2700px.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.prestigeonline.com/wp-content/uploads/sites/8/2023/05/05161902/10X_001-1536x845-1.jpg')"></div>
+      <div class="hero-shade" id="hero-shade"></div>
+    </div>
+    <!-- floating jet -->
+    <svg class="hero-craft" width="110" height="48" viewBox="0 0 110 48" fill="none">
+      <path d="M4 26L55 10L106 22V27L55 14L4 30Z" fill="#C9A84C" opacity="0.75"/>
+      <path d="M57.5 10.5L62 2L64 2.5L59.5 10.5Z" fill="#C9A84C" opacity="0.5"/>
+      <ellipse cx="106" cy="23" rx="6" ry="4" fill="#C9A84C" opacity="0.65"/>
+      <path d="M42 33L44 42L45.2 42L43.2 33Z" fill="#C9A84C" opacity="0.4"/>
+    </svg>
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span></span>India's Most Exclusive Charter Club<span></span></div>
+      <h1 class="hero-h1">Above<br><em>Every Horizon</em></h1>
+      <p class="hero-sub">Private Jets &amp; Helicopters · Reserved by the Day</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="goHome();setTimeout(()=>document.getElementById('fleet-home').scrollIntoView({behavior:'smooth'}),100)">Explore Fleet</button>
+        <button class="btn-ghost" onclick="goHome();setTimeout(()=>document.getElementById('why-home').scrollIntoView({behavior:'smooth'}),100)">Our Services</button>
+      </div>
+    </div>
+    <!-- Stats bar -->
+    <div class="hero-stats">
+      <div class="hs-item">
+        <span class="hs-val">12</span>
+        <span class="hs-lbl">Aircraft & Helicopters</span>
+      </div>
+      <div class="hs-item">
+        <span class="hs-val">24/7</span>
+        <span class="hs-lbl">Concierge Access</span>
+      </div>
+      <div class="hs-item">
+        <span class="hs-val">28+</span>
+        <span class="hs-lbl">Destinations</span>
+      </div>
+      <div class="hs-item">
+        <span class="hs-val">100%</span>
+        <span class="hs-lbl">Private. Always.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLEET SECTION -->
+  <section class="fleet-section" id="fleet-home">
+    <div class="sh reveal">
+      <p class="sh-eye">The Fleet</p>
+      <h2 class="sh-title">Choose Your <em>Aircraft</em></h2>
+      <p class="sh-desc">Reserved exclusively for you, by the day. Every aircraft prepared to your exact specifications.</p>
+    </div>
+    <div class="fleet-tabs">
+      <button class="ftab active" id="ftab-all" onclick="setFleetTab('all')">All Aircraft</button>
+      <button class="ftab" id="ftab-jet" onclick="setFleetTab('jet')">Private Jets</button>
+      <button class="ftab" id="ftab-heli" onclick="setFleetTab('heli')">Helicopters</button>
+    </div>
+    <div class="fleet-grid" id="fleet-grid"></div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why-section" id="why-home">
+    <div class="sh reveal">
+      <p class="sh-eye">The Standard</p>
+      <h2 class="sh-title">The <em>BlackWings</em> Experience</h2>
+    </div>
+    <div class="why-grid">
+      <div class="wi reveal">
+        <div class="wi-num">01</div>
+        <h3 class="wi-title">Complete Exclusivity</h3>
+        <p class="wi-desc">Your aircraft, your rules. Reserved entirely for you and your guests — no shared flights, no compromises, no other passengers. Ever.</p>
+      </div>
+      <div class="wi reveal" style="transition-delay:0.1s">
+        <div class="wi-num">02</div>
+        <h3 class="wi-title">Per-Day Freedom</h3>
+        <p class="wi-desc">Book your aircraft for as many days as you wish. Multi-destination tours, extended stays, or a single grand journey — priced transparently by the day.</p>
+      </div>
+      <div class="wi reveal" style="transition-delay:0.2s">
+        <div class="wi-num">03</div>
+        <h3 class="wi-title">White-Glove Concierge</h3>
+        <p class="wi-desc">From bespoke catering to private FBO lounges and seamless ground transfers — every detail arranged to your exact preferences.</p>
+      </div>
+      <div class="wi reveal" style="transition-delay:0.3s">
+        <div class="wi-num">04</div>
+        <h3 class="wi-title">Helicopter Access</h3>
+        <p class="wi-desc">Reach destinations no jet can touch. Our VIP helicopter fleet opens mountain retreats, remote estates, and city-centre helipads to BlackWings members.</p>
+      </div>
+      <div class="wi reveal" style="transition-delay:0.4s">
+        <div class="wi-num">05</div>
+        <h3 class="wi-title">Zero Wait Policy</h3>
+        <p class="wi-desc">Aircraft depart on your schedule. Arrive 15 minutes before and step aboard — no check-in, no queues, no theatre.</p>
+      </div>
+      <div class="wi reveal" style="transition-delay:0.5s">
+        <div class="wi-num">06</div>
+        <h3 class="wi-title">DGCA Certified Safety</h3>
+        <p class="wi-desc">Every aircraft in our fleet is certified to the highest international standards. Pilots hold Type Ratings with 5,000+ flying hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="nav-logo" onclick="goHome()" style="margin-bottom:0.5rem;cursor:pointer">
+        <div class="nav-logo-mark">
+          <svg width="18" height="18" viewBox="0 0 36 36" fill="none">
+            <path d="M3 19L18 8L33 14V18L18 11L3 22Z" fill="#C9A84C" opacity="0.9"/>
+            <ellipse cx="33" cy="15" rx="3" ry="2" fill="#C9A84C" opacity="0.75"/>
+          </svg>
+        </div>
+        <div class="nav-logo-text">
+          <span class="nav-brand" style="font-size:1.1rem">BlackWings</span>
+          <span class="nav-tagline">Private Charter Club</span>
+        </div>
+      </div>
+      <p class="f-tagline">India's most exclusive private charter club. Jets and helicopters, reserved entirely by the day.</p>
+      <p class="f-contact">+91 98200 00000<br>reserve@blackwingsclub.in</p>
+    </div>
+    <div>
+      <p class="f-col-title">Aircraft</p>
+      <ul class="f-links">
+        <li><a onclick="setFleetTab('jet');goHome();setTimeout(()=>document.getElementById('fleet-home').scrollIntoView({behavior:'smooth'}),100)">Private Jets</a></li>
+        <li><a onclick="setFleetTab('heli');goHome();setTimeout(()=>document.getElementById('fleet-home').scrollIntoView({behavior:'smooth'}),100)">Helicopters</a></li>
+        <li><a>Ultra Long Range</a></li>
+        <li><a>Super Midsize</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="f-col-title">Services</p>
+      <ul class="f-links">
+        <li><a>Day Charters</a></li>
+        <li><a>Corporate Charters</a></li>
+        <li><a>Leisure Travel</a></li>
+        <li><a>Air Ambulance</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="f-col-title">Support</p>
+      <ul class="f-links">
+        <li><a>24/7 Concierge</a></li>
+        <li><a>Booking Policy</a></li>
+        <li><a>Privacy</a></li>
+        <li><a>Terms</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="f-bottom">
+    <p>© 2026 BlackWings Club Aviation Pvt. Ltd. All rights reserved.</p>
+    <p>DGCA Approved Operator · AOC No. BW-CHR-2022</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PAGE: RESERVE
+══════════════════════════════ -->
+<div id="page-reserve" class="page">
+  <div class="reserve-hero">
+    <div class="breadcrumb">
+      <span onclick="goHome()">Home</span>
+      <span style="color:var(--muted)">›</span>
+      <span>Reserve</span>
+    </div>
+    <div class="rh-title" id="rh-title">Reserve Your Aircraft</div>
+    <div class="rh-sub" id="rh-sub">Configure your charter below</div>
+  </div>
+
+  <!-- Aircraft summary -->
+  <div class="aircraft-summary">
+    <div class="asim-img glass-card" style="overflow:hidden">
+      <img id="res-craft-img" src="" alt="" style="width:100%;height:200px;object-fit:cover;filter:brightness(0.8) saturate(0.8);display:block">
+    </div>
+    <div class="asim-info">
+      <div class="asim-badge" id="res-craft-badge">— Private Jet</div>
+      <div class="asim-name" id="res-craft-name">Aircraft Name</div>
+      <div class="asim-model" id="res-craft-model">Model</div>
+      <div class="asim-specs" id="res-craft-specs"></div>
+    </div>
+  </div>
+
+  <!-- RESERVATION MODE TABS -->
+  <div class="res-mode-tabs">
+    <button class="rmt active" id="rmt-duration" onclick="setResMode('duration')">📅 Reserve by Duration</button>
+    <button class="rmt" id="rmt-p2p" onclick="setResMode('p2p')">✈ Point-to-Point Flight</button>
+  </div>
+
+  <div class="reserve-body">
+    <div class="res-main">
+
+      <!-- ── DURATION MODE ── -->
+      <div id="res-mode-duration">
+        <div class="glass-card duration-card">
+          <span class="section-label">Reservation Period</span>
+          <div class="dur-inputs">
+            <div class="fg">
+              <label class="lbl">Start Date</label>
+              <input class="inp" type="date" id="res-start" onchange="calcTotal()">
+            </div>
+            <div class="fg">
+              <label class="lbl">End Date</label>
+              <input class="inp" type="date" id="res-end" onchange="calcTotal()">
+            </div>
+          </div>
+          <div class="dur-slider-wrap">
+            <div class="dur-display"><span id="dur-days">3</span> <span>days</span></div>
+            <input class="dur-slider" type="range" min="1" max="30" value="3" id="dur-slider" oninput="onDurSlider(this)">
+            <div class="dur-range-labels"><span>1 day</span><span>1 week</span><span>30 days</span></div>
+          </div>
+        </div>
+        <div class="glass-card pax-card" style="margin-bottom:1.2rem">
+          <span class="section-label">Base of Operations</span>
+          <div class="dur-inputs">
+            <div class="fg">
+              <label class="lbl">Departure City / Airport</label>
+              <input class="inp" id="res-from" placeholder="e.g. Mumbai — CSIA">
+            </div>
+            <div class="fg">
+              <label class="lbl">Preferred Departure Time</label>
+              <select class="sel" id="res-dep-time">
+                <option value="">Flexible</option>
+                <option value="06:00">06:00 — Early Morning</option>
+                <option value="08:00">08:00 — Morning</option>
+                <option value="10:00">10:00 — Mid Morning</option>
+                <option value="12:00">12:00 — Noon</option>
+                <option value="14:00">14:00 — Afternoon</option>
+                <option value="16:00">16:00 — Late Afternoon</option>
+                <option value="18:00">18:00 — Evening</option>
+                <option value="20:00">20:00 — Night</option>
+              </select>
+            </div>
+          </div>
+          <div class="dur-inputs" style="margin-bottom:0">
+            <div class="fg">
+              <label class="lbl">Return / Base Location</label>
+              <input class="inp" id="res-to" placeholder="Same as departure or different">
+            </div>
+            <div class="fg">
+              <label class="lbl">Aircraft Positioning</label>
+              <select class="sel" id="res-position">
+                <option value="home">Return to base after trip</option>
+                <option value="remote">Remain at destination</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── POINT-TO-POINT MODE ── -->
+      <div id="res-mode-p2p" style="display:none">
+        <div class="glass-card duration-card">
+          <span class="section-label">Popular Routes</span>
+          <div class="route-chips" id="route-chips"></div>
+
+          <div class="frv">
+            <div class="frv-city">
+              <div class="frv-code" id="frv-from-code">—</div>
+              <div class="frv-name" id="frv-from-name">Select Departure</div>
+            </div>
+            <div class="frv-mid">
+              <div class="frv-line"><span class="frv-plane">✈</span></div>
+              <div class="frv-dur" id="frv-dur">select a route</div>
+            </div>
+            <div class="frv-city" style="text-align:right">
+              <div class="frv-code" id="frv-to-code">—</div>
+              <div class="frv-name" id="frv-to-name">Select Destination</div>
+            </div>
+          </div>
+
+          <div class="p2p-from-to">
+            <div class="fg">
+              <label class="lbl">From</label>
+              <input class="inp" id="p2p-from" placeholder="City or airport" oninput="onP2PInput()">
+            </div>
+            <button class="p2p-swap" onclick="swapP2P()" title="Swap cities">⇄</button>
+            <div class="fg">
+              <label class="lbl">To</label>
+              <input class="inp" id="p2p-to" placeholder="City or airport" oninput="onP2PInput()">
+            </div>
+          </div>
+
+          <div class="dur-inputs">
+            <div class="fg">
+              <label class="lbl">Departure Date</label>
+              <input class="inp" type="date" id="p2p-date" onchange="calcTotal()">
+            </div>
+            <div class="fg">
+              <label class="lbl">Departure Time</label>
+              <select class="sel" id="p2p-time" onchange="calcTotal()">
+                <option value="06:00">06:00 — Early Morning</option>
+                <option value="08:00">08:00 — Morning</option>
+                <option value="10:00" selected>10:00 — Mid Morning</option>
+                <option value="12:00">12:00 — Noon</option>
+                <option value="14:00">14:00 — Afternoon</option>
+                <option value="16:00">16:00 — Late Afternoon</option>
+                <option value="18:00">18:00 — Evening</option>
+                <option value="20:00">20:00 — Night</option>
+              </select>
+            </div>
+          </div>
+          <div class="time-grid">
+            <div class="time-slot" onclick="selectTimeSlot('06:00')">06:00</div>
+            <div class="time-slot" onclick="selectTimeSlot('08:00')">08:00</div>
+            <div class="time-slot active" onclick="selectTimeSlot('10:00')">10:00</div>
+            <div class="time-slot" onclick="selectTimeSlot('12:00')">12:00</div>
+            <div class="time-slot" onclick="selectTimeSlot('14:00')">14:00</div>
+            <div class="time-slot" onclick="selectTimeSlot('16:00')">16:00</div>
+            <div class="time-slot" onclick="selectTimeSlot('18:00')">18:00</div>
+            <div class="time-slot" onclick="selectTimeSlot('20:00')">20:00</div>
+          </div>
+
+          <div class="return-row">
+            <div>
+              <div class="rr-label">Add Return Flight</div>
+              <div class="rr-sub">Round trip — preferred rate applied</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="p2p-return" onchange="toggleReturn()">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+
+          <div id="return-fields" style="display:none">
+            <span class="section-label" style="display:block;margin-top:1rem;margin-bottom:0.8rem">Return Flight Details</span>
+            <div class="dur-inputs" style="margin-bottom:0">
+              <div class="fg">
+                <label class="lbl">Return Date</label>
+                <input class="inp" type="date" id="p2p-return-date" onchange="calcTotal()">
+              </div>
+              <div class="fg">
+                <label class="lbl">Return Time</label>
+                <select class="sel" id="p2p-return-time" onchange="calcTotal()">
+                  <option value="08:00">08:00 — Morning</option>
+                  <option value="10:00">10:00 — Mid Morning</option>
+                  <option value="12:00">12:00 — Noon</option>
+                  <option value="14:00">14:00 — Afternoon</option>
+                  <option value="16:00" selected>16:00 — Late Afternoon</option>
+                  <option value="18:00">18:00 — Evening</option>
+                  <option value="20:00">20:00 — Night</option>
+                  <option value="22:00">22:00 — Late Night</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PASSENGERS (shared) ── -->
+      <div class="glass-card pax-card">
+        <span class="section-label">Passengers</span>
+        <div class="pax-ctrl">
+          <button class="pax-btn" onclick="changePax(-1)">−</button>
+          <span class="pax-num" id="pax-num">2</span>
+          <button class="pax-btn" onclick="changePax(1)">+</button>
+          <div class="pax-label">guests<br><span style="color:var(--muted)">Max <span id="pax-max">8</span> passengers</span></div>
+        </div>
+      </div>
+
+      <!-- ── EXTRAS (shared) ── -->
+      <div class="glass-card extras-card">
+        <span class="section-label">Premium Add-ons</span>
+        <div class="extra-item">
+          <div class="extra-info">
+            <span class="extra-name">Bespoke Catering</span>
+            <span class="extra-price" id="lbl-catering">₹45,000 / day — Chef-curated menus</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="extra-catering" onchange="calcTotal()">
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+        <div class="extra-item">
+          <div class="extra-info">
+            <span class="extra-name">Ground Transfer</span>
+            <span class="extra-price" id="lbl-transfer">₹18,000 / day — Luxury vehicles at both ends</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="extra-transfer" onchange="calcTotal()">
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+        <div class="extra-item">
+          <div class="extra-info">
+            <span class="extra-name">Onboard Butler</span>
+            <span class="extra-price" id="lbl-butler">₹28,000 / day — Dedicated personal service</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="extra-butler" onchange="calcTotal()">
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+        <div class="extra-item">
+          <div class="extra-info">
+            <span class="extra-name">Satellite WiFi</span>
+            <span class="extra-price" id="lbl-wifi">₹12,000 / day — High-speed Starlink</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="extra-wifi" onchange="calcTotal()">
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+        <div class="extra-item">
+          <div class="extra-info">
+            <span class="extra-name">Floral &amp; Décor Setup</span>
+            <span class="extra-price">₹35,000 flat — Bespoke cabin styling</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="extra-decor" onchange="calcTotal()">
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── SPECIAL REQUESTS ── -->
+      <div class="glass-card" style="padding:2rem;margin-bottom:1.2rem">
+        <span class="section-label">Special Requirements</span>
+        <div class="fg" style="margin-top:0.6rem">
+          <textarea class="inp" id="res-notes" placeholder="Dietary preferences, special occasions, ground arrangements, specific boarding requirements…" style="resize:none;min-height:90px"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="res-sidebar">
+      <div class="glass-card price-summary">
+        <div class="ps-craft">
+          <img class="ps-craft-img" id="ps-img" src="" alt="">
+          <div class="ps-craft-info">
+            <div class="ps-name" id="ps-name"></div>
+            <div class="ps-model" id="ps-model"></div>
+          </div>
+        </div>
+        <!-- Duration mode rows -->
+        <div id="ps-duration-rows">
+          <div class="ps-row">
+            <span class="ps-row-label">Charter rate</span>
+            <span class="ps-row-val" id="ps-rate"></span>
+          </div>
+          <div class="ps-row">
+            <span class="ps-row-label">Duration</span>
+            <span class="ps-row-val" id="ps-dur">3 days</span>
+          </div>
+        </div>
+        <!-- P2P mode rows -->
+        <div id="ps-p2p-rows" style="display:none">
+          <div class="ps-row">
+            <span class="ps-row-label">Route</span>
+            <span class="ps-row-val" id="ps-route">—</span>
+          </div>
+          <div class="ps-row">
+            <span class="ps-row-label">Flight time</span>
+            <span class="ps-row-val" id="ps-flighttime">—</span>
+          </div>
+          <div class="ps-row">
+            <span class="ps-row-label">One-way fare</span>
+            <span class="ps-row-val" id="ps-oneway">—</span>
+          </div>
+          <div class="ps-row" id="ps-return-row" style="display:none">
+            <span class="ps-row-label">Return flight</span>
+            <span class="ps-row-val" id="ps-return-price">—</span>
+          </div>
+        </div>
+        <div class="ps-row">
+          <span class="ps-row-label">Passengers</span>
+          <span class="ps-row-val" id="ps-pax">2 guests</span>
+        </div>
+        <div class="ps-row" id="ps-extras-row" style="display:none">
+          <span class="ps-row-label">Add-ons</span>
+          <span class="ps-row-val" id="ps-extras"></span>
+        </div>
+        <div class="ps-divider"></div>
+        <div class="ps-total-row">
+          <span class="ps-total-label">Total</span>
+          <span class="ps-total-val" id="ps-total">₹0</span>
+        </div>
+        <p class="ps-note">50% advance on booking. Balance 48 hrs before departure. No charge until confirmed.</p>
+        <button class="reserve-btn" onclick="goToPayment()">Proceed to Payment →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PAGE: PAYMENT
+══════════════════════════════ -->
+<div id="page-payment" class="page">
+  <div class="payment-hero">
+    <div class="breadcrumb">
+      <span onclick="goHome()">Home</span>
+      <span style="color:var(--muted)">›</span>
+      <span onclick="showPage('page-reserve')">Reserve</span>
+      <span style="color:var(--muted)">›</span>
+      <span>Payment</span>
+    </div>
+    <div class="rh-title">Secure Payment</div>
+    <div class="rh-sub">Your reservation is protected by 256-bit SSL encryption</div>
+    <div class="ph-step">
+      <div class="ph-step-item done">
+        <div class="ph-step-num">✓</div>
+        <span>Aircraft</span>
+      </div>
+      <div class="ph-step-connector"></div>
+      <div class="ph-step-item done">
+        <div class="ph-step-num">✓</div>
+        <span>Configure</span>
+      </div>
+      <div class="ph-step-connector"></div>
+      <div class="ph-step-item active">
+        <div class="ph-step-num">3</div>
+        <span>Payment</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-body">
+    <div>
+      <!-- Traveller info -->
+      <div class="glass-card card-section" style="margin-bottom:1.2rem">
+        <div class="cs-title">Traveller Information</div>
+        <div class="cs-sub">Details for the primary charter guest</div>
+        <div class="form-grid">
+          <div class="fg"><label class="lbl">First Name</label><input class="inp" id="pay-first" placeholder="Arjun"></div>
+          <div class="fg"><label class="lbl">Last Name</label><input class="inp" id="pay-last" placeholder="Mehta"></div>
+        </div>
+        <div class="form-grid">
+          <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="pay-email" placeholder="arjun@example.com"></div>
+          <div class="fg"><label class="lbl">Phone</label><input class="inp" type="tel" id="pay-phone" placeholder="+91 98000 00000"></div>
+        </div>
+        <div class="form-full">
+          <div class="fg"><label class="lbl">Special Requests</label><textarea class="inp" id="pay-req" placeholder="Dietary preferences, onboard requirements, concierge services…" style="resize:none;min-height:80px"></textarea></div>
+        </div>
+      </div>
+
+      <!-- Card details -->
+      <div class="glass-card card-section">
+        <div class="cs-title">Payment Details</div>
+        <div class="cs-sub">Secure card payment — 50% advance today</div>
+        <!-- Visual card -->
+        <div class="card-visual">
+          <div class="cv-chip"></div>
+          <div class="cv-number" id="cv-number">•••• •••• •••• ••••</div>
+          <div class="cv-info">
+            <div class="cv-name" id="cv-name">CARDHOLDER NAME</div>
+            <div class="cv-expiry">
+              <span class="cv-exp-lbl">Valid Thru</span>
+              <span class="cv-exp-val" id="cv-exp">MM/YY</span>
+            </div>
+          </div>
+          <div class="cv-brand">
+            <div class="cv-circle"></div>
+            <div class="cv-circle"></div>
+          </div>
+        </div>
+        <div class="form-full">
+          <div class="fg"><label class="lbl">Card Number</label>
+            <div class="inp-icon">
+              <span class="inp-icon-sym">💳</span>
+              <input class="inp" id="card-num" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)">
+            </div>
+          </div>
+        </div>
+        <div class="form-full">
+          <div class="fg"><label class="lbl">Cardholder Name</label>
+            <input class="inp" id="card-name" placeholder="As on card" oninput="document.getElementById('cv-name').textContent=(this.value||'CARDHOLDER NAME').toUpperCase()">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="fg"><label class="lbl">Expiry Date</label>
+            <input class="inp" id="card-exp" placeholder="MM/YY" maxlength="5" oninput="formatExp(this)">
+          </div>
+          <div class="fg"><label class="lbl">CVV</label>
+            <div class="inp-icon">
+              <span class="inp-icon-sym">🔒</span>
+              <input class="inp" id="card-cvv" placeholder="•••" maxlength="4" type="password">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Billing summary -->
+    <div>
+      <div class="glass-card billing-card">
+        <div class="bc-title">Booking Summary</div>
+        <div class="bc-craft">
+          <img class="bc-craft-img" id="bc-img" src="" alt="">
+          <div class="bc-craft-info">
+            <div class="bc-craft-name" id="bc-name"></div>
+            <div class="bc-craft-model" id="bc-model"></div>
+          </div>
+        </div>
+        <div class="bc-row"><span class="bc-row-l">Charter rate</span><span class="bc-row-v" id="bc-rate"></span></div>
+        <div class="bc-row" id="bc-route-row" style="display:none"><span class="bc-row-l">Route</span><span class="bc-row-v" id="bc-route"></span></div>
+        <div class="bc-row"><span class="bc-row-l">Duration / Flight</span><span class="bc-row-v" id="bc-dur"></span></div>
+        <div class="bc-row"><span class="bc-row-l">Passengers</span><span class="bc-row-v" id="bc-pax"></span></div>
+        <div class="bc-row" id="bc-extras-row" style="display:none"><span class="bc-row-l">Add-ons</span><span class="bc-row-v" id="bc-extras"></span></div>
+        <div class="bc-divider"></div>
+        <div class="bc-total">
+          <span class="bc-total-l">Total Charter</span>
+          <span class="bc-total-v" id="bc-total"></span>
+        </div>
+        <div class="bc-advance" id="bc-advance"></div>
+        <div class="bc-secure">
+          <span>🔐</span>
+          <span>256-bit SSL · PCI DSS Compliant</span>
+        </div>
+        <button class="pay-btn" onclick="processPayment()">Confirm &amp; Pay Advance →</button>
+        <div class="bc-note">By confirming you agree to our charter terms. Full refund for cancellations 72+ hours prior.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PAGE: CONFIRM
+══════════════════════════════ -->
+<div id="page-confirm" class="page">
+  <div class="conf-wrap">
+
+    <!-- Status banner -->
+    <div class="conf-status-bar">
+      <div class="conf-check-ring">✦</div>
+      <div class="conf-status-text">
+        <div class="conf-status-eyebrow">Booking Confirmed</div>
+        <div class="conf-status-headline">Reservation <em style="font-style:italic;color:var(--gold)">Secured</em></div>
+      </div>
+      <div class="conf-ref-pill">
+        <span class="conf-ref-pill-lbl">Reference</span>
+        <span class="conf-ref-pill-val" id="conf-ref">BWC-000000</span>
+      </div>
+    </div>
+
+    <!-- Aircraft banner -->
+    <div class="conf-aircraft">
+      <div class="conf-ac-img">
+        <img id="conf-ac-img" src="" alt="">
+      </div>
+      <div class="conf-ac-info">
+        <div class="conf-ac-badge" id="conf-ac-badge">✈ Private Jet</div>
+        <div class="conf-ac-name" id="conf-ac-name">—</div>
+        <div class="conf-ac-model" id="conf-ac-model">—</div>
+        <div class="conf-ac-specs-row" id="conf-ac-specs"></div>
+      </div>
+    </div>
+
+    <!-- Flight strip -->
+    <div class="conf-flight-strip">
+      <div class="conf-strip-inner">
+        <div class="conf-strip-city" id="conf-strip-from">
+          <div class="conf-strip-code" id="conf-from-code">—</div>
+          <div class="conf-strip-name" id="conf-from-name">Departure</div>
+          <div class="conf-strip-date" id="conf-dep-date">—</div>
+          <div class="conf-strip-time" id="conf-dep-time-disp">—</div>
+        </div>
+        <div class="conf-strip-mid">
+          <div class="conf-strip-mid-line"><span class="conf-strip-mid-plane">✈</span></div>
+          <div class="conf-strip-mid-dur" id="conf-flight-dur">—</div>
+        </div>
+        <div class="conf-strip-city right" id="conf-strip-to">
+          <div class="conf-strip-code" id="conf-to-code">—</div>
+          <div class="conf-strip-name" id="conf-to-name">Destination</div>
+          <div class="conf-strip-date" id="conf-arr-date">—</div>
+          <div class="conf-strip-time" id="conf-arr-time-disp">—</div>
+        </div>
+        <div class="conf-strip-divider"></div>
+        <div class="conf-strip-pax">
+          <div class="conf-strip-pax-lbl">Passengers</div>
+          <div class="conf-strip-pax-val" id="conf-pax-num">—</div>
+          <div class="conf-strip-pax-sub">guests aboard</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details grid -->
+    <div class="conf-details-grid" id="conf-details-grid"></div>
+
+    <!-- What happens next -->
+    <div class="conf-next">
+      <span class="conf-section-label">What Happens Next</span>
+      <div class="conf-steps">
+        <div class="conf-step">
+          <div class="conf-step-num">01</div>
+          <div class="conf-step-title">Concierge Contacts You</div>
+          <div class="conf-step-desc">Our dedicated concierge team will reach you within 60 minutes to finalise all arrangements.</div>
+        </div>
+        <div class="conf-step">
+          <div class="conf-step-num">02</div>
+          <div class="conf-step-title">Pre-Flight Briefing</div>
+          <div class="conf-step-desc">Detailed itinerary, crew manifest, and catering confirmation sent 24 hours before departure.</div>
+        </div>
+        <div class="conf-step">
+          <div class="conf-step-num">03</div>
+          <div class="conf-step-title">Arrive &amp; Board</div>
+          <div class="conf-step-desc">Arrive 15 minutes before departure. No queues, no check-in — step directly aboard your aircraft.</div>
+        </div>
+        <div class="conf-step">
+          <div class="conf-step-num">04</div>
+          <div class="conf-step-title">Balance Payment</div>
+          <div class="conf-step-desc">Remaining 50% due 48 hours before departure. Full refund for cancellations 72+ hours prior.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row: concierge + financial -->
+    <div class="conf-bottom">
+      <div class="conf-concierge">
+        <span class="conf-conc-lbl">Your Dedicated Concierge</span>
+        <div class="conf-conc-name">BlackWings Charter Desk</div>
+        <div class="conf-conc-contact">
+          +91 98200 00000<br>reserve@blackwingsclub.in
+        </div>
+        <div class="conf-conc-status">
+          <div class="conf-conc-dot"></div>
+          Available 24 / 7 — Response within 15 minutes
+        </div>
+      </div>
+      <div class="conf-financial">
+        <span class="conf-section-label" style="margin-bottom:0.8rem">Payment Summary</span>
+        <div class="conf-fin-row">
+          <span class="conf-fin-lbl">Charter total</span>
+          <span class="conf-fin-val" id="conf-total">—</span>
+        </div>
+        <div class="conf-fin-row">
+          <span class="conf-fin-lbl">Add-ons</span>
+          <span class="conf-fin-val" id="conf-extras">—</span>
+        </div>
+        <div class="conf-fin-divider"></div>
+        <div class="conf-fin-total">
+          <span class="conf-fin-total-lbl">Grand Total</span>
+          <span class="conf-fin-total-val" id="conf-grand">—</span>
+        </div>
+        <div class="conf-fin-row" style="margin-top:0.6rem">
+          <span class="conf-fin-lbl">Advance paid today (50%)</span>
+          <span class="conf-fin-val" id="conf-advance">—</span>
+        </div>
+        <div class="conf-fin-row">
+          <span class="conf-fin-lbl">Balance due 48 hrs before</span>
+          <span class="conf-fin-val" id="conf-balance">—</span>
+        </div>
+        <div class="conf-fin-note">A confirmation email with full itinerary and receipt has been sent to your registered address.</div>
+      </div>
+    </div>
+
+    <div class="conf-actions">
+      <button class="btn-primary" onclick="goHome()">Return Home</button>
+      <button class="btn-ghost" onclick="window.print()">Download Itinerary</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+<script>
+/* ══ DATA ══ */
+const CRAFT = [
+  {
+    id:'j1', type:'jet', category:'Ultra Long Range',
+    name:'Sovereign I',   model:'Bombardier Global 7500',
+    seats:14, range:'14,260 km', speed:'956 km/h', crew:3,
+    ppd:850000, ppdlabel:'₹8,50,000 / day',
+    img:'https://images.unsplash.com/photo-1635672033263-a19f27eaefa8?w=800&q=80',
+    specs:[{v:'14',k:'Seats'},{v:'14,260',k:'Range (km)'},{v:'956',k:'Speed (km/h)'}],
+    feats:['Private bedroom suite','4-zone cabin','Satcom WiFi','Stand-up height'],
+  },
+  {
+    id:'j2', type:'jet', category:'Ultra Long Range',
+    name:'Apex One',     model:'Gulfstream G700',
+    seats:16, range:'13,890 km', speed:'1,040 km/h', crew:4,
+    ppd:920000, ppdlabel:'₹9,20,000 / day',
+    img:'https://images.unsplash.com/photo-1734750358398-917f1da67c1f?w=800&q=80',
+    specs:[{v:'16',k:'Seats'},{v:'13,890',k:'Range (km)'},{v:'1,040',k:'Speed (km/h)'}],
+    feats:['Shower suite','Chef galley','4 cabin zones','Satellite link'],
+  },
+  {
+    id:'j3', type:'jet', category:'Super Midsize',
+    name:'Meridian',     model:'Cessna Citation Longitude',
+    seats:10, range:'6,482 km', speed:'884 km/h', crew:2,
+    ppd:380000, ppdlabel:'₹3,80,000 / day',
+    img:'https://images.unsplash.com/photo-1684838200815-36eef38f353c?w=800&q=80',
+    specs:[{v:'10',k:'Seats'},{v:'6,482',k:'Range (km)'},{v:'884',k:'Speed (km/h)'}],
+    feats:['Flat-bed seats','WiFi','Whisper-quiet','Full stand-up'],
+  },
+  {
+    id:'j4', type:'jet', category:'Super Midsize',
+    name:'Falcon Dark',  model:'Dassault Falcon 8X',
+    seats:12, range:'11,945 km', speed:'927 km/h', crew:3,
+    ppd:750000, ppdlabel:'₹7,50,000 / day',
+    img:'https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80',
+    specs:[{v:'12',k:'Seats'},{v:'11,945',k:'Range (km)'},{v:'927',k:'Speed (km/h)'}],
+    feats:['Three cabin zones','WiFi','Lie-flat seats','Premium galley'],
+  },
+  {
+    id:'j5', type:'jet', category:'Light Jet',
+    name:'Stealth 300',  model:'Embraer Phenom 300E',
+    seats:7,  range:'3,650 km', speed:'834 km/h', crew:1,
+    ppd:220000, ppdlabel:'₹2,20,000 / day',
+    img:'https://images.unsplash.com/photo-1777221673442-d188fa928768?w=800&q=80',
+    specs:[{v:'7',k:'Seats'},{v:'3,650',k:'Range (km)'},{v:'834',k:'Speed (km/h)'}],
+    feats:['Premium leather','WiFi','Large hold','City specialist'],
+  },
+  {
+    id:'j6', type:'jet', category:'Very Light Jet',
+    name:'Shadow',       model:'HondaJet Elite II',
+    seats:5,  range:'2,661 km', speed:'782 km/h', crew:1,
+    ppd:145000, ppdlabel:'₹1,45,000 / day',
+    img:'https://images.unsplash.com/photo-1684838200888-192e2a163cc9?w=800&q=80',
+    specs:[{v:'5',k:'Seats'},{v:'2,661',k:'Range (km)'},{v:'782',k:'Speed (km/h)'}],
+    feats:['Innovative design','Best-in-class cabin','WiFi','Fuel efficient'],
+  },
+  {
+    id:'h1', type:'helicopter', category:'VIP Helicopter',
+    name:'Nightbird',    model:'AgustaWestland AW139',
+    seats:8,  range:'1,061 km', speed:'306 km/h', crew:2,
+    ppd:280000, ppdlabel:'₹2,80,000 / day',
+    img:'https://images.unsplash.com/photo-1558597576-f1a962543f35?w=800&q=80',
+    specs:[{v:'8',k:'Seats'},{v:'1,061',k:'Range (km)'},{v:'306',k:'Speed (km/h)'}],
+    feats:['VIP interior','Noise insulated','Helicab','Remote access'],
+  },
+  {
+    id:'h2', type:'helicopter', category:'VIP Helicopter',
+    name:'Raven',        model:'Sikorsky S-76D',
+    seats:12, range:'762 km',  speed:'287 km/h', crew:2,
+    ppd:240000, ppdlabel:'₹2,40,000 / day',
+    img:'https://images.unsplash.com/photo-1607525884336-66ccfac7ab56?w=800&q=80',
+    specs:[{v:'12',k:'Seats'},{v:'762',k:'Range (km)'},{v:'287',k:'Speed (km/h)'}],
+    feats:['Executive cabin','WiFi','Smooth ride','All-weather'],
+  },
+  {
+    id:'h3', type:'helicopter', category:'Light Helicopter',
+    name:'Phantom',      model:'Bell 429',
+    seats:7,  range:'722 km',  speed:'260 km/h', crew:1,
+    ppd:180000, ppdlabel:'₹1,80,000 / day',
+    img:'https://images.unsplash.com/photo-1630866217872-764be80838fa?w=800&q=80',
+    specs:[{v:'7',k:'Seats'},{v:'722',k:'Range (km)'},{v:'260',k:'Speed (km/h)'}],
+    feats:['City-centre pads','Whisper mode','Mountain certified','Fast boarding'],
+  },
+  {
+    id:'h4', type:'helicopter', category:'Light Helicopter',
+    name:'Spectre',      model:'Airbus H145',
+    seats:9,  range:'680 km',  speed:'268 km/h', crew:2,
+    ppd:160000, ppdlabel:'₹1,60,000 / day',
+    img:'https://images.unsplash.com/photo-1529094464229-4990d6b9b0ba?w=800&q=80',
+    specs:[{v:'9',k:'Seats'},{v:'680',k:'Range (km)'},{v:'268',k:'Speed (km/h)'}],
+    feats:['Twin engine safety','Remote strip access','VIP seating','Night certified'],
+  },
+];
+
+/* ══ ROUTES DATA ══ */
+const ROUTES = [
+  { id:'r1', from:'Mumbai',    fcode:'BOM', to:'Delhi',     tcode:'DEL', hours:2.25, label:'2h 15m' },
+  { id:'r2', from:'Mumbai',    fcode:'BOM', to:'Goa',       tcode:'GOI', hours:1.0,  label:'1h' },
+  { id:'r3', from:'Delhi',     fcode:'DEL', to:'Jaipur',    tcode:'JAI', hours:0.75, label:'45m' },
+  { id:'r4', from:'Delhi',     fcode:'DEL', to:'Goa',       tcode:'GOI', hours:2.0,  label:'2h' },
+  { id:'r5', from:'Mumbai',    fcode:'BOM', to:'Hyderabad', tcode:'HYD', hours:1.25, label:'1h 15m' },
+  { id:'r6', from:'Bangalore', fcode:'BLR', to:'Delhi',     tcode:'DEL', hours:2.5,  label:'2h 30m' },
+  { id:'r7', from:'Delhi',     fcode:'DEL', to:'Mumbai',    tcode:'BOM', hours:2.25, label:'2h 15m' },
+  { id:'r8', from:'Chennai',   fcode:'MAA', to:'Mumbai',    tcode:'BOM', hours:1.5,  label:'1h 30m' },
+  { id:'h1', from:'Mumbai',    fcode:'BOM', to:'Pune',      tcode:'PNQ', hours:0.75, label:'45m',      heliOnly:true },
+  { id:'h2', from:'Delhi',     fcode:'DEL', to:'Agra',      tcode:'AGR', hours:0.83, label:'50m',      heliOnly:true },
+  { id:'h3', from:'Mumbai',    fcode:'BOM', to:'Shirdi',    tcode:'SAG', hours:1.0,  label:'1h',       heliOnly:true },
+  { id:'h4', from:'Delhi',     fcode:'DEL', to:'Mussoorie', tcode:'MSR', hours:1.25, label:'1h 15m',   heliOnly:true },
+  { id:'h5', from:'Mumbai',    fcode:'BOM', to:'Lonavala',  tcode:'LNV', hours:0.42, label:'25m',      heliOnly:true },
+];
+
+/* ══ STATE ══ */
+let curTab = 'all';
+let curCraft = null;
+let resDays = 3;
+let resPax = 2;
+let resMode = 'duration';
+let selectedRoute = null;
+let isReturn = false;
+let reservation = {};
+
+/* ══ SPLASH ══ */
+function initHeroSlideshow() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const shade  = document.getElementById('hero-shade');
+  if (!slides.length || !shade) return;
+  let current = 0;
+
+  function nextSlide() {
+    /* fade shade in */
+    shade.style.transition = 'opacity 0.55s ease-in';
+    shade.style.opacity    = '1';
+
+    setTimeout(() => {
+      /* swap active slide while shade is opaque */
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      /* restart Ken Burns on new slide by cloning animation */
+      const s = slides[current];
+      s.style.animation = 'none';
+      s.offsetHeight; /* reflow */
+      s.style.animation = '';
+      s.classList.add('active');
+
+      /* fade shade out */
+      shade.style.transition = 'opacity 0.85s ease-out';
+      shade.style.opacity    = '0';
+    }, 600);
+  }
+
+  setInterval(nextSlide, 5000);
+}
+
+window.addEventListener('load', () => {
+  renderFleet();
+  setDefaultDates();
+  initHeroSlideshow();
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hidden');
+    initReveal();
+  }, 3500);
+});
+
+/* ══ PAGE NAV ══ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  setTimeout(initReveal, 120);
+}
+
+function goHome() {
+  showPage('page-home');
+  setTimeout(initReveal, 150);
+}
+
+function transitionTo(id, label) {
+  const loader = document.getElementById('transition-loader');
+  const text = document.getElementById('tl-text');
+  const fill = document.getElementById('tl-fill');
+  text.textContent = label || 'Preparing your experience';
+  loader.classList.add('show');
+  fill.style.transition = 'none';
+  fill.style.width = '0';
+  setTimeout(() => {
+    fill.style.transition = 'width 2.5s cubic-bezier(0.4,0,0.2,1)';
+    fill.style.width = '100%';
+  }, 50);
+  setTimeout(() => {
+    showPage(id);
+    loader.classList.remove('show');
+    fill.style.width = '0';
+  }, 2800);
+}
+
+/* ══ FLEET RENDER ══ */
+function setFleetTab(tab) {
+  curTab = tab;
+  ['all','jet','heli'].forEach(t => {
+    document.getElementById('ftab-'+t).classList.toggle('active', t === tab);
+  });
+  renderFleet();
+}
+
+function renderFleet() {
+  const grid = document.getElementById('fleet-grid');
+  const filtered = CRAFT.filter(c => curTab === 'all' || c.type === (curTab === 'jet' ? 'jet' : 'helicopter'));
+  grid.innerHTML = filtered.map(c => `
+    <div class="ac reveal" onclick="selectCraft('${c.id}')">
+      <div class="ac-img-wrap">
+        <img class="ac-img" src="${c.img}" alt="${c.name}" loading="lazy">
+        <span class="ac-type-badge ${c.type === 'helicopter' ? 'helicopter' : 'jet'}">${c.type === 'helicopter' ? '🚁 Helicopter' : '✈ Private Jet'}</span>
+        <div class="ac-avail"></div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-cat">${c.category}</div>
+        <div class="ac-name">${c.name}</div>
+        <div class="ac-model">${c.model}</div>
+        <div class="ac-specs">
+          ${c.specs.map(s => `<div class="acspec"><span class="acspec-v">${s.v}</span><span class="acspec-k">${s.k}</span></div>`).join('')}
+        </div>
+        <div class="ac-foot">
+          <div class="ac-price">
+            <span class="ac-price-val">${c.ppdlabel.split(' /')[0]}</span>
+            <span class="ac-price-unit">per day · all inclusive</span>
+          </div>
+          <button class="btn-sm">Reserve →</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  setTimeout(initReveal, 100);
+}
+
+/* ══ SELECT CRAFT ══ */
+function selectCraft(id) {
+  curCraft = CRAFT.find(c => c.id === id);
+  if (!curCraft) return;
+
+  // Reset mode state
+  resMode = 'duration'; selectedRoute = null; isReturn = false;
+  document.getElementById('rmt-duration').classList.add('active');
+  document.getElementById('rmt-p2p').classList.remove('active');
+  document.getElementById('res-mode-duration').style.display = '';
+  document.getElementById('res-mode-p2p').style.display = 'none';
+  document.getElementById('ps-duration-rows').style.display = '';
+  document.getElementById('ps-p2p-rows').style.display = 'none';
+  document.getElementById('p2p-return').checked = false;
+  document.getElementById('return-fields').style.display = 'none';
+  document.getElementById('ps-return-row').style.display = 'none';
+  updateExtrasLabels();
+
+  // Populate reserve page
+  document.getElementById('rh-title').textContent = `Reserve ${curCraft.name}`;
+  document.getElementById('rh-sub').textContent = curCraft.model + ' · ' + curCraft.category;
+  document.getElementById('res-craft-img').src = curCraft.img;
+  document.getElementById('res-craft-name').textContent = curCraft.name;
+  document.getElementById('res-craft-model').textContent = curCraft.model;
+  document.getElementById('res-craft-badge').textContent = (curCraft.type === 'helicopter' ? '🚁 ' : '✈ ') + curCraft.category;
+  document.getElementById('res-craft-specs').innerHTML = curCraft.specs.map(s =>
+    `<div class="aspec"><span class="aspec-v">${s.v}</span><span class="aspec-k">${s.k}</span></div>`
+  ).join('');
+  document.getElementById('pax-max').textContent = curCraft.seats;
+  document.getElementById('ps-img').src = curCraft.img;
+  document.getElementById('ps-name').textContent = curCraft.name;
+  document.getElementById('ps-model').textContent = curCraft.model;
+  document.getElementById('ps-rate').textContent = curCraft.ppdlabel;
+
+  calcTotal();
+  transitionTo('page-reserve', `Configuring ${curCraft.name}`);
+}
+
+/* ══ DEFAULT DATES ══ */
+function setDefaultDates() {
+  const today = new Date();
+  const start = new Date(today); start.setDate(today.getDate() + 3);
+  const end   = new Date(today); end.setDate(today.getDate() + 3 + resDays - 1);
+  document.getElementById('res-start').value = toDateStr(start);
+  document.getElementById('res-end').value   = toDateStr(end);
+}
+
+function toDateStr(d) {
+  return d.toISOString().split('T')[0];
+}
+
+/* ══ DURATION SLIDER ══ */
+function onDurSlider(el) {
+  resDays = parseInt(el.value);
+  document.getElementById('dur-days').textContent = resDays;
+  // Update end date from start
+  const startVal = document.getElementById('res-start').value;
+  if (startVal) {
+    const start = new Date(startVal);
+    const end = new Date(start);
+    end.setDate(start.getDate() + resDays - 1);
+    document.getElementById('res-end').value = toDateStr(end);
+  }
+  calcTotal();
+}
+
+/* ══ RESERVATION MODE ══ */
+function setResMode(mode) {
+  resMode = mode;
+  document.getElementById('rmt-duration').classList.toggle('active', mode === 'duration');
+  document.getElementById('rmt-p2p').classList.toggle('active', mode === 'p2p');
+  document.getElementById('res-mode-duration').style.display = mode === 'duration' ? '' : 'none';
+  document.getElementById('res-mode-p2p').style.display = mode === 'p2p' ? '' : 'none';
+  document.getElementById('ps-duration-rows').style.display = mode === 'duration' ? '' : 'none';
+  document.getElementById('ps-p2p-rows').style.display = mode === 'p2p' ? '' : 'none';
+  updateExtrasLabels();
+  if (mode === 'p2p') renderRouteChips();
+  calcTotal();
+}
+
+function updateExtrasLabels() {
+  const unit = resMode === 'p2p' ? '/ flight' : '/ day';
+  document.getElementById('lbl-catering').textContent = '₹45,000 ' + unit + ' — Chef-curated menus';
+  document.getElementById('lbl-transfer').textContent = '₹18,000 ' + unit + ' — Luxury vehicles at both ends';
+  document.getElementById('lbl-butler').textContent   = '₹28,000 ' + unit + ' — Dedicated personal service';
+  document.getElementById('lbl-wifi').textContent     = '₹12,000 ' + unit + ' — High-speed Starlink';
+}
+
+/* ══ ROUTE CHIPS ══ */
+function renderRouteChips() {
+  if (!curCraft) return;
+  const isHeli = curCraft.type === 'helicopter';
+  const routes = ROUTES.filter(r => isHeli ? true : !r.heliOnly);
+  document.getElementById('route-chips').innerHTML = routes.map(r => `
+    <button class="route-chip ${selectedRoute && selectedRoute.id === r.id ? 'active' : ''}"
+      onclick="selectRoute('${r.id}')">${r.from} → ${r.to}</button>
+  `).join('');
+  const dp = document.getElementById('p2p-date');
+  if (!dp.value) {
+    const d = new Date(); d.setDate(d.getDate() + 3);
+    dp.value = toDateStr(d);
+  }
+}
+
+function selectRoute(id) {
+  selectedRoute = ROUTES.find(r => r.id === id);
+  if (!selectedRoute) return;
+  document.getElementById('p2p-from').value = selectedRoute.from;
+  document.getElementById('p2p-to').value   = selectedRoute.to;
+  document.getElementById('frv-from-code').textContent = selectedRoute.fcode;
+  document.getElementById('frv-from-name').textContent = selectedRoute.from;
+  document.getElementById('frv-to-code').textContent   = selectedRoute.tcode;
+  document.getElementById('frv-to-name').textContent   = selectedRoute.to;
+  document.getElementById('frv-dur').textContent       = selectedRoute.label;
+  renderRouteChips();
+  calcTotal();
+}
+
+function swapP2P() {
+  const f = document.getElementById('p2p-from');
+  const t = document.getElementById('p2p-to');
+  [f.value, t.value] = [t.value, f.value];
+  if (selectedRoute) {
+    const rev = ROUTES.find(r => r.from === selectedRoute.to && r.to === selectedRoute.from);
+    if (rev) { selectRoute(rev.id); return; }
+    const fc = document.getElementById('frv-from-code').textContent;
+    const fn = document.getElementById('frv-from-name').textContent;
+    document.getElementById('frv-from-code').textContent = document.getElementById('frv-to-code').textContent;
+    document.getElementById('frv-from-name').textContent = document.getElementById('frv-to-name').textContent;
+    document.getElementById('frv-to-code').textContent = fc;
+    document.getElementById('frv-to-name').textContent = fn;
+  }
+  calcTotal();
+}
+
+function onP2PInput() {
+  const f = document.getElementById('p2p-from').value.trim();
+  const t = document.getElementById('p2p-to').value.trim();
+  if (f.length > 2 && t.length > 2) {
+    const match = ROUTES.find(r =>
+      r.from.toLowerCase().includes(f.toLowerCase()) &&
+      r.to.toLowerCase().includes(t.toLowerCase())
+    );
+    if (match) { selectRoute(match.id); return; }
+  }
+  selectedRoute = null;
+  document.getElementById('frv-from-code').textContent = f.slice(0,3).toUpperCase() || '—';
+  document.getElementById('frv-from-name').textContent = f || 'Select Departure';
+  document.getElementById('frv-to-code').textContent   = t.slice(0,3).toUpperCase() || '—';
+  document.getElementById('frv-to-name').textContent   = t || 'Select Destination';
+  document.getElementById('frv-dur').textContent       = 'custom route';
+  renderRouteChips();
+  calcTotal();
+}
+
+function toggleReturn() {
+  isReturn = document.getElementById('p2p-return').checked;
+  document.getElementById('return-fields').style.display = isReturn ? '' : 'none';
+  document.getElementById('ps-return-row').style.display = isReturn ? 'flex' : 'none';
+  if (isReturn) {
+    const dep = document.getElementById('p2p-date').value;
+    if (dep) {
+      const d = new Date(dep); d.setDate(d.getDate() + 1);
+      document.getElementById('p2p-return-date').value = toDateStr(d);
+    }
+  }
+  calcTotal();
+}
+
+function selectTimeSlot(time) {
+  document.getElementById('p2p-time').value = time;
+  document.querySelectorAll('.time-slot').forEach(el => {
+    el.classList.toggle('active', el.textContent.trim() === time);
+  });
+  calcTotal();
+}
+
+/* ══ CALC TOTAL ══ */
+function calcTotal() {
+  if (!curCraft) return;
+  let baseTotal = 0;
+  let flightDur = '—';
+
+  if (resMode === 'duration') {
+    const startVal = document.getElementById('res-start').value;
+    const endVal   = document.getElementById('res-end').value;
+    if (startVal && endVal) {
+      const diff = Math.max(1, Math.round((new Date(endVal) - new Date(startVal)) / 86400000) + 1);
+      resDays = diff;
+      document.getElementById('dur-days').textContent = diff;
+      document.getElementById('dur-slider').value = Math.min(diff, 30);
+    }
+    baseTotal = curCraft.ppd * resDays;
+    document.getElementById('ps-dur').textContent  = resDays + ' day' + (resDays > 1 ? 's' : '');
+    document.getElementById('ps-rate').textContent = curCraft.ppdlabel;
+  } else {
+    if (selectedRoute) {
+      const hourlyRate  = curCraft.ppd / 8;
+      const oneWay      = Math.round(Math.max(curCraft.ppd * 0.25, hourlyRate * selectedRoute.hours));
+      const returnPrice = Math.round(oneWay * 0.9);
+      baseTotal = isReturn ? oneWay + returnPrice : oneWay;
+      flightDur = selectedRoute.label;
+      document.getElementById('ps-route').textContent      = selectedRoute.from + ' → ' + selectedRoute.to;
+      document.getElementById('ps-flighttime').textContent = selectedRoute.label;
+      document.getElementById('ps-oneway').textContent     = fmt(oneWay);
+      if (isReturn) document.getElementById('ps-return-price').textContent = fmt(returnPrice) + ' (−10%)';
+    } else {
+      document.getElementById('ps-route').textContent      = (document.getElementById('p2p-from').value || '—') + ' → ' + (document.getElementById('p2p-to').value || '—');
+      document.getElementById('ps-flighttime').textContent = '—';
+      document.getElementById('ps-oneway').textContent     = '—';
+    }
+    resDays = 1;
+  }
+
+  const mult = resMode === 'duration' ? resDays : (isReturn ? 2 : 1);
+  let extrasTotal = 0;
+  if (document.getElementById('extra-catering').checked) extrasTotal += 45000 * mult;
+  if (document.getElementById('extra-transfer').checked) extrasTotal += 18000 * mult;
+  if (document.getElementById('extra-butler').checked)   extrasTotal += 28000 * mult;
+  if (document.getElementById('extra-wifi').checked)     extrasTotal += 12000 * mult;
+  if (document.getElementById('extra-decor').checked)    extrasTotal += 35000;
+
+  const grandTotal = Math.round(baseTotal + extrasTotal);
+  document.getElementById('ps-pax').textContent   = resPax + ' guest' + (resPax > 1 ? 's' : '');
+  document.getElementById('ps-total').textContent = fmt(grandTotal);
+  const extRow = document.getElementById('ps-extras-row');
+  if (extrasTotal > 0) { extRow.style.display = 'flex'; document.getElementById('ps-extras').textContent = fmt(extrasTotal); }
+  else extRow.style.display = 'none';
+
+  reservation = {
+    craft: curCraft, mode: resMode, days: resDays, pax: resPax,
+    baseTotal, extrasTotal, grandTotal,
+    startDate: resMode === 'duration' ? document.getElementById('res-start').value : document.getElementById('p2p-date').value,
+    endDate:   resMode === 'duration' ? document.getElementById('res-end').value   : (isReturn ? document.getElementById('p2p-return-date').value : ''),
+    from: resMode === 'duration' ? (document.getElementById('res-from').value || '—') : (document.getElementById('p2p-from').value || '—'),
+    to:   resMode === 'duration' ? (document.getElementById('res-to').value   || '—') : (document.getElementById('p2p-to').value   || '—'),
+    route: selectedRoute, isReturn, flightDur,
+    depTime:    resMode === 'p2p' ? (document.getElementById('p2p-time').value || '—')
+                                  : (document.getElementById('res-dep-time').value || 'Flexible'),
+    returnTime: resMode === 'p2p' && isReturn ? document.getElementById('p2p-return-time').value : '',
+  };
+}
+
+function changePax(delta) {
+  const max = curCraft ? curCraft.seats : 16;
+  resPax = Math.max(1, Math.min(max, resPax + delta));
+  document.getElementById('pax-num').textContent = resPax;
+  if (curCraft) document.getElementById('pax-max').textContent = curCraft.seats;
+  calcTotal();
+  document.getElementById('ps-pax').textContent = resPax + ' guest' + (resPax > 1 ? 's' : '');
+}
+
+/* ══ GO TO PAYMENT ══ */
+function goToPayment() {
+  if (!curCraft) return;
+  calcTotal();
+  const r = reservation;
+
+  document.getElementById('bc-img').src        = r.craft.img;
+  document.getElementById('bc-name').textContent   = r.craft.name;
+  document.getElementById('bc-model').textContent  = r.craft.model;
+  document.getElementById('bc-rate').textContent   = r.craft.ppdlabel;
+  document.getElementById('bc-pax').textContent    = r.pax + ' guest' + (r.pax > 1 ? 's' : '');
+  document.getElementById('bc-total').textContent  = fmt(r.grandTotal);
+  document.getElementById('bc-advance').textContent = '50% advance today: ' + fmt(Math.round(r.grandTotal / 2));
+
+  const routeRow = document.getElementById('bc-route-row');
+  if (r.mode === 'p2p' && r.route) {
+    routeRow.style.display = 'flex';
+    document.getElementById('bc-route').textContent = r.from + ' → ' + r.to + (r.isReturn ? ' (return)' : '');
+    document.getElementById('bc-dur').textContent   = r.flightDur + (r.isReturn ? ' × 2' : '');
+  } else {
+    routeRow.style.display = 'none';
+    document.getElementById('bc-dur').textContent   = r.days + ' day' + (r.days > 1 ? 's' : '');
+  }
+
+  const bcExtRow = document.getElementById('bc-extras-row');
+  if (r.extrasTotal > 0) { bcExtRow.style.display = 'flex'; document.getElementById('bc-extras').textContent = fmt(r.extrasTotal); }
+  else bcExtRow.style.display = 'none';
+
+  transitionTo('page-payment', 'Securing your reservation');
+}
+
+/* ══ CARD INPUT FORMATTING ══ */
+function formatCard(el) {
+  let v = el.value.replace(/\D/g, '').slice(0, 16);
+  el.value = v.replace(/(.{4})/g, '$1 ').trim();
+  const display = v.padEnd(16, '•');
+  document.getElementById('cv-number').textContent =
+    display.slice(0,4) + ' ' + display.slice(4,8) + ' ' + display.slice(8,12) + ' ' + display.slice(12,16);
+}
+
+function formatExp(el) {
+  let v = el.value.replace(/\D/g, '').slice(0, 4);
+  if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2);
+  el.value = v;
+  document.getElementById('cv-exp').textContent = v || 'MM/YY';
+}
+
+/* ══ PAYMENT PROCESSING ══ */
+function processPayment() {
+  const loader   = document.getElementById('payment-loader');
+  const arc      = document.getElementById('pl-arc');
+  const statusEl = document.getElementById('pl-status');
+  const plRing   = document.getElementById('pl-ring');
+  const plCheck  = document.getElementById('pl-check');
+  const plIcon   = document.getElementById('pl-icon');
+  const plSuccess= document.getElementById('pl-success');
+
+  loader.classList.add('show');
+  arc.style.strokeDashoffset = 251;
+
+  const steps = [
+    { t: 400,  pct: 0.15, msg: 'Initiating secure connection',    icon: '🔒' },
+    { t: 900,  pct: 0.32, msg: 'Verifying card details',          icon: '💳' },
+    { t: 1600, pct: 0.55, msg: 'Contacting payment gateway',      icon: '🌐' },
+    { t: 2400, pct: 0.72, msg: 'Processing authorization',        icon: '⚡' },
+    { t: 3100, pct: 0.90, msg: 'Securing reservation',            icon: '✈' },
+    { t: 3800, pct: 1.00, msg: 'Confirmed',                       icon: '✦'  },
+  ];
+
+  steps.forEach(s => {
+    setTimeout(() => {
+      arc.style.strokeDashoffset = 251 - (251 * s.pct);
+      statusEl.textContent = s.msg;
+      plIcon.textContent = s.icon;
+    }, s.t);
+  });
+
+  setTimeout(() => {
+    plRing.style.opacity = '0';
+    plCheck.classList.add('show');
+    plSuccess.classList.add('show');
+  }, 4200);
+
+  setTimeout(() => {
+    loader.classList.remove('show');
+    plRing.style.opacity = '1';
+    plCheck.classList.remove('show');
+    plSuccess.classList.remove('show');
+    arc.style.strokeDashoffset = 251;
+    showConfirm();
+  }, 5500);
+}
+
+/* ══ HELPERS ══ */
+function addHoursToTime(timeStr, hours) {
+  if (!timeStr || timeStr === 'Flexible') return '—';
+  const [h, m] = timeStr.split(':').map(Number);
+  const total = h * 60 + m + Math.round(hours * 60);
+  return String(Math.floor(total / 60) % 24).padStart(2,'0') + ':' + String(total % 60).padStart(2,'0');
+}
+function fmtDate(str) {
+  if (!str) return '—';
+  const d = new Date(str + 'T00:00:00');
+  return d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+}
+
+/* ══ SHOW CONFIRM ══ */
+function showConfirm() {
+  const ref = 'BWC-' + Math.floor(100000 + Math.random() * 900000);
+  const r   = reservation;
+  const c   = r.craft || {};
+  const isP2P = r.mode === 'p2p';
+
+  // Reference
+  document.getElementById('conf-ref').textContent = ref;
+
+  // Aircraft banner
+  document.getElementById('conf-ac-img').src       = c.img || '';
+  document.getElementById('conf-ac-badge').textContent = (c.type === 'helicopter' ? '🚁 ' : '✈ ') + (c.category || '');
+  document.getElementById('conf-ac-name').textContent  = c.name || '—';
+  document.getElementById('conf-ac-model').textContent = c.model || '—';
+  document.getElementById('conf-ac-specs').innerHTML   = (c.specs || []).map(s =>
+    `<div class="conf-ac-spec"><span class="conf-ac-spec-v">${s.v}</span><span class="conf-ac-spec-k">${s.k}</span></div>`
+  ).join('');
+
+  // Flight strip
+  const depTime  = r.depTime || '—';
+  const arrTime  = (isP2P && r.route) ? addHoursToTime(depTime, r.route.hours) : '—';
+  const fromCode = isP2P && r.route ? r.route.fcode : (r.from || '—').slice(0,3).toUpperCase();
+  const toCode   = isP2P && r.route ? r.route.tcode : (r.to   || '—').slice(0,3).toUpperCase();
+  const fromName = r.from || '—';
+  const toName   = r.to   || '—';
+  const dur      = isP2P && r.flightDur ? r.flightDur : r.days + ' day' + (r.days > 1 ? 's' : '');
+
+  document.getElementById('conf-from-code').textContent    = fromCode;
+  document.getElementById('conf-from-name').textContent    = fromName;
+  document.getElementById('conf-dep-date').textContent     = fmtDate(r.startDate);
+  document.getElementById('conf-dep-time-disp').textContent = depTime !== '—' ? depTime : '';
+  document.getElementById('conf-to-code').textContent      = toCode;
+  document.getElementById('conf-to-name').textContent      = toName;
+  document.getElementById('conf-arr-date').textContent     = isP2P ? fmtDate(r.startDate) : fmtDate(r.endDate);
+  document.getElementById('conf-arr-time-disp').textContent = arrTime !== '—' ? arrTime : '';
+  document.getElementById('conf-flight-dur').textContent   = dur;
+  document.getElementById('conf-pax-num').textContent      = r.pax || '—';
+
+  // Details grid
+  const details = [
+    { lbl:'Booking Reference', val:ref, gold:true },
+    { lbl:'Reservation Type',  val: isP2P ? (r.isReturn ? 'Round-Trip Flight' : 'One-Way Flight') : 'Duration Charter' },
+    { lbl:'Aircraft',          val: c.name ? c.name + ' · ' + c.model : '—' },
+    isP2P && r.route ? { lbl:'Route',       val: fromName + ' → ' + toName } : { lbl:'Period', val: fmtDate(r.startDate) + (r.endDate ? ' – ' + fmtDate(r.endDate) : '') },
+    isP2P ? { lbl:'Departure', val: fmtDate(r.startDate) + (depTime !== '—' ? ' at ' + depTime : '') }
+           : { lbl:'Duration', val: r.days + ' day' + (r.days > 1 ? 's' : '') },
+    isP2P && r.isReturn ? { lbl:'Return Flight', val: fmtDate(r.endDate) + (r.returnTime ? ' at ' + r.returnTime : '') }
+                        : { lbl:'Capacity',      val: c.seats ? c.seats + ' seats · ' + c.range + ' range' : '—' },
+  ].filter(Boolean);
+
+  document.getElementById('conf-details-grid').innerHTML = details.map(d => `
+    <div class="conf-detail">
+      <div class="conf-detail-lbl">${d.lbl}</div>
+      <div class="conf-detail-val${d.gold ? ' conf-val-gold' : ''}">${d.val}</div>
+    </div>
+  `).join('');
+
+  // Financial
+  const grand   = r.grandTotal || 0;
+  const advance = Math.round(grand / 2);
+  document.getElementById('conf-total').textContent   = fmt(r.baseTotal   || 0);
+  document.getElementById('conf-extras').textContent  = r.extrasTotal > 0 ? fmt(r.extrasTotal) : '—';
+  document.getElementById('conf-grand').textContent   = fmt(grand);
+  document.getElementById('conf-advance').textContent = fmt(advance);
+  document.getElementById('conf-balance').textContent = fmt(grand - advance);
+
+  showPage('page-confirm');
+}
+
+/* ══ FORMAT ══ */
+function fmt(n) {
+  if (!n) return '₹0';
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+/* ══ REVEAL ══ */
+function initReveal() {
+  const items = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  items.forEach(el => { if (!el.classList.contains('visible')) observer.observe(el); });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderFleet();
+  setDefaultDates();
+  initReveal();
+});
+</script>
+</body>
+</html>

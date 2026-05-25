@@ -1,4 +1,4 @@
-/* JSON-driven portfolio (v4). */
+/* JSON-driven portfolio — enhanced with scroll reveal and stagger animations */
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
@@ -152,7 +152,9 @@ function buildTimeline(items){
   const previewCount = buildTimeline.previewCount > 0 ? buildTimeline.previewCount : 0;
 
   items.forEach((it, idx) => {
-    const row = el("div", "tRow" + (idx % 2 === 1 ? " is-even" : ""));
+    const row = el("div", "tRow reveal" + (idx % 2 === 1 ? " is-even" : ""));
+    row.style.transitionDelay = Math.min(idx * 0.06, 0.30) + "s";
+
     const metaCol = el("div", "tCol tCol--meta");
     const mid = el("div", "tMid");
     const detailCol = el("div", "tCol tCol--detail");
@@ -187,7 +189,7 @@ function buildTimeline(items){
     // Detail card (role + description + responsibilities)
     const detail = el("div", "tCard");
 
-    // Company strip (shown on mobile; hidden on desktop)
+    // Company strip (mobile only)
     const strip = el("div", "tCompanyStrip");
     const stripLogo = el("div", "tStripLogo");
     const stripImg = document.createElement("img");
@@ -199,7 +201,7 @@ function buildTimeline(items){
 
     const stripText = el("div", "tStripText");
     stripText.appendChild(el("div", "tStripCompany", safeText(it.company)));
-    stripText.appendChild(el("div", "tStripMeta", `${safeText(it.period)} • ${safeText(it.location)}`));
+    stripText.appendChild(el("div", "tStripMeta", `${safeText(it.period)} · ${safeText(it.location)}`));
 
     strip.appendChild(stripLogo);
     strip.appendChild(stripText);
@@ -259,8 +261,9 @@ function buildTimeline(items){
 function buildSkills(groups){
   const host = $("#skillsGrid");
   host.innerHTML = "";
-  groups.forEach((g) => {
-    const box = el("div", "skillGroup");
+  groups.forEach((g, idx) => {
+    const box = el("div", "skillGroup reveal");
+    box.style.transitionDelay = Math.min(idx * 0.08, 0.40) + "s";
     box.appendChild(el("h3", "skillGroup__title", safeText(g.title)));
     (g.items || []).forEach((s) => {
       const row = el("div", "skillRow");
@@ -275,8 +278,10 @@ function buildSkills(groups){
 function buildProjects(items){
   const host = $("#projectsGrid");
   host.innerHTML = "";
-  items.forEach((p) => {
-    const card = el("article", "card");
+  items.forEach((p, idx) => {
+    const card = el("article", "card reveal");
+    card.style.transitionDelay = Math.min(idx * 0.10, 0.30) + "s";
+
     const imgWrap = el("div", "card__img");
     const img = document.createElement("img");
     img.alt = safeText(p.title);
@@ -309,8 +314,10 @@ function buildProjects(items){
 function buildEducation(items){
   const host = $("#educationGrid");
   host.innerHTML = "";
-  items.forEach((e) => {
-    const row = el("div", "eduItem");
+  items.forEach((e, idx) => {
+    const row = el("div", "eduItem reveal");
+    row.style.transitionDelay = Math.min(idx * 0.09, 0.27) + "s";
+
     const logo = el("div", "eduLogo");
     const img = document.createElement("img");
     img.alt = safeText(e.org);
@@ -320,7 +327,7 @@ function buildEducation(items){
 
     const content = el("div", "");
     content.appendChild(el("h3", "eduTitle", safeText(e.title)));
-    content.appendChild(el("p", "eduMeta", `${safeText(e.org)} • ${safeText(e.year)}`));
+    content.appendChild(el("p", "eduMeta", `${safeText(e.org)}${e.year ? " · " + safeText(e.year) : ""}`));
     if(e.description) content.appendChild(el("p", "eduDesc", safeText(e.description)));
 
     row.appendChild(logo);
@@ -344,8 +351,10 @@ function iconFor(type){
 function buildContact(details){
   const host = $("#contactCards");
   host.innerHTML = "";
-  details.forEach((d) => {
-    const card = el("div", "contactCard");
+  details.forEach((d, idx) => {
+    const card = el("div", "contactCard reveal");
+    card.style.transitionDelay = Math.min(idx * 0.07, 0.35) + "s";
+
     const icon = el("div", "contactIcon", iconFor(d.type));
     const content = el("div", "");
     content.appendChild(el("p", "contactLabel", safeText(d.label)));
@@ -383,7 +392,7 @@ function buildQuickLinks(links){
 function setupContactForm(toEmail){
   const form = $("#contactForm");
   const hint = $("#contactHint");
-  hint.textContent = `Tip: this opens a draft email to ${toEmail}.`;
+  hint.textContent = `Opens a draft email to ${toEmail}.`;
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -403,6 +412,26 @@ function setupContactForm(toEmail){
     const body = encodeURIComponent(bodyLines.join("\n"));
     window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
   });
+}
+
+/* Scroll reveal via IntersectionObserver */
+function setupReveal(){
+  if(!("IntersectionObserver" in window)){
+    // Fallback: show everything immediately
+    $$(".reveal").forEach(n => n.classList.add("is-visible"));
+    return;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add("is-visible");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.10, rootMargin: "0px 0px -32px 0px" });
+
+  $$(".reveal").forEach(el => io.observe(el));
 }
 
 /* Smooth scrolling + active highlight + hide-on-scroll header */
@@ -527,6 +556,7 @@ function applyContent(c){
     const content = await loadContent();
     applyContent(content);
     setupNav();
+    setupReveal();
   }catch(err){
     console.error(err);
     $("#aboutBio").textContent = "Edit content.json and reload. (Failed to load JSON.)";
