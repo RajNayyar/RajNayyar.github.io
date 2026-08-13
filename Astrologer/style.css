@@ -97,3 +97,7 @@ dialog{border:0}.booking-modal,.card-modal{margin:auto;box-shadow:0 35px 100px r
 }
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.orbit{animation:none}.reveal{opacity:1;transform:none}}
+
+/* Compact content rhythm */
+.section{padding-top:82px;padding-bottom:82px}.service-row{margin-top:42px}.practice-copy{display:flex;flex-direction:column;justify-content:center}.practice-copy .large-copy{margin-bottom:20px}.rashifal-head{margin-bottom:28px}
+@media(max-width:620px){.section{padding-top:54px;padding-bottom:54px}.service-row{margin-top:28px}.practice-grid{gap:20px}.contact-grid{gap:20px}.contact-phone{margin-top:0}}
