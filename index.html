@@ -37,11 +37,14 @@
       scroll-behavior: auto;
       scroll-padding-top: 88px;
       background: var(--bg);
+      overflow-x: clip;
     }
 
     html, body {
       scrollbar-width: thin;
       scrollbar-color: rgba(134, 174, 248, 0.7) rgba(7, 16, 24, 0.8);
+      overflow-x: clip;
+      overscroll-behavior-x: none;
     }
 
     *::-webkit-scrollbar {
@@ -69,15 +72,16 @@
         var(--bg);
       color: var(--text);
       line-height: 1.65;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
     body::after {
       content: "";
       position: fixed;
       inset: -18% -10% auto auto;
-      width: 38rem;
-      height: 38rem;
+      width: min(38rem, 76vw);
+      height: min(38rem, 76vw);
+      max-width: 100%;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(134,174,248,0.16), rgba(134,174,248,0.04) 38%, transparent 68%);
       filter: blur(30px);
@@ -175,8 +179,9 @@
     }
 
     .hero::before {
-      width: 28rem;
-      height: 28rem;
+      width: min(28rem, 64vw);
+      height: min(28rem, 64vw);
+      max-width: 100%;
       background: rgba(134, 174, 248, 0.13);
       top: 4%;
       right: 4%;
@@ -184,8 +189,9 @@
     }
 
     .hero::after {
-      width: 20rem;
-      height: 20rem;
+      width: min(20rem, 54vw);
+      height: min(20rem, 54vw);
+      max-width: 100%;
       background: rgba(215, 181, 122, 0.12);
       bottom: 4%;
       left: 2%;
@@ -1220,7 +1226,26 @@
       .pill-row { gap: 10px; }
       .pill { flex: 1 1 auto; justify-content: center; }
       .hero-panel { min-height: auto; padding-top: 0; }
-      .profile-card { width: 100%; padding: 22px 18px 18px; }
+      body::after,
+      .hero::before,
+      .hero::after {
+        width: min(16rem, 66vw);
+        height: min(16rem, 66vw);
+        max-width: 100%;
+      }
+      .profile-card {
+        width: 100%;
+        padding: 22px 18px 18px;
+        transform: none !important;
+        transition: none;
+        touch-action: manipulation;
+      }
+      .profile-card:hover,
+      .profile-card:active {
+        transform: none !important;
+        border-color: rgba(134, 174, 248, 0.18);
+        box-shadow: 0 28px 70px var(--shadow), 0 0 0 1px rgba(134,174,248,0.06);
+      }
       .profile-meta { gap: 8px; }
       .meta-row { flex-direction: column; }
       .meta-tile { min-height: unset; }
