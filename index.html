@@ -1,173 +1,1695 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rajpreet Singh Nayyar — Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rajpreet Singh Nayyar | Portfolio v3</title>
+  <meta name="description" content="Professional portfolio for Rajpreet Singh Nayyar, software engineering leader in travel and fintech." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --bg-soft: #0f1b2b;
+      --panel: rgba(15, 27, 43, 0.78);
+      --panel-strong: rgba(18, 30, 46, 0.95);
+      --panel-alt: rgba(11, 18, 28, 0.9);
+      --border: rgba(174, 198, 223, 0.16);
+      --border-strong: rgba(174, 198, 223, 0.28);
+      --text: #edf4ff;
+      --muted: #9aa9b9;
+      --muted-strong: #c5d0dc;
+      --accent: #86aef8;
+      --accent-strong: #bed3ff;
+      --accent-soft: rgba(134, 174, 248, 0.12);
+      --gold: #d7b57a;
+      --gold-soft: rgba(215, 181, 122, 0.14);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --max: 1160px;
+      --radius: 24px;
+      --radius-sm: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(134, 174, 248, 0.18), transparent 26%),
+        radial-gradient(circle at 85% 18%, rgba(215, 181, 122, 0.14), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(92, 130, 255, 0.10), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -18% -10% auto auto;
+      width: 38rem;
+      height: 38rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(134,174,248,0.16), rgba(134,174,248,0.04) 38%, transparent 68%);
+      filter: blur(30px);
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 18px;
+      color: var(--accent-strong);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.73rem;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 52px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(134,174,248,0), rgba(134,174,248,0.9), rgba(134,174,248,0.18));
+      border-radius: 999px;
+      box-shadow: 0 0 18px rgba(134, 174, 248, 0.35);
+      animation: pulseLine 3.5s ease-in-out infinite alternate;
+    }
+
+    .section {
+      padding: 100px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section.alt {
+      background: linear-gradient(180deg, rgba(255,255,255,0.00), rgba(134,174,248,0.03));
+      border-top: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .section-heading {
+      margin-bottom: 42px;
+      max-width: 700px;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .big-serif {
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      letter-spacing: -0.05em;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 90px;
+      isolation: isolate;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(54px);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero::before {
+      width: 28rem;
+      height: 28rem;
+      background: rgba(134, 174, 248, 0.13);
+      top: 4%;
+      right: 4%;
+      animation: drift 16s ease-in-out infinite alternate;
+    }
+
+    .hero::after {
+      width: 20rem;
+      height: 20rem;
+      background: rgba(215, 181, 122, 0.12);
+      bottom: 4%;
+      left: 2%;
+      animation: drift 18s ease-in-out infinite alternate-reverse;
+    }
+
+    .hero-shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+    }
+
+    .hero-name {
+      margin: 0;
+      font-size: clamp(3.5rem, 7vw, 7rem);
+      line-height: 0.9;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.065em;
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+    }
+
+    .hero-name .accent {
+      color: var(--accent-strong);
+      font-weight: 700;
+    }
+
+    .hero-role {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 36px;
+      font-size: clamp(1.05rem, 1.9vw, 1.5rem);
+      color: var(--muted-strong);
+      margin-top: 18px;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .hero-role .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.15em;
+      background: var(--accent-strong);
+      animation: blink 1s step-end infinite;
+      transform: translateY(2px);
+    }
+
+    .hero-bio {
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 0 0 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .button::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(120deg, transparent 12%, rgba(255,255,255,0.24) 45%, transparent 78%);
+      transform: translateX(-120%);
+      transition: transform 0.7s ease;
+      z-index: 0;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+      box-shadow: 0 12px 28px rgba(10,20,34,0.34);
+    }
+
+    .button:hover::before {
+      transform: translateX(130%);
+    }
+
+    .button > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent), #b9ccff);
+      color: #06131d;
+      border-color: transparent;
+      box-shadow: 0 18px 40px rgba(134, 174, 248, 0.22);
+    }
+
+    .button.primary:hover {
+      background: linear-gradient(135deg, #9fc0ff, #d9e3ff);
+      box-shadow: 0 18px 42px rgba(134, 174, 248, 0.32);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.015);
+      color: var(--muted-strong);
+      font-size: 0.8rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .pill:hover {
+      border-color: rgba(134, 174, 248, 0.4);
+      background: rgba(134, 174, 248, 0.08);
+    }
+
+    .pill svg {
+      width: 12px;
+      height: 12px;
+      opacity: 0.9;
+    }
+
+    .hero-panel {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 560px;
+      overflow: hidden;
+      padding-top: 10px;
+    }
+
+    .profile-card {
+      position: relative;
+      width: min(100%, 420px);
+      background: linear-gradient(180deg, rgba(18,30,46,0.9), rgba(9,16,25,0.96));
+      border: 1px solid rgba(134, 174, 248, 0.18);
+      border-radius: 28px;
+      box-shadow: 0 28px 70px var(--shadow), 0 0 0 1px rgba(134,174,248,0.06);
+      padding: 30px 28px 26px;
+      overflow: hidden;
+      transform: translateY(0) scale(1);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .profile-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, rgba(134,174,248,0.38), rgba(215,181,122,0.2), transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .profile-card::after {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .profile-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(134, 174, 248, 0.3);
+      box-shadow: 0 34px 80px rgba(0,0,0,0.44), 0 0 26px rgba(134,174,248,0.12);
+    }
+
+    .mini-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(215,181,122,0.28);
+      background: rgba(215,181,122,0.08);
+      color: var(--gold);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .profile-card .avatar {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(134,174,248,0.16), rgba(215,181,122,0.12));
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: saturate(1.08) contrast(1.04);
+    }
+
+    .avatar .initials {
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      font-size: clamp(5rem, 8vw, 7rem);
+      font-weight: 700;
+      color: var(--accent-strong);
+      opacity: 0.92;
+      letter-spacing: -0.06em;
+    }
+
+    .profile-meta {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .meta-row .meta-tile {
+      flex: 1;
+      min-height: 72px;
+    }
+
+    .meta-tile {
+      display: grid;
+      gap: 4px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      border-radius: 14px;
+      min-height: 72px;
+    }
+
+    .meta-label {
+      color: var(--muted);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      color: var(--text);
+      font-size: 0.74rem;
+      line-height: 1.45;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .stat {
+      padding: 18px 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      border-radius: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      line-height: 1;
+      color: var(--accent-strong);
+      margin-bottom: 4px;
+      letter-spacing: -0.05em;
+    }
+
+    .stat span {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      position: relative;
+      background: rgba(13, 24, 37, 0.76);
+      border: 1px solid rgba(134, 174, 248, 0.25);
+      border-radius: var(--radius);
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.22), 0 0 22px rgba(134,174,248,0.08);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      isolation: isolate;
+    }
+
+    .panel::before,
+    .skill-card::before,
+    .project-card::before,
+    .edu-card::before,
+    .contact-item::before,
+    .contact-form::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(134,174,248,0.10), transparent 40%, rgba(215,181,122,0.08));
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .panel:hover::before,
+    .skill-card:hover::before,
+    .project-card:hover::before,
+    .edu-card:hover::before,
+    .contact-item:hover::before,
+    .contact-form:hover::before {
+      opacity: 1;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 28px 26px 18px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 28px;
+      bottom: 28px;
+      left: 28px;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(134,174,248,0.7), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 42px;
+      margin-bottom: 28px;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 7px;
+      width: 14px;
+      height: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(134, 174, 248, 0.08);
+    }
+
+    .timeline-date {
+      display: inline-block;
+      color: var(--accent-strong);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .timeline-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+    }
+
+    .timeline-role {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 0 0 3px;
+    }
+
+    .timeline-company {
+      color: var(--accent-strong);
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    .timeline-team {
+      color: var(--muted);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .timeline-summary {
+      color: var(--muted-strong);
+      font-size: 0.94rem;
+      margin-bottom: 10px;
+    }
+
+    .timeline-details {
+      display: none;
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .timeline-details.visible { display: block; }
+
+    .timeline-details li + li { margin-top: 8px; }
+
+    .toggle {
+      margin-top: 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted-strong);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.74rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .toggle:hover {
+      border-color: rgba(134, 174, 248, 0.5);
+      color: var(--text);
+    }
+
+    .mini-panel {
+      padding: 28px;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(7,18,28,0.92), rgba(11,22,32,0.82));
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(134,174,248,0.12), 0 0 24px rgba(134,174,248,0.08);
+    }
+
+    .mini-panel::after {
+      content: "";
+      position: absolute;
+      inset: -25% -20% auto auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(134,174,248,0.18), transparent 62%);
+      filter: blur(12px);
+      opacity: 0.9;
+      animation: glowDrift 10s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .mini-panel h3 {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .quick-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .quick-list li {
+      display: grid;
+      grid-template-columns: minmax(120px, 160px) minmax(0, 1fr);
+      align-items: start;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .quick-list li span {
+      text-align: left;
+    }
+
+    .quick-list li strong {
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+      text-align: left;
+      line-height: 1.4;
+    }
+
+    .skills-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .skill-card {
+      position: relative;
+      padding: 22px 20px;
+      background: rgba(13, 24, 37, 0.76);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      min-height: 100%;
+      overflow: hidden;
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(134,174,248,0.28);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    }
+
+    .skill-card h3 {
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+      margin-bottom: 18px;
+    }
+
+    .skill-group {
+      display: grid;
+      gap: 16px;
+    }
+
+    .skill-row {
+      display: grid;
+      gap: 7px;
+    }
+
+    .skill-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted-strong);
+      font-size: 0.9rem;
+    }
+
+    .skill-bar {
+      height: 7px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .skill-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      width: 0;
+      transition: width 1s ease;
+      box-shadow: 0 0 18px rgba(134,174,248,0.26);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: rgba(13,24,37,0.76);
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.2);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(134,174,248,0.35);
+      box-shadow: 0 24px 50px rgba(0,0,0,0.28), 0 0 24px rgba(134,174,248,0.12);
+    }
+
+    .project-art {
+      position: relative;
+      aspect-ratio: 16/9;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(134,174,248,0.14), rgba(215,181,122,0.12));
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .project-art::before {
+      content: "";
+      position: absolute;
+      inset: -25% -10% auto auto;
+      width: 16rem;
+      height: 16rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 60%);
+      filter: blur(10px);
+    }
+
+    .project-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent, rgba(7,16,24,0.24));
+      pointer-events: none;
+    }
+
+    .project-art svg {
+      width: 84%;
+      height: auto;
+      opacity: 0.94;
+    }
+
+    .project-body {
+      padding: 20px 20px 18px;
+    }
+
+    .project-tag {
+      color: var(--accent-strong);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .project-title {
+      font-size: 1.4rem;
+      margin: 0 0 8px;
+      letter-spacing: -0.04em;
+    }
+
+    .project-summary {
+      color: var(--muted);
+      margin: 0 0 14px;
+      font-size: 0.94rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(134,174,248,0.3);
+      background: rgba(134,174,248,0.05);
+      color: var(--accent-strong);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .edu-card {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 22px 20px;
+      border-radius: 22px;
+      background: rgba(13,24,37,0.76);
+      border: 1px solid var(--border);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+    }
+
+    .edu-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(134,174,248,0.28);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.18);
+    }
+
+    .edu-mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: var(--accent-strong);
+      background: rgba(134,174,248,0.08);
+      border: 1px solid rgba(134,174,248,0.18);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .edu-title {
+      font-size: 1.05rem;
+      margin-bottom: 5px;
+    }
+
+    .edu-meta {
+      color: var(--accent-strong);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .edu-text {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(13,24,37,0.76);
+      border: 1px solid var(--border);
+      color: var(--muted-strong);
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .contact-item:hover {
+      transform: translateX(4px);
+      border-color: rgba(134,174,248,0.26);
+    }
+
+    .contact-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(134,174,248,0.08);
+      border: 1px solid rgba(134,174,248,0.2);
+      color: var(--accent-strong);
+      flex-shrink: 0;
+    }
+
+    .contact-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .contact-kicker {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      margin-bottom: 4px;
+    }
+
+    .contact-value {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.96rem;
+    }
+
+    .contact-form {
+      position: relative;
+      padding: 24px;
+      border-radius: 22px;
+      background: rgba(13,24,37,0.76);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .contact-form:hover {
+      border-color: rgba(134,174,248,0.26);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.16);
+    }
+
+    .contact-form h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .form-sub {
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-size: 0.92rem;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      font: inherit;
+      padding: 12px 14px;
+      resize: vertical;
+      min-height: 46px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: rgba(134,174,248,0.55);
+      box-shadow: 0 0 0 4px rgba(134,174,248,0.08);
+    }
+
+    .field textarea {
+      min-height: 130px;
+    }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      padding: 24px 0 40px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .footer small {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer a {
+      color: var(--accent-strong);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+
+    @keyframes drift {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(30px, -22px, 0) scale(1.08); }
+    }
+
+    @keyframes pulseLine {
+      0% { opacity: 0.7; transform: scaleX(0.92); }
+      100% { opacity: 1; transform: scaleX(1); }
+    }
+
+    @keyframes glowDrift {
+      0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.5; }
+      100% { transform: translate3d(-10px, 14px, 0) scale(1.12); opacity: 1; }
+    }
+
+    @media (max-width: 960px) {
+      .hero-shell,
+      .grid-2,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        order: -1;
+        min-height: auto;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .section { padding: 78px 0; }
+      .hero { padding-top: 72px; }
+      .hero-name { font-size: clamp(3rem, 15vw, 4.6rem); }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .button { width: 100%; }
+      .timeline { padding-left: 18px; padding-right: 14px; }
+      .timeline::before { left: 18px; }
+      .timeline-item { padding-left: 30px; }
+      .timeline-item::before { left: 10px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
-
-  <div class="plasma" aria-hidden="true">
-    <div class="plasma__wrapper">
-      <div class="plasma__gradient plasma__g1"></div>
-      <div class="plasma__gradient plasma__g2"></div>
-      <div class="plasma__gradient plasma__g3"></div>
-    </div>
-  </div>
-
-<div class="navOverlay" id="navOverlay" aria-hidden="true"></div>
-
-  <header id="siteHeader" class="header">
-    <div class="container header__inner">
-      <a class="brand" href="#about" aria-label="Go to About">
-        <span class="brand__mark" aria-hidden="true"></span>
-        <span id="brandName">Rajpreet</span>
-      </a>
-
-      <nav class="nav" aria-label="Primary navigation">
-        <button class="themeToggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Toggle theme">
-          <span class="themeToggle__icon" aria-hidden="true"></span>
-          <span class="themeToggle__label" id="themeToggleLabel">Dark</span>
-        </button>
-
-        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navList">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="burger" aria-hidden="true"></span>
-        </button>
-
-        <ul class="nav__list" id="navList">
-          <li><a class="nav__link" href="#about">About</a></li>
-          <li><a class="nav__link" href="#work">Work</a></li>
-          <li><a class="nav__link" href="#skills">Skills</a></li>
-          <li><a class="nav__link" href="#projects">Projects</a></li>
-          <li><a class="nav__link" href="#education">Education</a></li>
-          <li><a class="nav__link" href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+  <header>
+    <nav class="container" aria-label="Main navigation" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;position:relative;z-index:2;">
+      <a href="#top" style="font-size:0.84rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:700;">Rajpreet</a>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:flex-end;">
+        <a href="#about" style="color:var(--muted);font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;">About</a>
+        <a href="#work" style="color:var(--muted);font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;">Work</a>
+        <a href="#skills" style="color:var(--muted);font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;">Skills</a>
+        <a href="#projects" style="color:var(--muted);font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;">Projects</a>
+        <a href="#contact" style="color:var(--muted);font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;">Contact</a>
+      </div>
+    </nav>
   </header>
 
-  <main class="main">
-    <section id="about" class="section section--hero">
-      <div class="container hero">
-        <div class="hero__left">
-          <p class="kicker" id="aboutKicker">Hello, I'm</p>
-          <h1 class="hero__title" id="aboutName">Rajpreet Singh Nayyar</h1>
-          <p class="hero__subtitle" id="aboutTitle">Senior Software Engineer • C#/.NET • Cloud-Native Systems</p>
-          <p class="hero__desc" id="aboutBio"></p>
-
-          <div class="hero__cta">
-            <a class="btn btn--primary" id="resumeBtn" href="#" download>Download Resume</a>
-            <a class="btn btn--ghost" href="#work">View Work</a>
+  <main id="top">
+    <section id="about" class="hero">
+      <div class="container hero-shell">
+        <div class="hero-copy">
+          <div class="eyebrow">Technology Leadership • Platform Engineering</div>
+          <h1 class="hero-name">Rajpreet Singh <span class="accent">Nayyar</span></h1>
+          <div class="hero-role"><span id="typed-text"></span><span class="cursor" aria-hidden="true"></span></div>
+          <p class="hero-bio">I lead product-scale engineering initiatives across travel commerce, digital platforms, and backend systems — designing resilient APIs, modernizing decisioning flows, and bringing AI-assisted product thinking into customer experiences that balance performance, reliability, and business impact.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="assets/Rajpreet-Singh-Nayyar-Resume.pdf" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v13M5 16l7 6 7-6"/><path d="M3 21h18"/></svg>
+              Download Resume
+            </a>
+            <a class="button" href="#work">View Experience</a>
           </div>
-
-          <div class="hero__quick" id="heroQuickLinks" aria-label="Quick links"></div>
-        </div>
-
-        <div class="hero__right">
-          <div class="portrait">
-            <img id="aboutImage" alt="Rajpreet portrait" />
-            <div class="portrait__ring" aria-hidden="true"></div>
+          <div class="pill-row">
+            <a class="pill" href="https://www.linkedin.com/in/rajpreetnayyar" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 9.5V19M6.5 6.6a1.35 1.35 0 1 0 0-2.7 1.35 1.35 0 0 0 0 2.7ZM10 19v-5.4c0-2 1.2-3.2 3-3.2 1.7 0 2.7 1.2 2.7 3.2V19M10 9.5V19"/></svg>
+              LinkedIn
+            </a>
+            <a class="pill" href="https://github.com/" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6c-5.25 0-9.5 4.1-9.5 9.2 0 4.1 2.7 7.6 6.5 8.8.5.1.7-.2.7-.5v-1.9c-2.6.6-3.2-1-3.2-1-.4-1-1-1.3-1-1.3-.9-.5.1-.5.1-.5 1 .1 1.5 1 1.5 1 .9 1.4 2.3 1 2.8.8.1-.6.3-1 .6-1.2-2.1-.2-4.4-1-4.4-4.5 0-1 .4-1.8 1-2.4-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6.9.8-.2 1.6-.3 2.4-.3s1.6.1 2.4.3c1.8-1.1 2.6-.9 2.6-.9.5 1.2.2 2.1.1 2.3.6.6 1 1.4 1 2.4 0 3.5-2.3 4.3-4.4 4.5.3.3.7.9.7 1.8v2.6c0 .3.2.6.7.5 3.8-1.2 6.5-4.7 6.5-8.8 0-5.1-4.3-9.2-9.5-9.2Z"/></svg>
+              GitHub
+            </a>
+            <a class="pill" href="mailto:rajpreetsinghnayyar@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="m4 8 8 5 8-5"/></svg>
+              Email
+            </a>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section id="work" class="section">
-      <div class="container">
-        <div class="section__head reveal">
-          <h2 class="section__title">Work</h2>
-          <p class="section__subtitle">Experience across fintech, travel e-commerce, and data analytics.</p>
-        </div>
-
-        <div class="timeline2" id="workTimeline" aria-label="Work timeline"></div>
-      </div>
-    </section>
-
-    <section id="skills" class="section section--alt">
-      <div class="container">
-        <div class="section__head reveal">
-          <h2 class="section__title">Skills</h2>
-          <p class="section__subtitle">Core technologies and tools, rated by proficiency.</p>
-        </div>
-
-        <div class="skillGrid" id="skillsGrid" aria-label="Skills list"></div>
-      </div>
-    </section>
-
-    <section id="projects" class="section">
-      <div class="container">
-        <div class="section__head reveal">
-          <h2 class="section__title">Projects</h2>
-          <p class="section__subtitle">Personal projects and internal tools.</p>
-        </div>
-
-        <div class="cards" id="projectsGrid" aria-label="Projects"></div>
-      </div>
-    </section>
-
-    <section id="education" class="section section--alt">
-      <div class="container">
-        <div class="section__head reveal">
-          <h2 class="section__title">Education & Certifications</h2>
-          <p class="section__subtitle">Academic background and professional certifications.</p>
-        </div>
-
-        <div class="eduGrid" id="educationGrid" aria-label="Education and certifications"></div>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <div class="container">
-        <div class="section__head reveal">
-          <h2 class="section__title">Contact</h2>
-          <p class="section__subtitle">Open to conversations about interesting problems.</p>
-        </div>
-
-        <div class="contact">
-          <div class="contact__left">
-            <div class="contactCards" id="contactCards" aria-label="Contact details"></div>
-          </div>
-
-          <div class="contact__right">
-            <div class="card card--pad">
-              <h3 class="card__title">Send me a message</h3>
-              <p class="card__subtitle">Opens your email client (no backend needed).</p>
-
-              <form id="contactForm" class="form">
-                <label class="field">
-                  <span class="field__label">Your name</span>
-                  <input class="field__input" id="fromName" type="text" autocomplete="name" placeholder="e.g., John Doe" />
-                </label>
-
-                <label class="field">
-                  <span class="field__label">Your email</span>
-                  <input class="field__input" id="fromEmail" type="email" autocomplete="email" placeholder="e.g., john@email.com" />
-                </label>
-
-                <label class="field">
-                  <span class="field__label">Message</span>
-                  <textarea class="field__input field__input--area" id="message" rows="6" placeholder="Write your message..."></textarea>
-                </label>
-
-                <button class="btn btn--primary" type="submit">Open Email Draft</button>
-                <p class="hint" id="contactHint"></p>
-              </form>
+        <div class="hero-panel">
+          <div class="profile-card">
+            <div class="mini-badge">Technology leadership</div>
+            <div class="avatar" aria-label="Rajpreet Nayyar profile photo">
+              <img src="profile.PNG" alt="Rajpreet Singh Nayyar profile photo" />
+            </div>
+            <div class="profile-meta">
+              <div class="meta-row">
+                <div class="meta-tile">
+                  <div class="meta-label">Location</div>
+                  <div class="meta-value">Plano, Texas</div>
+                </div>
+                <div class="meta-tile">
+                  <div class="meta-label">Experience</div>
+                  <div class="meta-value">7+ years</div>
+                </div>
+              </div>
+              <div class="meta-tile">
+                <div class="meta-label">Current Firm</div>
+                <div class="meta-value">JPMorgan Chase &amp; Co.</div>
+              </div>
+              <div class="meta-tile">
+                <div class="meta-label">Current Role</div>
+                <div class="meta-value">VP, Lead Software Engineer</div>
+              </div>
+              <div class="meta-tile">
+                <div class="meta-label">Current Focus</div>
+                <div class="meta-value">Chase Travel • Cart, Checkout &amp; Loyalty</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="container footer__inner">
-        <span id="footerText">© <span id="year"></span> Rajpreet Singh Nayyar</span>
-        <a class="footer__top" href="#about">Back to top</a>
+    <section id="work" class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Work Experience</div>
+          <h2 class="big-serif" style="font-size:clamp(2.3rem,4vw,4rem);">Career Timeline</h2>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel timeline">
+            <div class="timeline-item">
+              <span class="timeline-date">Feb 2026 — Present</span>
+              <div class="timeline-card">
+                <div class="timeline-role">VP, Lead Software Engineer</div>
+                <div class="timeline-company">JPMorgan Chase &amp; Co.</div>
+                <div class="timeline-team">Chase Travel · Product Platform, Checkout &amp; Loyalty</div>
+                <div class="timeline-summary">Leading engineering strategy for large-scale digital commerce and traveler-facing platforms, balancing product delivery with reliability and platform scale.</div>
+                <ul class="timeline-details" id="detail-1">
+                  <li>Driving technical direction across checkout, loyalty, offers, and product-platform strategy for a high-volume travel ecosystem.</li>
+                  <li>Partnering with product and platform leaders to improve scalability, resilience, and delivery velocity across critical customer flows.</li>
+                  <li>Strengthening observability, production governance, and engineering standards to support increasingly complex customer journeys.</li>
+                </ul>
+                <button class="toggle" type="button" data-target="detail-1">Show Details</button>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <span class="timeline-date">Oct 2023 — Jan 2026</span>
+              <div class="timeline-card">
+                <div class="timeline-role">Associate Software Engineer III</div>
+                <div class="timeline-company">JPMorgan Chase &amp; Co.</div>
+                <div class="timeline-team">Chase Travel · Cart, Checkout &amp; Rewards</div>
+                <div class="timeline-summary">Subject matter expert for digital checkout experiences, promotions, and loyalty workflows across high-volume customer journeys.</div>
+                <ul class="timeline-details" id="detail-2">
+                  <li>Owned critical reward and promotion flows, including points burn and dynamic offer logic for member experiences.</li>
+                  <li>Delivered major business initiatives spanning cruise onboarding, preserved-burn logic, and promotional offers.</li>
+                  <li>Collaborated with product, architecture, and platform teams to validate rollout strategies for high-risk rules and customer journeys.</li>
+                </ul>
+                <button class="toggle" type="button" data-target="detail-2">Show Details</button>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <span class="timeline-date">Jan 2022 — Sep 2023</span>
+              <div class="timeline-card">
+                <div class="timeline-role">Associate Software Engineer II</div>
+                <div class="timeline-company">JPMorgan Chase &amp; Co.</div>
+                <div class="timeline-team">Chase Travel · Cart &amp; Checkout</div>
+                <div class="timeline-summary">Code owner for the Cart Engine while guiding squad-level delivery on customer-critical checkout initiatives and platform improvements.</div>
+                <ul class="timeline-details" id="detail-3">
+                  <li>Owned architecture decisions, reviews, and quality standards for Cart Engine services powering booking and checkout flows.</li>
+                  <li>Led multi-squad delivery for Fee in Points and the Traveler Information Page experience across business and engineering teams.</li>
+                  <li>Built observability dashboards and monitored production performance across customer experience flows using Grafana and Kibana.</li>
+                </ul>
+                <button class="toggle" type="button" data-target="detail-3">Show Details</button>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <span class="timeline-date">Jul 2019 — Dec 2021</span>
+              <div class="timeline-card">
+                <div class="timeline-role">Associate Software Engineer</div>
+                <div class="timeline-company">JPMorgan Chase &amp; Co.</div>
+                <div class="timeline-team">Chase Travel · Cart &amp; Payments</div>
+                <div class="timeline-summary">Built backend and UI components for cart, checkout, and payments flows, contributing to resilient digital commerce services.</div>
+                <ul class="timeline-details" id="detail-4">
+                  <li>Developed backend APIs for cart and checkout using C# and .NET Core for core booking and payment workflows.</li>
+                  <li>Delivered PCI-sensitive payment capabilities including Fraud Check, One-Use Card, and BIN Validation.</li>
+                  <li>Implemented Angular UI experiences and advanced microservice patterns with measurable production impact.</li>
+                </ul>
+                <button class="toggle" type="button" data-target="detail-4">Show Details</button>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <span class="timeline-date">Jul 2018 — Jul 2019</span>
+              <div class="timeline-card">
+                <div class="timeline-role">Software Engineer Intern</div>
+                <div class="timeline-company">Tavisca Solutions Pvt Ltd</div>
+                <div class="timeline-team">ORXe · Data Analytics</div>
+                <div class="timeline-summary">Built a data analytics and visualization interface with interactive reporting and automated insights delivery.</div>
+                <ul class="timeline-details" id="detail-5">
+                  <li>Created an interactive analytics UI using Angular with CanvasJS charts for operational reporting and trend analysis.</li>
+                  <li>Developed an Email API for automated delivery of data reports and business metrics to stakeholders.</li>
+                </ul>
+                <button class="toggle" type="button" data-target="detail-5">Show Details</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="panel mini-panel">
+            <h3>At a glance</h3>
+            <ul class="quick-list">
+              <li><span>Domain</span><strong>Travel Commerce &amp; Loyalty</strong></li>
+              <li><span>Stack</span><strong>.NET Core, Java, Spring Boot, Angular</strong></li>
+              <li><span>Leadership</span><strong>Platform strategy &amp; delivery</strong></li>
+              <li><span>Specialty</span><strong>Rewards systems, checkout architecture &amp; AI-enabled workflows</strong></li>
+              <li><span>Production</span><strong>High-volume digital experiences</strong></li>
+            </ul>
+          </aside>
+        </div>
       </div>
-    </footer>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Technical Skills</div>
+          <h2 class="big-serif" style="font-size:clamp(2.3rem,4vw,4rem);">Stack &amp; Tools</h2>
+        </div>
+
+        <div class="skills-wrap">
+          <div class="skill-card">
+            <h3>Languages</h3>
+            <div class="skill-group">
+              <div class="skill-row">
+                <div class="skill-head"><span>C#</span><span>100%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="100%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>Java</span><span>80%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="80%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>TypeScript / JavaScript</span><span>80%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="80%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>Python</span><span>60%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="60%"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <h3>Frameworks</h3>
+            <div class="skill-group">
+              <div class="skill-row">
+                <div class="skill-head"><span>.NET Core / ASP.NET Core</span><span>100%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="100%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>Angular</span><span>80%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="80%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>Spring Boot</span><span>60%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="60%"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <h3>Architecture</h3>
+            <div class="skill-group">
+              <div class="skill-row">
+                <div class="skill-head"><span>Microservices / REST</span><span>100%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="100%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>System Design</span><span>80%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="80%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>Patterns / Actor Model</span><span>80%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="80%"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <h3>Observability</h3>
+            <div class="skill-group">
+              <div class="skill-row">
+                <div class="skill-head"><span>Dynatrace</span><span>80%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="80%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>Grafana</span><span>80%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="80%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>Kibana</span><span>80%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="80%"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <h3>AI &amp; Automation</h3>
+            <div class="skill-group">
+              <div class="skill-row">
+                <div class="skill-head"><span>LLM-enabled workflows</span><span>70%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="70%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>Prompt design &amp; orchestration</span><span>70%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="70%"></span></div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-head"><span>AI-assisted product prototyping</span><span>65%</span></div>
+                <div class="skill-bar"><span class="skill-fill" data-width="65%"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Selected Work</div>
+          <h2 class="big-serif" style="font-size:clamp(2.3rem,4vw,4rem);">Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-art">
+              <svg viewBox="0 0 460 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="30" y="48" width="400" height="180" rx="22" stroke="rgba(134,174,248,0.65)" stroke-width="2"/>
+                <path d="M84 156C113 126 138 112 170 115C197 118 216 132 234 152C257 150 273 138 291 122C314 101 342 90 377 93" stroke="#BDE0FF" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="125" cy="163" r="17" fill="rgba(134,174,248,0.18)" stroke="#BDE0FF"/>
+                <circle cx="231" cy="149" r="19" fill="rgba(215,181,122,0.18)" stroke="#D7B57A"/>
+                <circle cx="324" cy="116" r="15" fill="rgba(134,174,248,0.18)" stroke="#BDE0FF"/>
+              </svg>
+            </div>
+            <div class="project-body">
+              <div class="project-tag">Travel • AI</div>
+              <h3 class="project-title">Virtual Tourister</h3>
+              <p class="project-summary">AI-assisted travel planning that blends destination context, seasonal events, and travel preferences into a cohesive itinerary.</p>
+              <a class="project-link" href="#contact">Learn More</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-art">
+              <svg viewBox="0 0 460 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="84" y="52" width="292" height="156" rx="18" stroke="rgba(134,174,248,0.65)" stroke-width="2"/>
+                <path d="M106 170H354M106 130H354M106 90H290" stroke="#BDE0FF" stroke-width="4" stroke-linecap="round"/>
+                <rect x="110" y="100" width="40" height="20" fill="rgba(215,181,122,0.18)" stroke="#D7B57A"/>
+                <rect x="170" y="100" width="80" height="20" fill="rgba(134,174,248,0.18)" stroke="#BDE0FF"/>
+                <rect x="270" y="100" width="60" height="20" fill="rgba(134,174,248,0.18)" stroke="#BDE0FF"/>
+              </svg>
+            </div>
+            <div class="project-body">
+              <div class="project-tag">Developer Tool • AI</div>
+              <h3 class="project-title">Test Suite Genie</h3>
+              <p class="project-summary">Converts API documentation into structured functional test coverage to accelerate validation and standardize assertions.</p>
+              <a class="project-link" href="#contact">Learn More</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-art">
+              <svg viewBox="0 0 460 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="50" y="56" width="360" height="148" rx="18" stroke="rgba(134,174,248,0.65)" stroke-width="2"/>
+                <path d="M105 145L165 125L225 145L285 103L350 140" stroke="#BDE0FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="105" cy="145" r="8" fill="#D7B57A"/>
+                <circle cx="165" cy="125" r="8" fill="#BDE0FF"/>
+                <circle cx="225" cy="145" r="8" fill="#BDE0FF"/>
+                <circle cx="285" cy="103" r="8" fill="#D7B57A"/>
+                <circle cx="350" cy="140" r="8" fill="#BDE0FF"/>
+              </svg>
+            </div>
+            <div class="project-body">
+              <div class="project-tag">Analytics • Internal</div>
+              <h3 class="project-title">ORXe Data Analyzer</h3>
+              <p class="project-summary">Interactive analytics experience for operational reporting, dashboarding, and data exploration across business metrics.</p>
+              <a class="project-link" href="#contact">Learn More</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Background</div>
+          <h2 class="big-serif" style="font-size:clamp(2.3rem,4vw,4rem);">Education &amp; Certifications</h2>
+        </div>
+
+        <div class="edu-grid">
+          <div class="edu-card">
+            <div class="edu-mark">CU</div>
+            <div>
+              <div class="edu-title">B.E. Computer Science</div>
+              <div class="edu-meta">Chitkara University · 2015 — 2019</div>
+              <div class="edu-text">Computer science fundamentals, software systems, and product engineering.</div>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-mark">AWS</div>
+            <div>
+              <div class="edu-title">AWS Certified Cloud Practitioner</div>
+              <div class="edu-meta">Amazon Web Services</div>
+              <div class="edu-text">Cloud compute, networking, storage, and platform fundamentals.</div>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-mark">UD</div>
+            <div>
+              <div class="edu-title">iOS &amp; Frontend Nanodegrees</div>
+              <div class="edu-meta">Udacity</div>
+              <div class="edu-text">Mobile and frontend engineering training centered on product delivery.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Get in touch</div>
+          <h2 class="big-serif" style="font-size:clamp(2.3rem,4vw,4rem);">Contact</h2>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 3.5h3l1.1 4.2-2 1.4c1.5 3 3.9 5.4 6.9 6.9l1.4-2 4.2 1.1v3c0 1-.8 1.8-1.8 1.8C10 20.9 3.1 14 3.1 4.9c0-1 .8-1.8 1.8-1.8Z"/></svg>
+              </div>
+              <div>
+                <div class="contact-kicker">US Phone</div>
+                <div class="contact-value"><a href="tel:+14695074543">+1 (469) 507-4543</a></div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="m4 8 8 5 8-5"/></svg>
+              </div>
+              <div>
+                <div class="contact-kicker">Email</div>
+                <div class="contact-value"><a href="mailto:rajpreetsinghnayyar@gmail.com">rajpreetsinghnayyar@gmail.com</a></div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 9.5V19M6.5 6.6a1.35 1.35 0 1 0 0-2.7 1.35 1.35 0 0 0 0 2.7ZM10 19v-5.4c0-2 1.2-3.2 3-3.2 1.7 0 2.7 1.2 2.7 3.2V19M10 9.5V19"/></svg>
+              </div>
+              <div>
+                <div class="contact-kicker">LinkedIn</div>
+                <div class="contact-value"><a href="https://www.linkedin.com/in/rajpreetnayyar" target="_blank" rel="noreferrer">linkedin.com/in/rajpreetnayyar</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <h3>Send a message</h3>
+            <div class="form-sub">Choose how you want to send your note.</div>
+            <div class="contact-actions" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
+              <button class="button primary" type="button" data-channel="email" style="justify-self:start;">Email Draft</button>
+              <button class="button" type="button" data-channel="whatsapp" style="justify-self:start;">WhatsApp Draft</button>
+            </div>
+            <form id="contact-form">
+              <div class="field">
+                <label for="name">Your name</label>
+                <input id="name" name="name" type="text" placeholder="John Doe" autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="email">Your email</label>
+                <input id="email" name="email" type="email" placeholder="john@email.com" autocomplete="email" />
+              </div>
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Write your message..."></textarea>
+              </div>
+              <button class="button primary" type="submit" style="justify-self:start;">Send Message</button>
+              <div class="form-note">Tip: Email goes to rajpreetsinghnayyar@gmail.com. WhatsApp opens a drafted message to +1 (469) 507-4543.</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script src="app.js"></script>
+  <footer class="footer">
+    <div class="footer-inner">
+      <small>© 2026 Rajpreet Singh Nayyar</small>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <script>
+    const typedText = document.getElementById('typed-text');
+    const phrases = [
+      'Chase Travel Checkout & Loyalty',
+      'C# · .NET Core · Java · Spring Boot',
+      'Backend Platform Engineering',
+      'Production Reliability & Scale'
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function tick() {
+      const phrase = phrases[phraseIndex];
+      if (!deleting) {
+        charIndex++;
+        typedText.textContent = phrase.slice(0, charIndex);
+        if (charIndex >= phrase.length) {
+          deleting = true;
+          setTimeout(tick, 1400);
+          return;
+        }
+      } else {
+        charIndex--;
+        typedText.textContent = phrase.slice(0, charIndex);
+        if (charIndex <= 0) {
+          deleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+      }
+      setTimeout(tick, deleting ? 35 : 70);
+    }
+
+    setTimeout(tick, 700);
+
+    document.querySelectorAll('.toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.target);
+        const isOpen = target.classList.toggle('visible');
+        button.textContent = isOpen ? 'Hide Details' : 'Show Details';
+      });
+    });
+
+    document.querySelectorAll('.skill-fill').forEach((bar, index) => {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          bar.style.width = bar.dataset.width;
+        }, index * 120);
+      });
+    });
+
+    const contactForm = document.getElementById('contact-form');
+    let contactChannel = 'email';
+
+    document.querySelectorAll('[data-channel]').forEach(button => {
+      button.addEventListener('click', () => {
+        contactChannel = button.dataset.channel;
+        document.querySelectorAll('[data-channel]').forEach(item => {
+          item.classList.toggle('primary', item === button);
+        });
+      });
+    });
+
+    contactForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (contactChannel === 'whatsapp') {
+        const whatsappText = encodeURIComponent([message || '(message here)', '', '—', name && 'Name: ' + name, email && 'Email: ' + email].filter(Boolean).join('\n'));
+        const whatsappUrl = `https://wa.me/14695074543?text=${whatsappText}`;
+        window.open(whatsappUrl, '_blank', 'noopener');
+        return;
+      }
+
+      const subject = encodeURIComponent('Portfolio inquiry' + (name ? ' — ' + name : ''));
+      const body = encodeURIComponent([message || '(message here)', '', '—', name && 'Name: ' + name, email && 'Email: ' + email].filter(Boolean).join('\n'));
+      window.location.href = `mailto:rajpreetsinghnayyar@gmail.com?subject=${subject}&body=${body}`;
+    });
+  </script>
 </body>
 </html>
